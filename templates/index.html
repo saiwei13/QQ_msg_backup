@@ -44,7 +44,7 @@
     <form action="/test_login" method="POST">
         {% module xsrf_form_html() %}
         Name: <input type="text" name="username" id="username"> <br>
-        Password: <input type="text" name="password"> <br>
+        Password: <input type="text" name="password" id="password"> <br>
         <input type="submit" value="Sign in">
     </form>
 
@@ -60,7 +60,7 @@
     </form>
 
     <input type="button" value="从js中点击+1" onclick="test_add()" id="fromjssubmit"><br />
-    <input type="button" value="测试ajax" onclick="test_ajax()"><br />
+    <input type="button" value="测试ajax" onclick="test_ajax()" id="test_ajax"><br />
 
 </body>
 </html>

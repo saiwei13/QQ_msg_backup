@@ -10,5 +10,5 @@
     <ConfirmationsSetting value="0" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.4.0 (/usr/bin/python3.4)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Remote Python 3.2.3 (sftp://chenwei@106.186.118.123:22/usr/bin/python3.2)" project-jdk-type="Python SDK" />
 </project>

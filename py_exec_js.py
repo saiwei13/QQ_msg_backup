@@ -1,3 +1,5 @@
+from selenium.webdriver.common.by import By
+
 __author__ = 'chenwei'
 
 
@@ -15,10 +17,6 @@ def test():
     pass
     base_url = 'http://www.baidu.com'
     driver = webdriver.PhantomJS()
-
-    # driver.set_window_size(1120, 550)
-    # driver.execute_script("console.log('Hello, world!')")
-    # driver.execute_script('/home/chenwei/workspace/pythonProject/TestTornadoServer/pjs/hello.js')
     driver.get(base_url)
     print(driver.current_url)
     data = driver.find_element_by_id('cp').text
@@ -42,29 +40,7 @@ def test_3():
     driver.find_element_by_id("pw").send_keys("密码")
     driver.find_element_by_class_name("loading_btn").click()
     driver.quit()
-def test_4():
-    # driver = webdriver.PhantomJS()
-    driver = webdriver.Firefox()
-    # driver.execute_script("window.blah = function () {document.body.innerHTML='testing';}")
-    # driver.execute_script("blah()")
-    driver.get('test.html')
-    driver.quit()
-def test_5():
-    pass
-    driver = webdriver.PhantomJS()
-    driver.get(base_url)
 
-    time.sleep(3)
-
-    # driver.find_element_by_id('test_alert').click()
-    data = driver.find_element_by_id('test_alert').text
-
-    # data = driver.find_element_by_id('mytest').text
-    # data = driver.find_element_by_id('mytest').is_displayed()
-
-    print(data)
-    # print(driver.current_url)
-    driver.quit()
 
 def test_6():
     from ghost import Ghost
@@ -79,30 +55,33 @@ def test_6():
 
 def test_2():
     driver = webdriver.PhantomJS()
-    # driver.set_window_size(1120, 550)
-    # driver.execute_script()
-    # driver.get("https://duckduckgo.com/")
-    # driver.find_element_by_id('search_form_input_homepage').send_keys("realpython")
-    # driver.find_element_by_id("search_button_homepage").click()
-    # print driver.current_url
-
-
+    driver.set_window_size(1120, 550)
     driver.get(base_url)
-
-
-    driver.find_element_by_id('fromjssubmit').click()
-    # data = driver.find_element_by_id('test_alert').text
-    # print(data)
-    # print(driver.page_source)
+    driver.find_element_by_id('username').send_keys('username')
+    driver.find_element_by_id('password').send_keys('123456')
+    driver.find_element_by_id('test_ajax').click()
     print(driver.current_url)
     driver.quit()
+
+def test_3():
+    driver = webdriver.Firefox()
+
+    # driver = webdriver.PhantomJS()
+    # driver.set_window_size(1120, 550)
+    driver.get("https://ssl.ptlogin2.qq.com/check?pt_tea=1&uin=2081374195&appid=501004106&js_ver=10124&js_type=0&login_sig=&u1=http://w.qq.com/proxy.html&r=0.5679909912869334")
+    # driver.find_element_by_id('username').send_keys('username')
+    # driver.find_element_by_id('password').send_keys('123456')
+    # driver.find_element_by_id('test_ajax').click()
+    print(driver.current_url)
+    print(driver.page_source)
+    # driver.quit()
 
 if __name__ == '__main__':
     pass
     # test_6()
     # test()
     # test_1()
-    test_2()
+    test_3()
     # test_3()
     # test_4()
     # import os

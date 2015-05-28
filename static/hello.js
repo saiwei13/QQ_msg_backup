@@ -86,7 +86,11 @@ function test_add(){
 
 function test_ajax(){
     console.log('test_ajax()')
-
-    var data={ "firstName" : "Ray" };
+    //var u = document.getElementById('u')
+    //// $("#mytable").val()
+    //var p = document.getElementById('p').textContent
+    var u = $("#username").val()
+    var p = $("#password").val()
+    var data={ "u" : u,'p':p };
     $.ajax({url: "/set_encrypt_pwd", type: "POST", dataType: "text",data: data});
 }

@@ -9,6 +9,7 @@ import tornado.ioloop
 import tornado.options
 import tornado.web
 import os
+
 import datetime
 
 from tornado.options import define, options
@@ -25,8 +26,9 @@ count = 0;
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
+        print('get() ',self.request.headers)
         # self.write("Hello, world")
-        self.render('index.html')
+        # self.render('index.html  get()  ')
 
 class TestAdd(tornado.web.RequestHandler):
     def get(self):
