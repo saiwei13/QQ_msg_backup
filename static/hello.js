@@ -95,17 +95,40 @@ function test_ajax(){
     $.ajax({url: "/set_encrypt_pwd", type: "POST", dataType: "text",data: data});
 }
 
+
+var xmlhttp;
+
+function loadXMLDoc(url,cfunc){
+    xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange=cfunc;
+    xmlhttp.open('GET',url,true);
+    xmlhttp.send();
+}
+
 function test_ajax_get(){
     var xmlhttp;
     xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange=function(){
+        if(xmlhttp.readyState==4 && xmlhttp.status == 200){
+            document.getElementById('mydiv').innerHTML = xmlhttp.responseText;
+        }
+    }
     xmlhttp.open("GET",'login',true);
-    xmlhttp.send()
-}
+    xmlhttp.send();
 
+}
 
 function test_ajax_post(){
     var xmlhttp;
     xmlhttp = new XMLHttpRequest();
     xmlhttp.open("POST",'login',true);
     xmlhttp.send()
+}
+
+function test_ajax_callback(){
+    loadXMLDoc('login', function () {
+        if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+            document.getElementById('mydiv').innerHTML = "callback [[["+xmlhttp.responseText;
+        }
+    })
 }

@@ -39,9 +39,12 @@ class LoginHandler(tornado.web.RequestHandler):
     def get(self):
         print('get()');
 
+        self.write('hello world'+str(datetime.datetime.now()))
+
     def post(self):
         print('LoginHandler post()')
         self.login();
+
 
     def login(self):
 
@@ -56,8 +59,6 @@ class LoginHandler(tornado.web.RequestHandler):
         qq.check_vc();
         if qq.cap_cd :
             qq.get_captcha()
-
-        self.render('index.html')
 
 class TestAdd(tornado.web.RequestHandler):
     def get(self):
