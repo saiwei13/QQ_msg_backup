@@ -132,3 +132,39 @@ function test_ajax_callback(){
         }
     })
 }
+
+$(document).ready(function () {
+   $('p').click(function () {
+       $(this).hide();
+   })
+});
+
+
+
+function test_jquery_get_2(){
+    $.get('login',function(rsp){
+        console.log(rsp)
+    })
+}
+
+function test_jquery_post_2(){
+    $.post('login',function(rsp){
+        console.log(rsp)
+    })
+}
+
+function test_jquery_get_3(){
+    $.ajax({
+            url: '/login',
+            data: 'ttt',
+            type: 'GET',
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+}
+
+
