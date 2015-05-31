@@ -94,3 +94,18 @@ function test_ajax(){
     var data={ "u" : u,'p':p };
     $.ajax({url: "/set_encrypt_pwd", type: "POST", dataType: "text",data: data});
 }
+
+function test_ajax_get(){
+    var xmlhttp;
+    xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET",'login',true);
+    xmlhttp.send()
+}
+
+
+function test_ajax_post(){
+    var xmlhttp;
+    xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("POST",'login',true);
+    xmlhttp.send()
+}

@@ -2,7 +2,6 @@
 <!--<!DOCTYPE html>-->
 <!--<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
 <head lang="en">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title></title>
@@ -17,7 +16,6 @@
 <script src="{{ static_url('encrypt.js') }}" type="text/javascript"></script>
 <!--<body onload="sayHi()">-->
 
-
 <script type="text/javascript">
 
         var d = new Date().getTime()
@@ -30,16 +28,13 @@
         console.log(typeof(ttt))
 </script>
 
-<body>
+<>
     <div id="showbox"></div>
     <!--<script> window.onload("show_time()") </script>-->
     <br />
 
 
     <div id="mytest">time : <script>d</script></div>
-
-
-
 
     <form action="/test_login" method="POST">
         {% module xsrf_form_html() %}
@@ -61,6 +56,21 @@
 
     <input type="button" value="从js中点击+1" onclick="test_add()" id="fromjssubmit"><br />
     <input type="button" value="测试ajax" onclick="test_ajax()" id="test_ajax"><br />
+
+
+    <form action="/login" method="post">
+        <h1><input type="submit" value="登录"></h1><br />
+    </form>
+
+    <!--验证码-->
+
+    <h1>显示验证码</h1><br />
+    <img src="{{ static_url('img/pic.jpg')}}"> <br />
+
+
+
+
+     <input type="button" value="测试ajax" onclick="test_ajax_2()" id="测试ajax"><br />
 
 </body>
 </html>

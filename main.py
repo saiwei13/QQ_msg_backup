@@ -1,6 +1,5 @@
 import logging
-
-__author__ = 'chenwei'
+from qq_login import SmartQQ
 
 __author__ = 'chenwei'
 
@@ -26,9 +25,39 @@ count = 0;
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        print('get() ',self.request.headers)
+        # print('get() ',self.request.headers)
         # self.write("Hello, world")
-        # self.render('index.html  get()  ')
+        self.render('index.html')
+    def post(self, *args, **kwargs):
+        print('post()',self.request)
+        print('post() ',self.request.body);
+
+class LoginHandler(tornado.web.RequestHandler):
+    '''
+    登录接口
+    '''
+    def get(self):
+        print('get()');
+
+    def post(self):
+        print('LoginHandler post()')
+        self.login();
+
+    def login(self):
+
+        from utils import config_file
+        import configparser
+        cf = configparser.ConfigParser()
+        cf.read(config_file)
+        qq = SmartQQ(
+            username=cf.get('qq','username'),
+            password=cf.get('qq','password')
+        );
+        qq.check_vc();
+        if qq.cap_cd :
+            qq.get_captcha()
+
+        self.render('index.html')
 
 class TestAdd(tornado.web.RequestHandler):
     def get(self):
@@ -53,15 +82,23 @@ class Application(tornado.web.Application):
 
     def __init__(self):
 
+
+        settings = dict(
+            template_path=os.path.join(os.path.dirname(__file__), "templates"),
+            static_path=os.path.join(os.path.dirname(__file__), "static"),
+            debug=True,
+        );
+
+
         handlers = [
             (r"/", MainHandler),
             (r"/add", TestAdd),
             (r"/set_encrypt_pwd", SetEncryptPwd),
+            (r"/login", LoginHandler),
+            # (r"/pic.jpg",tornado.web.StaticFileHandler,dict(path=settings['static_path'])),
+            (r"/static/(.*)",tornado.web.StaticFileHandler,{'path':'html/static'}),
         ]
-        settings = dict(
-            template_path=os.path.join(os.path.dirname(__file__), "templates"),
-            static_path=os.path.join(os.path.dirname(__file__), "static"),
-        );
+
         tornado.web.Application.__init__(self,handlers,**settings)
 
         LOGDIR = os.path.join(os.getcwd(),'log')
