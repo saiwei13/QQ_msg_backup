@@ -57,21 +57,33 @@ class LoginHandler(tornado.web.RequestHandler):
 
         if uri == '/check':
             tmp = self.qq.check_vc();
+            # print(type(tmp))
             msg = tornado.escape.json_decode(tmp)
+            # print(type(msg))
             print(msg)
             self.write(msg)
         elif uri == '/getimage':
-            self.qq.get_captcha()
+            self.qq.get_captcha()   ##待完善　【ＴＯＤＯ】
         else:
             print('不处理 ： match '+uri)
 
     def post(self):
+
         print('LoginHandler post() ',self.request.body)
 
-class TestAdd(tornado.web.RequestHandler):
+        uri = self.request.uri;
+        print('uri='+uri)
 
-    def __init__(self):
-        super(TestAdd)
+        if(uri == "/login"):
+            print('匹配　login')
+            body = self.request.body;
+            msg = tornado.escape.json_decode(body)
+            print(msg);
+
+            verifycode = msg['verifycode']
+            print('verifycode='+verifycode)
+
+class TestAdd(tornado.web.RequestHandler):
 
     def get(self, *args, **kwargs):
         pass
