@@ -566,7 +566,7 @@ var pt = {
         d.style.width = f + "px"
     },
     bind_account: function () {
-        window.open("http://id.qq.com/index.html#account");
+        window.open("http://id.qq.com/test.html#account");
         ptui_reportAttr2("234964")
     },
     loadScript: function (b, c) {

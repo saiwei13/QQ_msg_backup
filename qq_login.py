@@ -5,15 +5,33 @@ import os
 __author__ = 'chenwei'
 
 from base_client import BaseClient
-
+import json
 
 #验证码图片路径
 pic_path = "static/img/pic.jpg"
 
 
+
+'''
+json 协议：
+
+check:
+    rsp:    {resp_code:0,resp_msg:'需要验证码',resp_data:true}
+            {resp_code:0,resp_msg:'不需要验证码',resp_data:false}
+
+            {resp_code:1001,resp_msg:'请求失败',resp_data:false}
+
+'''
+
+
+
 class SmartQQ(BaseClient):
     ''''''
     def __init__(self, username, password):
+
+
+        print("SmartQQ  init() 初始化")
+
         self.username = username
         self.password = password
         self.session = requests.session()
@@ -82,7 +100,6 @@ class SmartQQ(BaseClient):
 
         print('--------finish-------ddd---')
 
-
     def del_captcha(self,path):
         if os.path.isfile(path):
             os.remove(path)
@@ -124,27 +141,23 @@ class SmartQQ(BaseClient):
             s = s.split(',')
 
             if s[0] == '0':
-
                 print('不需要验证码')
-
                 self.salt = s[2]
                 self.cap_cd = ''
                 print('salt='+self.salt)
-
                 self.del_captcha(pic_path)
-
-                pass
+                tmp = json.dumps({'resp_code':0,'resp_msg':'不需要验证码','resp_data':False})
             elif s[0] == '1':
                 print('需要验证码')
                 self.cap_cd = s[1];
                 self.salt = s[2]
                 print('salt='+self.salt+" ,  cap_cd="+self.cap_cd)
-                pass
+                tmp = json.dumps({'resp_code':0,'resp_msg':'需要验证码','resp_data':True})
         else :
             print(rsp.status_code)
             print(rsp.content)
-            pass
-        pass
+            tmp = json.dumps({'resp_code':rsp.status_code,'resp_msg':rsp.content,'resp_data':False})
+        return tmp;
 
 
     def test(self):

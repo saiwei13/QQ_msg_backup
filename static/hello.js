@@ -115,7 +115,6 @@ function test_ajax_get(){
     }
     xmlhttp.open("GET",'login',true);
     xmlhttp.send();
-
 }
 
 function test_ajax_post(){
@@ -139,8 +138,6 @@ $(document).ready(function () {
    })
 });
 
-
-
 function test_jquery_get_2(){
     $.get('login',function(rsp){
         console.log(rsp)
@@ -155,7 +152,7 @@ function test_jquery_post_2(){
 
 function test_jquery_get_3(){
     $.ajax({
-            url: '/login',
+            url: 'login',
             data: 'ttt',
             type: 'GET',
             success: function(response) {
@@ -167,4 +164,20 @@ function test_jquery_get_3(){
         });
 }
 
+function test_jquery_post_3(){
+    $.ajax({
+            url: 'login',
+            data: 'ppppppp',
+            type: 'POST',
+            success: function(response) {
+                console.log(response);
 
+                if(response.readyState == 4 && response.status == 200){
+                    console.log(response.responseText)
+                }
+            },
+            error: function(error) {
+                console.log(error);
+            }
+    });
+}

@@ -19,15 +19,19 @@ logger = logging.getLogger('demo')
 
 count = 0;
 
-
 ## 模拟场景一：
+from utils import config_file
+import configparser
+
 
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
         # print('get() ',self.request.headers)
         # self.write("Hello, world")
-        self.render('index.html')
+        # self.render('test.html')
+        self.render('index2.html')
+
     def post(self, *args, **kwargs):
         print('post()',self.request)
         print('post() ',self.request.body);
@@ -36,38 +40,41 @@ class LoginHandler(tornado.web.RequestHandler):
     '''
     登录接口
     '''
+
+    cf = configparser.ConfigParser()
+    cf.read(config_file)
+    qq = SmartQQ(
+        username=cf.get('qq','username'),
+        password=cf.get('qq','password')
+    );
+
     def get(self):
         print('get()');
+        # self.write('hello world'+str(datetime.datetime.now()))
 
-        self.write('hello world'+str(datetime.datetime.now()))
+        uri = self.request.uri;
+        print('uri='+uri)
+
+        if uri == '/check':
+            tmp = self.qq.check_vc();
+            msg = tornado.escape.json_decode(tmp)
+            print(msg)
+            self.write(msg)
+        elif uri == '/getimage':
+            self.qq.get_captcha()
+        else:
+            print('不处理 ： match '+uri)
 
     def post(self):
-        print('LoginHandler post()')
-        self.login();
-
-
-    def login(self):
-
-        from utils import config_file
-        import configparser
-        cf = configparser.ConfigParser()
-        cf.read(config_file)
-        qq = SmartQQ(
-            username=cf.get('qq','username'),
-            password=cf.get('qq','password')
-        );
-        qq.check_vc();
-        if qq.cap_cd :
-            qq.get_captcha()
+        print('LoginHandler post() ',self.request.body)
 
 class TestAdd(tornado.web.RequestHandler):
-    def get(self):
-        print('TestAdd()')
-        global count;
-        count += 1;
 
-        print('count = ',count)
-        self.render('index.html')
+    def __init__(self):
+        super(TestAdd)
+
+    def get(self, *args, **kwargs):
+        pass
 
 class SetEncryptPwd(tornado.web.RequestHandler):
     '''将js解析后的值传过来，进行保存'''
@@ -83,21 +90,20 @@ class Application(tornado.web.Application):
 
     def __init__(self):
 
-
         settings = dict(
             template_path=os.path.join(os.path.dirname(__file__), "templates"),
             static_path=os.path.join(os.path.dirname(__file__), "static"),
             debug=True,
         );
 
-
         handlers = [
             (r"/", MainHandler),
-            (r"/add", TestAdd),
+            (r"/test", TestAdd),
             (r"/set_encrypt_pwd", SetEncryptPwd),
-            (r"/login", LoginHandler),
-            # (r"/pic.jpg",tornado.web.StaticFileHandler,dict(path=settings['static_path'])),
             (r"/static/(.*)",tornado.web.StaticFileHandler,{'path':'html/static'}),
+            (r"/check", LoginHandler),
+            (r"/getimage", LoginHandler),
+            (r"/login", LoginHandler),
         ]
 
         tornado.web.Application.__init__(self,handlers,**settings)
@@ -126,5 +132,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
