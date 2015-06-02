@@ -119,7 +119,9 @@ function get_captcha(){
             //与前段做交互
             //alert();
             //显示验证码
-            $("#img_smscode").attr("src","/static/img/pic.jpg");
+
+            var tmp = (new Date().getTime())
+            $("#img_smscode").attr("src","/static/img/pic.jpg"+"?"+tmp);
         } else {
             alert('获取验证码 error :'+json.resp_msg)
         }
