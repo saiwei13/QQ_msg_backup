@@ -85,18 +85,28 @@ class SmartQQ(BaseClient):
 
         print(rsp.url)
 
+        msg = '';
+
+        if rsp.status_code == 200:
+            with open(pic_path, 'wb') as f:
+
+                for chunk in rsp.iter_content(chunk_size=1024):
+                    if chunk: # filter out keep-alive new chunks
+                        f.write(chunk)
+                        f.flush()
+                f.close()
+
+            msg = json.dumps({'resp_code':0,'resp_msg':'success'})
+        else:
+            msg = json.dumps({'resp_code':rsp.status_code,'resp_msg':rsp.content})
+            pass
+
+        return msg;
+
         # print(rsp.status_code)
         # print(rsp.content)
         # s = rsp.content.decode(encoding='UTF-8');
         # print()
-
-
-        with open(pic_path, 'wb') as f:
-            for chunk in rsp.iter_content(chunk_size=1024):
-                if chunk: # filter out keep-alive new chunks
-                    f.write(chunk)
-                    f.flush()
-            f.close()
 
         print('--------finish-------ddd---')
 

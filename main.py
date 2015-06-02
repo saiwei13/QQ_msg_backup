@@ -23,8 +23,6 @@ count = 0;
 from utils import config_file
 import configparser
 
-
-
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
         # print('get() ',self.request.headers)
@@ -57,13 +55,13 @@ class LoginHandler(tornado.web.RequestHandler):
 
         if uri == '/check':
             tmp = self.qq.check_vc();
-            # print(type(tmp))
             msg = tornado.escape.json_decode(tmp)
-            # print(type(msg))
             print(msg)
             self.write(msg)
         elif uri == '/getimage':
-            self.qq.get_captcha()   ##待完善　【ＴＯＤＯ】
+            msg = self.qq.get_captcha()   ##待完善　【ＴＯＤＯ】
+            msg = tornado.escape.json_decode(msg)
+            self.write(msg)
         else:
             print('不处理 ： match '+uri)
 
