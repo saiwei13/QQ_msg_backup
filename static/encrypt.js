@@ -1534,12 +1534,10 @@ $.Encryption = function () {
         password = password || "";
         var md5Pwd = isMd5 ? password : md5(password), h1 = hexchar2bin(md5Pwd), s2 = md5(h1 + salt), rsaH1 = $.RSA.rsa_encrypt(h1), rsaH1Len = (rsaH1.length / 2).toString(16), hexVcode = TEA.strToBytes(vcode.toUpperCase(), true), vcodeLen = Number(hexVcode.length / 2).toString(16);
 
-
         console.log('md5Pwd = '+md5Pwd)   //1568FEF95121E99EB359AF7FBB46EE10
         console.log('h1 = '+h1)
         console.log('s2='+s2)    //FCA5BE481D4F69F7DC55029D0419C9F1
         console.log('rsaH1='+rsaH1)
-
 
         while (vcodeLen.length < 4) {
             vcodeLen = "0" + vcodeLen
@@ -1574,13 +1572,41 @@ function test_2(){
     //$.Encryption.getEncryption('6377508')
 
     console.log('test_2()')
-    var salt = '\x00\x00\x00\x00\x7c\x0f\x3f\xf3'
-    var password = 'gguuss'
-    var result = $.Encryption.getEncryption(password,salt,'ehyp')
-    console.log('result = '+result)
+
+    var salt = $("#salt").val()
+    var pwd = $("#pwd").val()
+    var vcode = $("#vcode").val()
+
+    //console.log('salt='+salt+" ,pwd="+pwd+" , vcode="+vcode)
+
+    var result = $.Encryption.getEncryption(pwd,salt,vcode)
+    console.log('result='+result);
+
+    var encrypt_pwd = JSON.stringify({'encrypt_pwd':result});
+
+    $.ajax({
+            url: 'login',
+            type: 'post',
+            dataType : 'json',
+            data:encrypt_pwd,
+            success: function( json ) {
+                console.log('success');
+                console.log(json);
+                console.log(json.resp_msg);
+            },
+            error: function(error) {
+                console.log('error',error.responseText);
+            },
+            complete: function( xhr, status ) {
+                console.log('complete');
+            }
+    });
+
+    //var salt = '\x00\x00\x00\x00\x7c\x0f\x3f\xf3'
+    //var password = 'gguuss'
+    //var result = $.Encryption.getEncryption(password,salt,'ehyp')
+    //console.log('result = '+result)
 }
-
-
 
 function test(){
 

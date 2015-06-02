@@ -1,3 +1,4 @@
+import threading
 import requests
 import random2
 import os
@@ -10,8 +11,6 @@ import json
 #验证码图片路径
 pic_path = "static/img/pic.jpg"
 
-
-
 '''
 json 协议：
 
@@ -23,17 +22,16 @@ check:
 
 '''
 
-
-
 class SmartQQ(BaseClient):
     ''''''
     def __init__(self, username, password):
-
 
         print("SmartQQ  init() 初始化")
 
         self.username = username
         self.password = password
+
+
         self.session = requests.session()
 
         ## check 使用
@@ -44,6 +42,12 @@ class SmartQQ(BaseClient):
         self.login_sig ='';
         self.u1 = 'http://w.qq.com/proxy.html'
         # self.r =
+
+
+        ##自定义
+        self.vcode=''
+        self.encrypt_pwd=''
+
 
         self.salt =''
         self.cap_cd = ''
@@ -102,11 +106,6 @@ class SmartQQ(BaseClient):
             pass
 
         return msg;
-
-        # print(rsp.status_code)
-        # print(rsp.content)
-        # s = rsp.content.decode(encoding='UTF-8');
-        # print()
 
         print('--------finish-------ddd---')
 
@@ -169,6 +168,39 @@ class SmartQQ(BaseClient):
             tmp = json.dumps({'resp_code':rsp.status_code,'resp_msg':rsp.content,'resp_data':False})
         return tmp;
 
+    def __get_encrypt_pwd(self):
+        '''私有方法：　获取加密密码'''
+        from selenium import webdriver
+        base_url = "http://127.0.0.1:8888/encrypt"
+        driver = webdriver.PhantomJS()
+        driver.get(base_url)
+
+        print(base_url)
+
+        driver.find_element_by_id('salt').send_keys('\x00\x00\x00\x00\x7c\x0f\x3f\xf3')
+        driver.find_element_by_id('pwd').send_keys('gguuss')
+        driver.find_element_by_id('vcode').send_keys(self.vcode)
+        driver.find_element_by_id('bt_01').click()
+        print(driver.current_url)
+        driver.quit()
+        print('get_encrypt_pwd()  finish()')
+
+    def get_encrypt_pwd(self):
+        '''获取加密密码'''
+        print('get_encrypt_pwd()')
+        w = threading.Thread(name='worker', target=self.__get_encrypt_pwd)
+        w.start()
+
+    def sign_in(self):
+
+        print('sign_in()')
+
+        if not self.encrypt_pwd:
+            self.get_encrypt_pwd()
+        else:
+
+            print('vcode = '+self.vcode)
+            print('encrypt_pwd = '+self.encrypt_pwd)
 
     def test(self):
         s = "ptui_checkVC('0','!UFV','\x00\x00\x00\x00\x7c\x0f\x3f\xf3','e322f75cb753410b90762a1d05153515118fa46e6186800fba28ab7de4760b6a90e7ad3444b39b48d52eb6819efb231ab1d9379fefd72a14','0');"
@@ -177,17 +209,12 @@ class SmartQQ(BaseClient):
         s = s.replace('\'','')
         print(s)
         s = s.split(',')
-
         print('--------------------------------')
-
         for i in range(0,len(s)):
             print(s[i])
         # print(len(s[0]))
         # print(len(s[1]))
 
-
-    def test2(self):
-        pass
 if __name__ == '__main__':
 
     # tmp = 'ss'

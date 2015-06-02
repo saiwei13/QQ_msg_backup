@@ -41,7 +41,6 @@ def test():
     # dd = call(["ls", "-l"])
     # print(type(dd))
     # print('dd= ',dd)
-    #
 
     # import subprocess
     # p = subprocess.Popen('pwd',stdout=subprocess.PIPE)

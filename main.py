@@ -38,7 +38,6 @@ class LoginHandler(tornado.web.RequestHandler):
     '''
     登录接口
     '''
-
     cf = configparser.ConfigParser()
     cf.read(config_file)
     qq = SmartQQ(
@@ -59,16 +58,17 @@ class LoginHandler(tornado.web.RequestHandler):
             print(msg)
             self.write(msg)
         elif uri == '/getimage':
-            msg = self.qq.get_captcha()   ##待完善　【ＴＯＤＯ】
+            msg = self.qq.get_captcha()
             msg = tornado.escape.json_decode(msg)
             self.write(msg)
+        elif uri == '/encrypt':
+            self.render('encrypt.html')
         else:
             print('不处理 ： match '+uri)
 
     def post(self):
 
-        print('LoginHandler post() ',self.request.body)
-
+        # print('LoginHandler post() ',self.request.body)
         uri = self.request.uri;
         print('uri='+uri)
 
@@ -78,23 +78,37 @@ class LoginHandler(tornado.web.RequestHandler):
             msg = tornado.escape.json_decode(body)
             print(msg);
 
-            verifycode = msg['verifycode']
-            print('verifycode='+verifycode)
+            try:
+                vcode = msg['vcode']
+                if vcode:
+                    self.qq.vcode = vcode
+            except :
+                print('msg[vcode] 解析失败')
+
+            try:
+                encrypt_pwd = msg['encrypt_pwd']
+                if encrypt_pwd:
+                    self.qq.encrypt_pwd = encrypt_pwd;
+            except :
+                print('msg[encrypt_pwd] 解析失败')
+
+            self.qq.sign_in();
+
+            print('finish')
+
+        elif(uri == "/set_encrypt_pwd"):
+            print('set encrypt_pwd=',self.request.body)
+            body = self.request.body;
+            msg = tornado.escape.json_decode(body)
+            # print(msg)
+            print(msg['encrypt_pwd'])
+            pass
 
 class TestAdd(tornado.web.RequestHandler):
 
     def get(self, *args, **kwargs):
         pass
 
-class SetEncryptPwd(tornado.web.RequestHandler):
-    '''将js解析后的值传过来，进行保存'''
-    def get(self):
-        print('SetEncryptPwd  get()')
-    def post(self, *args, **kwargs):
-        print("SetEncryptPwd() post() ")
-
-        # print(self.request)
-        print(self.request.body)
 
 class Application(tornado.web.Application):
 
@@ -109,11 +123,12 @@ class Application(tornado.web.Application):
         handlers = [
             (r"/", MainHandler),
             (r"/test", TestAdd),
-            (r"/set_encrypt_pwd", SetEncryptPwd),
+            (r"/set_encrypt_pwd", LoginHandler),
             (r"/static/(.*)",tornado.web.StaticFileHandler,{'path':'html/static'}),
             (r"/check", LoginHandler),
             (r"/getimage", LoginHandler),
             (r"/login", LoginHandler),
+            (r"/encrypt", LoginHandler),
         ]
 
         tornado.web.Application.__init__(self,handlers,**settings)

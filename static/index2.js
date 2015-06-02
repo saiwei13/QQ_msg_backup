@@ -72,13 +72,12 @@ function show_sms_code(){
  * 获取控件上的验证码的值
  * @returns {*|jQuery}
  */
-function get_verifycode(){
-    var verifycode = $("#verifycode").val()
+function get_vcode(){
+    var vcode = $("#vcode").val()
     if(!isNeedVerifyCode){
-        verifycode='';
+        vcode='';
     }
-    verifycode = JSON.stringify({'verifycode':verifycode});
-    return verifycode;
+    return vcode;
 }
 
 /**
@@ -119,7 +118,6 @@ function get_captcha(){
             //与前段做交互
             //alert();
             //显示验证码
-
             var tmp = (new Date().getTime())
             $("#img_smscode").attr("src","/static/img/pic.jpg"+"?"+tmp);
         } else {
@@ -133,25 +131,19 @@ function get_captcha(){
  * 登录　(与后台交互) [TODO]
  */
 function login(){
-    var verifycode = get_verifycode();
+    var vcode = get_vcode();
     //转化为json形式
-    verifycode = JSON.stringify({'verifycode':verifycode});
+    vcode = JSON.stringify({'vcode':vcode});
 
-    $.ajax({
-            url: 'login',
-            type: 'post',
-            dataType : 'json',
-            data:verifycode,
-            success: function( json ) {
-                console.log('success');
-                console.log(json);
-                console.log(json.resp_msg);
-            },
-            error: function(error) {
-                console.log('error',error.responseText);
-            },
-            complete: function( xhr, status ) {
-                console.log('complete');
-            }
-    });
+    var success_callback = function(json){
+        console.log(json)
+
+        if(json.resp_code == 0){
+            alert('ok')
+        } else {
+            alert('failer')
+        }
+    }
+
+    req_post('login',vcode,success_callback)
 }

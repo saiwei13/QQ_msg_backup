@@ -1,3 +1,4 @@
+import threading
 from selenium.webdriver.common.by import By
 
 __author__ = 'chenwei'
@@ -55,7 +56,7 @@ def test_6():
 
 def test_2():
     driver = webdriver.PhantomJS()
-    driver.set_window_size(1120, 550)
+    # driver.set_window_size(1120, 550)
     driver.get(base_url)
     driver.find_element_by_id('username').send_keys('username')
     driver.find_element_by_id('password').send_keys('123456')
@@ -76,12 +77,54 @@ def test_3():
     print(driver.page_source)
     # driver.quit()
 
+def get_encrypt_pwd():
+    '''获取加密密码'''
+
+    print('get_encrypt_pwd()')
+    base_url = "http://127.0.0.1:8888/encrypt"
+    driver = webdriver.PhantomJS()
+    driver.get(base_url)
+    print(base_url)
+    driver.find_element_by_id('salt').send_keys('\x00\x00\x00\x00\x7c\x0f\x3f\xf3')
+    driver.find_element_by_id('pwd').send_keys('gguuss')
+    driver.find_element_by_id('vcode').send_keys('')
+    driver.find_element_by_id('bt_01').click()
+    print(driver.current_url)
+    driver.quit()
+
+    print('quit()')
+
+
+def worker(str):
+
+    print(str)
+    print (threading.currentThread().getName(), 'Starting')
+    time.sleep(3)
+    print (threading.currentThread().getName(), 'Exiting')
+
+def test_thread():
+    w = threading.Thread(name='get_encrypt_pwd', target=get_encrypt_pwd)
+    w.start()
+
+
 if __name__ == '__main__':
-    pass
+
+    # w = threading.Thread(name='worker', target=worker('3'))
+    # w2 = threading.Thread(target=worker) # use default name
+    #
+    # w.start()
+    # w2.start()
+
+    print('hello world')
+
+
+    # pass
+    #
+    # get_encrypt_pwd();
     # test_6()
     # test()
     # test_1()
-    test_3()
+    # test_3()
     # test_3()
     # test_4()
     # import os
