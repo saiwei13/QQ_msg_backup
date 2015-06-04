@@ -115,10 +115,13 @@ if __name__ == '__main__':
     # w.start()
     # w2.start()
 
-    print('hello world')
+    # print('hello world')
+    #
+    # action = [0, 0];
 
-    action = [0, 0];
 
+    salt = '\x00\x00\x00\x00\x7c\x0f\x3f\xf3';
+    print(bytes(salt,encoding='utf8'))
 
     # pass
     #

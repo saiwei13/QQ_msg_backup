@@ -157,5 +157,5 @@ function login(){
         }
     }
 
-    req_post('login',vcode,success_callback)
+    req_post('login/vcode',vcode,success_callback)
 }

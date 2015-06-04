@@ -203,7 +203,8 @@ class SmartQQ(BaseClient):
         print('__get_encrypt_pwd()  self.vcode = ',self.vcode)
 
         # driver.find_element_by_id('salt').send_keys('\x00\x00\x00\x00\x7c\x0f\x3f\xf3')
-        driver.find_element_by_id('salt').send_keys(self.salt)
+        # driver.find_element_by_id('salt').send_keys(self.salt)
+        driver.find_element_by_id('salt').send_keys(bytes(self.salt,encoding='utf8'))
         driver.find_element_by_id('pwd').send_keys(self.password)
         driver.find_element_by_id('vcode').send_keys(self.vcode)
         driver.find_element_by_id('bt_01').click()

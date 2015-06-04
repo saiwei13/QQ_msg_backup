@@ -2888,16 +2888,11 @@ function test_my_comm(){
 
     tmp_time = 1433340244761;
 
-    //alert('hello world')
-    //console.log('test()')
-    //var salt = '\x00\x00\x00\x00\x7c\x0f\x3f\xf3'
-    //var password = 'gguuss'
-    //var result = $.Encryption.getEncryption(password,salt,'ehyp')
-    //console.log('result = '+result)
-
     var salt = $("#salt").val()
     var pwd = $("#pwd").val()
     var vcode = $("#vcode").val()
+
+    var python_salt = salt;
 
     salt = '\x00\x00\x00\x00\x7c\x0f\x3f\xf3'
     //pwd = '111111'// 'gguuss'
@@ -2908,25 +2903,31 @@ function test_my_comm(){
     var result = $.Encryption.getEncryption(pwd,salt,vcode)
     //console.log('result='+result);
 
-    //var encrypt_pwd = JSON.stringify({'encrypt_pwd':result})
+    var encrypt_pwd = JSON.stringify({'encrypt_pwd':result}) //正式使用
 
-    var encrypt_pwd = JSON.stringify(
-        {   'input_salt':salt,
-            'input_pwd':pwd,
-            'input_vcode':vcode,
-            'd':tmp_d,
-            'saltPwd':tmp_saltPwd,
-            'md5Pwd':tmp_md5Pwd,
-            'h1':tmp_h1,
-            's2':tmp_s2,
-            'rsaH1':tmp_rsaH1,
-            'hexVcode':tmp_hexVcode,
-            'vcodeLen':tmp_vcodeLen,
-            'encrypt_pwd':result,
-        });
+    //var encrypt_pwd = JSON.stringify(
+    //    {
+    //        'python_salt':python_salt,
+    //        'salt':salt
+    //    })
+
+    //var encrypt_pwd = JSON.stringify(
+    //    {   'input_salt':salt,
+    //        'input_pwd':pwd,
+    //        'input_vcode':vcode,
+    //        'd':tmp_d,
+    //        'saltPwd':tmp_saltPwd,
+    //        'md5Pwd':tmp_md5Pwd,
+    //        'h1':tmp_h1,
+    //        's2':tmp_s2,
+    //        'rsaH1':tmp_rsaH1,
+    //        'hexVcode':tmp_hexVcode,
+    //        'vcodeLen':tmp_vcodeLen,
+    //        'encrypt_pwd':result,
+    //    });
 
     $.ajax({
-            url: 'login',
+            url: 'login/first',
             type: 'post',
             dataType : 'json',
             data:encrypt_pwd,

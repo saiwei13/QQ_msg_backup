@@ -70,38 +70,23 @@ class LoginHandler(tornado.web.RequestHandler):
         uri = self.request.uri;
         print('uri='+uri)
 
-        if(uri == "/login"):
-            print('match　login')
-            body = self.request.body;
-            msg = tornado.escape.json_decode(body)
+        body = self.request.body;
+        print(body)
+        msg = tornado.escape.json_decode(body)
+        print(msg);
 
-            print(msg);
-
-            try:
-                vcode = msg['vcode']
-                if vcode:
-                    self.qq.vcode = vcode
-            except :
-                print('msg[vcode] parse error')
-
-            try:
-                encrypt_pwd = msg['encrypt_pwd']
-                if encrypt_pwd:
-                    self.qq.encrypt_pwd = encrypt_pwd;
-            except :
-                print('msg[encrypt_pwd] parse error')
-
+        if(uri == "/login/vcode"):
+            vcode = msg['vcode']
             self.qq.sign_in();
+        elif(uri == "/login/first"):
+            print('match　/login/first')
 
-            print('finish')
-
-        # elif(uri == "/set_encrypt_pwd"):
-        #     print('set encrypt_pwd=',self.request.body)
-        #     body = self.request.body;
-        #     msg = tornado.escape.json_decode(body)
-        #     # print(msg)
-        #     print(msg['encrypt_pwd'])
-        #     pass
+            encrypt_pwd = msg['encrypt_pwd']
+            self.qq.encrypt_pwd = encrypt_pwd;
+            self.qq.sign_in();
+        elif(uri == "/login/second"):
+            print('match　/login/second')
+            pass
 
 class TestAdd(tornado.web.RequestHandler):
 
@@ -126,7 +111,9 @@ class Application(tornado.web.Application):
             (r"/static/(.*)",tornado.web.StaticFileHandler,{'path':'html/static'}),
             (r"/check", LoginHandler),
             (r"/getimage", LoginHandler),
-            (r"/login", LoginHandler),
+            (r"/login/vcode", LoginHandler),
+            (r"/login/first", LoginHandler),
+            (r"/login/second", LoginHandler),
             (r"/encrypt", LoginHandler),
         ]
 
