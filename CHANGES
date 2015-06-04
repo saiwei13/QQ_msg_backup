@@ -1,0 +1,14 @@
+version: 0.4   time: 2015-06-0
+
+version: 0.3   time: 2015-06-04
+- 解决salt值传递的问题　【ＴＯＤＯ】
+
+version: 0.2   time: 2015-06-04
+- encrypt_pwd value is error by comparing webqq Official login process.
+  找到原因，the value .....[TODO]
+- first login by mothod GET is connected success.
+
+
+version: 0.1   time: 2015-06-03
+- Initial version
+- add record change file.

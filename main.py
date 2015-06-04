@@ -93,7 +93,6 @@ class TestAdd(tornado.web.RequestHandler):
     def get(self, *args, **kwargs):
         pass
 
-
 class Application(tornado.web.Application):
 
     def __init__(self):
