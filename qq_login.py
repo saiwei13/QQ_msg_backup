@@ -2,6 +2,7 @@ import threading
 import requests
 import random2
 import os
+from requests.utils import dict_from_cookiejar
 
 __author__ = 'chenwei'
 
@@ -26,11 +27,10 @@ class SmartQQ(BaseClient):
     ''''''
     def __init__(self, username, password):
 
-        print("SmartQQ  init() 初始化")
+        print("SmartQQ  init() username="+username+" , password="+password)
 
         self.username = username
         self.password = password
-
 
         self.session = requests.session()
 
@@ -43,18 +43,21 @@ class SmartQQ(BaseClient):
         self.u1 = 'http://w.qq.com/proxy.html'
         # self.r =
 
-
         ##自定义
         self.vcode=''
         self.encrypt_pwd=''
 
-
+        ##check 界面，如果没看仔细看，好多坑
         self.salt =''
         self.cap_cd = ''
+        self.pt_verifysession=''
+
+        self.js_ver = '10125'
 
         self.index_url = 'http://w.qq.com/'
         self.check_url = 'https://ssl.ptlogin2.qq.com/check'
         self.captcha_url = 'https://ssl.captcha.qq.com/getimage'
+        self.login_url = 'https://ssl.ptlogin2.qq.com/login'
 
         self.config_section = 'qq'
         '''配置文件字段'''
@@ -113,18 +116,30 @@ class SmartQQ(BaseClient):
         if os.path.isfile(path):
             os.remove(path)
 
+    def del_cacel(self):
+        '''清除缓存'''
+        self.vcode=''
+        self.encrypt_pwd=''
+
     def check_vc(self):
+        '''check 返回的东西，要仔细看，都是坑'''
         print('check_vc()')
+
+        self.del_cacel();
+
+        self.session.get(self.index_url)
+
+
 
         url = self.check_url+ \
                              '?pt_tea=1' \
                              '&uin=%s' \
                              '&appid=501004106' \
-                             '&js_ver=10124' \
+                             '&js_ver=%s' \
                              '&js_type=0' \
                              '&login_sig=' \
                              '&u1=http://w.qq.com/proxy.html' \
-                             '&r=%s' % (self.username,str(random2.random()))
+                             '&r=%s' % (self.username,self.js_ver,str(random2.random()))
         print(url)
 
         self.session.headers.update({
@@ -139,20 +154,23 @@ class SmartQQ(BaseClient):
         #     "http": "http://127.0.0.1:8118",
         #     "https": "http://127.0.0.1:8118",
         # }
-
+        print('check url = '+url)
         rsp = self.session.get(url)
         ''':type : requests.Response'''
         if rsp.status_code == 200 :
             # s = "ptui_checkVC('0','!UFV','\x00\x00\x00\x00\x7c\x0f\x3f\xf3','e322f75cb753410b90762a1d05153515118fa46e6186800fba28ab7de4760b6a90e7ad3444b39b48d52eb6819efb231ab1d9379fefd72a14','0');"
             s = rsp.content.decode(encoding='UTF-8')  #bytes  --> str
+            print('check rsp : ',s)
             s = s[13:-2]
             s = s.replace('\'','')
             s = s.split(',')
 
             if s[0] == '0':
                 print('不需要验证码')
+                self.vcode=s[1]
                 self.salt = s[2]
                 self.cap_cd = ''
+                self.pt_verifysession = s[3]
                 print('salt='+self.salt)
                 self.del_captcha(pic_path)
                 tmp = json.dumps({'resp_code':0,'resp_msg':'不需要验证码','resp_data':False})
@@ -169,25 +187,32 @@ class SmartQQ(BaseClient):
         return tmp;
 
     def __get_encrypt_pwd(self):
+
+        # print('get_encrypt_pwd()')
+
         '''私有方法：　获取加密密码'''
         from selenium import webdriver
         base_url = "http://127.0.0.1:8888/encrypt"
         driver = webdriver.PhantomJS()
         driver.get(base_url)
 
-        print(base_url)
+        # print(base_url)
 
-        driver.find_element_by_id('salt').send_keys('\x00\x00\x00\x00\x7c\x0f\x3f\xf3')
-        driver.find_element_by_id('pwd').send_keys('gguuss')
+        print('__get_encrypt_pwd()  self.salt = ',self.salt);
+        print('__get_encrypt_pwd()  self.password = ',self.password)
+        print('__get_encrypt_pwd()  self.vcode = ',self.vcode)
+
+        # driver.find_element_by_id('salt').send_keys('\x00\x00\x00\x00\x7c\x0f\x3f\xf3')
+        driver.find_element_by_id('salt').send_keys(self.salt)
+        driver.find_element_by_id('pwd').send_keys(self.password)
         driver.find_element_by_id('vcode').send_keys(self.vcode)
         driver.find_element_by_id('bt_01').click()
         print(driver.current_url)
         driver.quit()
-        print('get_encrypt_pwd()  finish()')
+        print('__get_encrypt_pwd()  finish()')
 
     def get_encrypt_pwd(self):
         '''获取加密密码'''
-        print('get_encrypt_pwd()')
         w = threading.Thread(name='worker', target=self.__get_encrypt_pwd)
         w.start()
 
@@ -199,8 +224,86 @@ class SmartQQ(BaseClient):
             self.get_encrypt_pwd()
         else:
 
+            print('encrypt_pwd.length=',len(self.encrypt_pwd))
+
+            # return;
+            print('u = '+self.username)
             print('vcode = '+self.vcode)
             print('encrypt_pwd = '+self.encrypt_pwd)
+
+            cookies = dict_from_cookiejar(self.session.cookies)
+            self.pt_verifysession = cookies['ptvfsession']
+            print('pt_verifysession='+self.pt_verifysession)
+
+            # self.vcode = '!TUG'
+            # self.encrypt_pwd='HRs11rVeFoIPrGxPIuiKrDslTpdssXG*mVgNDfngG-g9JtVUyNkifrJLJOorVvyKISjNGnz26AlepMUKcImSY4FL4mA3lbhn3d-rPmakcwyEVXxk1TpOcV2jBPpnATC-NjHGInZCopqaq7RE*NBYxXPg*8u*3VlAFYyfbmbLgDsZzmPKjXK*VjylO*TWhTlqlvDQKmpt4duD*X1JDRRuWw__'
+
+            # print('cookies = ',str(cookies))
+            # print(cookies['ptvfsession'])
+
+            pt_verifysession_v1 = ''
+
+            # if not self.pt_verifysession:
+            #     cookies = dict_from_cookiejar(self.session.cookies)
+            #     self.pt_verifysession = cookies['verifysession']
+
+
+
+            par = {
+                'u':self.username,
+                'p':self.encrypt_pwd,
+                'verifycode':self.vcode,
+                'webqq_type':10,
+                'remember_uin':1,
+                'login2qq':1,
+                'aid':501004106,
+                'u1':'http://w.qq.com/proxy.html?login2qq=1&webqq_type=10',
+                'h':1,
+                'ptredirect':0,
+                'ptlang':2052,
+                'daid':164,
+                'from_ui':1,
+                'pttype':1,
+                'dumy':'',
+                'fp': 'loginerroralert',
+                'action':'0-17-8156',     ##改变 ##写死
+                'mibao_css':'m_webqq',
+                't':1,
+                'g':1,
+                'js_type':0,
+                'js_ver':self.js_ver,
+                'login_sig':'',
+                'pt_randsalt':0,
+                'pt_vcode_v1':0,
+                'pt_verifysession_v1':self.pt_verifysession, ##改变
+            }
+
+            from urllib.parse import urlencode
+
+            url = self.login_url+'?%s' %   urlencode(par)
+
+            print('login_url = '+url)
+
+            self.session.headers.update({
+                'Accept': '*/*',
+                'Referer': 'https://ui.ptlogin2.qq.com/cgi-bin/login?daid=164&target=self&style=16&mibao_css=m_webqq&appid=501004106&enable_qlogin=0&no_verifyimg=1&s_url=http//w.qq.com/proxy.html&f_url=loginerroralert&strong_login=1&login_state=10&t=20131024001',
+                'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/41.0.2272.76 Chrome/41.0.2272.76 Safari/537.36',
+                'Accept-Encoding':'gzip, deflate, sdch',
+                'Accept-Language':'en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2',
+                'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+            })
+
+            rsp = self.session.get(url)
+            ''':type : requests.Response'''
+            if rsp.status_code == 200 :
+
+                print(rsp.content.decode(encoding='UTF-8'))
+
+                cookies = dict_from_cookiejar(self.session.cookies)
+                # print(cookies)
+                print(rsp.headers)
+            else:
+                print(rsp.status_code)
 
     def test(self):
         s = "ptui_checkVC('0','!UFV','\x00\x00\x00\x00\x7c\x0f\x3f\xf3','e322f75cb753410b90762a1d05153515118fa46e6186800fba28ab7de4760b6a90e7ad3444b39b48d52eb6819efb231ab1d9379fefd72a14','0');"

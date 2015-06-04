@@ -25,14 +25,12 @@ import configparser
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        # print('get() ',self.request.headers)
-        # self.write("Hello, world")
-        # self.render('test.html')
         self.render('index2.html')
 
     def post(self, *args, **kwargs):
-        print('post()',self.request)
-        print('post() ',self.request.body);
+        pass
+        # print('post()',self.request)
+        # print('post() ',self.request.body);
 
 class LoginHandler(tornado.web.RequestHandler):
     '''
@@ -64,7 +62,7 @@ class LoginHandler(tornado.web.RequestHandler):
         elif uri == '/encrypt':
             self.render('encrypt.html')
         else:
-            print('不处理 ： match '+uri)
+            print('not deal ： match '+uri)
 
     def post(self):
 
@@ -73,9 +71,10 @@ class LoginHandler(tornado.web.RequestHandler):
         print('uri='+uri)
 
         if(uri == "/login"):
-            print('匹配　login')
+            print('match　login')
             body = self.request.body;
             msg = tornado.escape.json_decode(body)
+
             print(msg);
 
             try:
@@ -83,26 +82,26 @@ class LoginHandler(tornado.web.RequestHandler):
                 if vcode:
                     self.qq.vcode = vcode
             except :
-                print('msg[vcode] 解析失败')
+                print('msg[vcode] parse error')
 
             try:
                 encrypt_pwd = msg['encrypt_pwd']
                 if encrypt_pwd:
                     self.qq.encrypt_pwd = encrypt_pwd;
             except :
-                print('msg[encrypt_pwd] 解析失败')
+                print('msg[encrypt_pwd] parse error')
 
             self.qq.sign_in();
 
             print('finish')
 
-        elif(uri == "/set_encrypt_pwd"):
-            print('set encrypt_pwd=',self.request.body)
-            body = self.request.body;
-            msg = tornado.escape.json_decode(body)
-            # print(msg)
-            print(msg['encrypt_pwd'])
-            pass
+        # elif(uri == "/set_encrypt_pwd"):
+        #     print('set encrypt_pwd=',self.request.body)
+        #     body = self.request.body;
+        #     msg = tornado.escape.json_decode(body)
+        #     # print(msg)
+        #     print(msg['encrypt_pwd'])
+        #     pass
 
 class TestAdd(tornado.web.RequestHandler):
 

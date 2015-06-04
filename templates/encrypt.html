@@ -9,14 +9,39 @@
 <script src="/static/vendor/modernizr-2.8.3.min.js"></script>
 <script src="/static/vendor/jquery-1.11.3.min.js"></script>
 
-<script src="{{ static_url('encrypt.js') }}" type="text/javascript"></script>
+<!--<script src="{{ static_url('encrypt.js') }}" type="text/javascript"></script>-->
+<script src="{{ static_url('mq_comm_10123.js') }}" type="text/javascript"></script>
+
+<script>
+    var saltPwd = 'd5cxlZagzNNxBv/QK0R9bYSHB2cNoamzc/FSmfk/BOYBJ1lwxhDg0B/CMEY13E3WRnX2cl59mc61bRyRHRJja2eq8pW7Qt2VTjFvxZnc8rCQRx4wD8klbzcQwLmpQ0b18+SmZULK6vOAU8tqlVALUV/7ty2/oJwBqz/QlhpYl264fRgsBiRyYkqZQD+tZPgUf3GP85cSfxVq18MkWvd/XQ=='
+//                '+Brjx3VPX3m4nFFQkj4Oa+OIvN8IvWD3uw22GZogdkO03VUN8svnBJdy+BwwM49+ykruuRklLvIl0zIHX/J2e40m1aBVbHRkxC73fABClG5sTPpl16Z3k+7F04oIDWDVKc7wjdTHvRWSUINLZ5eSeTAIHxWrkEl3mDwnYgrjHHZ8yvIir/5h8AeZkMfLBDKrh/DodyYOu2tJxSSYf3RAZQ=='
+//                '3wV66cy6/qxIpLI+jDdO1K+JYyDcPkmnKJWqf5FU1vAwr/sswBOEVVXFoDkp7AHpTMk4ibskWeN3dqAX1ZmtXfixXo+4XZ982SmGKiDacU9G4+Gs+WYQnMCBC8dPrXHCwntaM7ifhjwEXSWj5mnIlcQ5THT0Xoc2d4ZX5YAhN4L6VU3v9TBzRX+1K9dT7ooic7it6SGBjawEgeNjcNaVsQ=='
+//                '3wV66cy6-qxIpLI*jDdO1K*JYyDcPkmnKJWqf5FU1vAwr-sswBOEVVXFoDkp7AHpTMk4ibskWeN3dqAX1ZmtXfixXo*4XZ982SmGKiDacU9G4*Gs*WYQnMCBC8dPrXHCwntaM7ifhjwEXSWj5mnIlcQ5THT0Xoc2d4ZX5YAhN4L6VU3v9TBzRX*1K9dT7ooic7it6SGBjawEgeNjcNaVsQ__',
+
+        saltPwd = 'UNf3UsBZle1ZsbTMOHDEiFlVjD0ehuc3xqcCDPTtQW5UAq8xxKyLSFjjE75nxOysxzCYh3Ja/3ata5XqWkhH2AhSsP2DyJcDhIhepkTiCPlnnVxbBezEgbQDnPJ4isagci+4Gl8eWPrbXwxk6xyWvzBVs3wXCYbLrBVpfwZu+jZpCEddRl0kI/lwzcCL48GA359L3vaR1sG/a84bYbgUsw=='
+        saltPwd = 'mYcV6yabDh1X6qBTzHgBKjsdGEUW5XuhPXOIyhx/dfvaMrVorhCUZkbO2pQV9PeZA1qFK1qZpEFVoDYY/pjSComtpLe6VqR0UaDT8jenozBhqBB4OrIGMIv1II12IHXB/AgTt1YbfLFNkEVrW9BrU0p9RpK/aKmME0CoJclt7iglYyL/kaBNwHG1EnjKpMWsCgtIxeCfO1CLvXY+qrpKqd6ZmoMp5Y2DWR0a52gDTtiH85aVH7NFdw=='
+    console.log(saltPwd.length)
+
+    var result = saltPwd.replace(/[\/\+=]/g, function (a) {
+
+        console.log(a);
+        return {"/": "-", "+": "*", "=": "_"}[a]
+    })
+
+    console.log('result='+result)
+
+</script>
 
 <body>
 <div>
     password： <input type="text" id="pwd"><br/>
     salt： <input type="text" id="salt"><br/>
     vcode： <input type="text" id="vcode"><br/>
-    <button id="bt_01" onclick="test_2()">按钮</button>　<br/>
+    <button id="bt_01" onclick="test_my_comm()">按钮</button>　<br/>
 </div>
+
+<button id="bt_02" onclick="test_ex()">测试</button>　<br/>
+
+
 </body>
 </html>

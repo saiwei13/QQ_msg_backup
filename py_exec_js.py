@@ -117,6 +117,8 @@ if __name__ == '__main__':
 
     print('hello world')
 
+    action = [0, 0];
+
 
     # pass
     #

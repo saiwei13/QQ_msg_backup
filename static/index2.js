@@ -11,6 +11,8 @@ var TYPE_GET='get'
 var TYPE_POST='post'
 var DATATYPE_JSON='json'
 
+var ischeck = false;
+
 /**
  * get 请求服务器
  * @param url
@@ -99,6 +101,9 @@ function check_vc(){
                         $('#tip_smscode').html("不需要验证码");
                         isNeedVerifyCode= false;
                     }
+
+                    ischeck = true;
+
                 } else {
                     alert(json);
                 }
@@ -128,9 +133,16 @@ function get_captcha(){
 }
 
 /**
- * 登录　(与后台交互) [TODO]
+ * 登录　(与后台交互)
  */
 function login(){
+
+
+    if(!ischeck){
+        alert('please first check !')
+        return;
+    }
+
     var vcode = get_vcode();
     //转化为json形式
     vcode = JSON.stringify({'vcode':vcode});

@@ -1,3 +1,25 @@
+
+//var window = {};
+//var $ = window.$ || {};
+
+var g_appid =encodeURIComponent("501004106");
+var g_href="https\x3A\x2F\x2Fui.ptlogin2.qq.com\x2Fcgi-bin\x2Flogin\x3Fdaid\x3D164\x26target\x3Dself\x26style\x3D16\x26mibao_css\x3Dm_webqq\x26appid\x3D501004106\x26enable_qlogin\x3D0\x26no_verifyimg\x3D1\x26s_url\x3Dhttp\x253A\x252F\x252Fw.qq.com\x252Fproxy.html\x26f_url\x3Dloginerroralert\x26strong_login\x3D1\x26login_state\x3D10\x26t\x3D20131024001";
+var g_begTime=new Date;
+
+var tmp_time = 1433340126955;
+
+var tmp_saltPwd='';
+var tmp_d='';
+
+var tmp_md5Pwd = '';
+var tmp_h1 = '';
+var tmp_s2 = '';
+var tmp_rsaH1 = '';
+var tmp_rsaH1Len = '';
+var tmp_hexVcode = '';
+var tmp_vcodeLen = '';
+
+
 String.prototype.trim = function () {
     return this.replace(/(^\s*)|(\s*$)/g, "")
 };
@@ -198,16 +220,16 @@ var pt = {
             } else {
                 m.src = "http://isdspeed.qq.com/cgi-bin/r.cgi?flag1=7812&flag2=2&flag3=1&5=" + (f - g_begTime) + "&3=" + (f - a) + "&t=" + f
             }
-            if (sys.$("u").value) {
-                check()
-            }
-            pt.err_m = sys.$("err_m");
-            if (g_appid != 1003903 && g_appid != 501004106) {
-                document.body.onclick = function (t) {
-                    t = t | window.event;
-                    pt.action[0]++
-                }
-            }
+            //if (sys.$("u").value) {
+            //    check()
+            //}
+            //pt.err_m = sys.$("err_m");
+            //if (g_appid != 1003903 && g_appid != 501004106) {
+            //    document.body.onclick = function (t) {
+            //        t = t | window.event;
+            //        pt.action[0]++
+            //    }
+            //}
             document.body.onkeydown = function (t) {
                 t = t | window.event;
                 pt.action[1]++
@@ -356,7 +378,7 @@ var pt = {
         var b = navigator.userAgent.toLowerCase();
         pt.isIpad = /ipad/i.test(b);
         pt.needCodeTip = window.needCodeTip ? needCodeTip : false;
-        var c = document.loginform.regmaster ? document.loginform.regmaster.value : "";
+        var c = '';//document.loginform.regmaster ? document.loginform.regmaster.value : "";
         if ((c == 2 || c == 3) && !pt.isHttps) {
             pt.regmaster = c
         }
@@ -2072,6 +2094,10 @@ $.RSA = $pt.RSA = function () {
     var ac;
 
     function d(t) {
+
+        console.log('d(t)  t=',t);
+        tmp_d = tmp_d+','+t
+
         U[ac++] ^= t & 255;
         U[ac++] ^= (t >> 8) & 255;
         U[ac++] ^= (t >> 16) & 255;
@@ -2083,6 +2109,7 @@ $.RSA = $pt.RSA = function () {
 
     function T() {
         d(new Date().getTime())
+        //d(tmp_time);
     }
 
     if (U == null) {
@@ -2482,8 +2509,8 @@ $.RSA = $pt.RSA = function () {
             var z = h(A);
             return w(z)
         }, enAsBase64: function (E, D) {
-            var C = o(E, D);
-            var B = h(C);
+            var C = o(E, D);   // [不变]
+            var B = h(C);　　　// [都在改变]  [原因：　里面有个随机数在参与计算]
             var z = "";
             for (var A = 0; A < B.length; A++) {
                 z += String.fromCharCode(B[A])
@@ -2550,6 +2577,8 @@ $pt = window.$pt || {};
 
 
 //md5 加密
+
+//$.Encryption = $pt.Encryption = function () {
 
 $.Encryption = $pt.Encryption = function () {
     var hexcase = 1;
@@ -2779,9 +2808,34 @@ $.Encryption = $pt.Encryption = function () {
     }
 
     function getEncryption(password, salt, vcode, isMd5) {
+
+        console.log('password='+password + " , salt ="+salt+ ', vcode='+vcode)
+
         vcode = vcode || "";
         password = password || "";
         var md5Pwd = isMd5 ? password : md5(password), h1 = hexchar2bin(md5Pwd), s2 = md5(h1 + salt), rsaH1 = $pt.RSA.rsa_encrypt(h1), rsaH1Len = (rsaH1.length / 2).toString(16), hexVcode = TEA.strToBytes(vcode.toUpperCase(), true), vcodeLen = Number(hexVcode.length / 2).toString(16);
+
+        console.log("md5Pwd = "+md5Pwd)   //【正确】  //与验证码无关
+        console.log("h1 = "+h1)　    //[正确]　　　//与验证码无关
+        console.log("s2 = "+s2)     //[正确]　　//与验证码无关
+
+        //重点，这个值又变了
+        console.log("rsaH1 = "+rsaH1)   //已破解　这个值   根据当前时间在改变
+
+        console.log("rsaH1Len = "+rsaH1Len)  //[正确]　　//与验证码无关
+        console.log("hexVcode = "+hexVcode)  //[正确]
+        console.log("vcodeLen = "+vcodeLen)  //[正确]
+
+
+
+        tmp_md5Pwd = md5Pwd;
+        tmp_h1 = h1;
+        tmp_s2 = s2;
+        tmp_rsaH1 = rsaH1;
+        tmp_rsaH1Len = rsaH1Len;
+        tmp_hexVcode = hexVcode;
+        tmp_vcodeLen = vcodeLen;
+
         while (vcodeLen.length < 4) {
             vcodeLen = "0" + vcodeLen
         }
@@ -2789,7 +2843,13 @@ $.Encryption = $pt.Encryption = function () {
             rsaH1Len = "0" + rsaH1Len
         }
         TEA.initkey(s2);
+
+        //【未破解】
         var saltPwd = TEA.enAsBase64(rsaH1Len + rsaH1 + TEA.strToBytes(salt) + vcodeLen + hexVcode);
+
+        tmp_saltPwd = saltPwd;
+        console.log("saltPwd = "+saltPwd)
+
         TEA.initkey("");
         setTimeout(function () {
             __monitor(488358, 1)
@@ -2809,13 +2869,77 @@ $.Encryption = $pt.Encryption = function () {
     return {getEncryption: getEncryption, getRSAEncryption: getRSAEncryption, md5: md5}
 }();
 
-
-function test_my_comm(){
-    //$.Encryption.getEncryption('6377508')
-
-    console.log('test()')
+/**
+ * 普通的页面点击测试
+ */
+function test_ex(){
+    tmp_time = 1433340244761;
     var salt = '\x00\x00\x00\x00\x7c\x0f\x3f\xf3'
-    var password = 'gguuss'
-    var result = $.Encryption.getEncryption(password,salt,'ehyp')
+    var password = '111111'// 'gguuss'
+    var vcode = '!IUM';// "!FDE"
+    var result = $.Encryption.getEncryption(password,salt,vcode)
     console.log('result = '+result)
+}
+
+/**
+ * 给　PhantomJS　使用的
+ */
+function test_my_comm(){
+
+    tmp_time = 1433340244761;
+
+    //alert('hello world')
+    //console.log('test()')
+    //var salt = '\x00\x00\x00\x00\x7c\x0f\x3f\xf3'
+    //var password = 'gguuss'
+    //var result = $.Encryption.getEncryption(password,salt,'ehyp')
+    //console.log('result = '+result)
+
+    var salt = $("#salt").val()
+    var pwd = $("#pwd").val()
+    var vcode = $("#vcode").val()
+
+    salt = '\x00\x00\x00\x00\x7c\x0f\x3f\xf3'
+    //pwd = '111111'// 'gguuss'
+    //vcode = '!IUM';// "!FDE"
+
+    //console.log('salt='+salt+" ,pwd="+pwd+" , vcode="+vcode)
+
+    var result = $.Encryption.getEncryption(pwd,salt,vcode)
+    //console.log('result='+result);
+
+    //var encrypt_pwd = JSON.stringify({'encrypt_pwd':result})
+
+    var encrypt_pwd = JSON.stringify(
+        {   'input_salt':salt,
+            'input_pwd':pwd,
+            'input_vcode':vcode,
+            'd':tmp_d,
+            'saltPwd':tmp_saltPwd,
+            'md5Pwd':tmp_md5Pwd,
+            'h1':tmp_h1,
+            's2':tmp_s2,
+            'rsaH1':tmp_rsaH1,
+            'hexVcode':tmp_hexVcode,
+            'vcodeLen':tmp_vcodeLen,
+            'encrypt_pwd':result,
+        });
+
+    $.ajax({
+            url: 'login',
+            type: 'post',
+            dataType : 'json',
+            data:encrypt_pwd,
+            success: function( json ) {
+                console.log('success');
+                console.log(json);
+                console.log(json.resp_msg);
+            },
+            error: function(error) {
+                console.log('error',error.responseText);
+            },
+            complete: function( xhr, status ) {
+                console.log('complete');
+            }
+    });
 }
