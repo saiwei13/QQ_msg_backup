@@ -135,7 +135,7 @@ class SmartQQ(BaseClient):
 
         self.del_cache();
 
-        self.session.get(self.index_url)
+        # self.session.get(self.index_url)
 
         url = self.check_url+ \
                              '?pt_tea=1' \
@@ -295,12 +295,24 @@ class SmartQQ(BaseClient):
 
         ''':type : requests.Response'''
         if rsp.status_code == 200 :
+
+            s = rsp.content.decode(encoding='UTF-8')
+            s = s[7:-1]
+            s = s.replace('\'','')
+            s = s.split(',')
+            tmp_url = s[2]
+            print('tmp_url='+tmp_url)
+
+            if tmp_url:
+                self.session.get(tmp_url)
+
+
             cookies = dict_from_cookiejar(self.session.cookies)
             try:
                 if cookies['ptwebqq']:
                     self.ptwebqq = cookies['ptwebqq']
-                    # self.sign_in_second();
-                    self.getvfwebqq()
+                    self.sign_in_second();
+                    # self.getvfwebqq()
             except Exception as e:
                 print(e)
             # print(cookies)

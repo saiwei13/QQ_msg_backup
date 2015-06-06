@@ -109,6 +109,12 @@ def test_thread():
 
 if __name__ == '__main__':
 
+    s = "ptuiCB('0','0','http://ptlogin4.web2.qq.com/check_sig?pttype=1&uin=2081374195&service=login&nodirect=0&ptsigx=26ec0347eb5084a199eaf9f7dad05afccdaf4e86055b2c37dcbb1a90aeb234038afc5bb272e734768ac7a0c9184d6bef3a9fec1f9fcb83c0231adc0760a0c8a0&s_url=http%3A%2F%2Fw.qq.com%2Fproxy.html%3Flogin2qq%3D1%26webqq_type%3D10&f_url=&ptlang=2052&ptredirect=100&aid=501004106&daid=164&j_later=0&low_login_hour=0&regmaster=0&pt_login_type=1&pt_aid=0&pt_aaid=0&pt_light=0&pt_3rd_aid=0','0','\xe7\x99\xbb\xe5\xbd\x95\xe6\x88\x90\xe5\x8a\x9f\xef\xbc\x81', 'rtokie')"
+    s = s[7:-1]
+    print(s)
+
+
+
     # w = threading.Thread(name='worker', target=worker('3'))
     # w2 = threading.Thread(target=worker) # use default name
     #
@@ -119,8 +125,8 @@ if __name__ == '__main__':
     #
     # action = [0, 0];
 
-    import time
-    print(int(time.time()))
+    # import time
+    # print(int(time.time()))
 
     # salt = '\x00\x00\x00\x00\x7c\x0f\x3f\xf3';
     # print(bytes(salt,encoding='utf8'))

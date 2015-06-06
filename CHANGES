@@ -1,5 +1,3 @@
-
-
 version: 0.x   time: 2015-06-04
 - 解决salt值传递的问题，现在这个值被我写死在js里，需要动态传值　【ＴＯＤＯ】
 - 登录请求后，需要删除缓存信息
@@ -14,10 +12,17 @@ version: 0.x   time: 2015-06-04
 
 
 
+
+version: 0.6  time: 2015-06-06
+- 删除 请求　http://s.web2.qq.com/api/getvfwebqq
+- 移除在check的时候访问主页的代码
+
 version: 0.5  time: 2015-06-06
 -bug: 第二次登成功后，返回retcode为103　　
  b'{"retcode":103,"errmsg":""}\r\n'
-解决：ＴＯＤＯ
+解决：　在第一次登录的时候，返回了结果中有个ｕｒｌ,需要访问该链接，
+　　　　获取到一个Cookie名为p_skey，用于第二次登录
+参考：　http://iofai.com/897.html
 
 
 version: 0.4  time: 2015-06-06
@@ -29,7 +34,6 @@ version: 0.3   time: 2015-06-04
 - encrypt_pwd value is error by comparing webqq Official login process.
   找到原因，the value .....[TODO]
 - first login by mothod GET is connected success.
-
 
 version: 0.2   time: 2015-06-03
 - phantomjs　会阻塞主线程，需要开个线程运行。
