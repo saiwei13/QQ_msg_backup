@@ -159,3 +159,31 @@ function login(){
 
     req_post('login/vcode',vcode,success_callback)
 }
+
+
+function test_post(){
+
+    var success_callback = function(json){
+        console.log(json)
+
+        if(json.resp_code == 0){
+            //alert('ok')
+        } else {
+            //alert('failer')
+        }
+    }
+
+
+    var data = 'r: {"ptwebqq":"dea75142dc6e91fd609e47c9c7c3fcd63d5d48f1a5631d2e2480825cab90d6b4","clientid":53999199,"psessionid":"","status":"online"}'
+    data = JSON.stringify({'vcode':12344,'ttt':'dddd'});
+    console.log('data='+data);
+    $.ajax({
+            url: 'test',
+            type: 'post',
+            data:'r:{"ptwebqq"="1111","clientid"=53999199,"psessionid"="","status"="online"}',
+            success: success_callback,
+            complete: function( xhr, status ) {
+                console.log('complete');
+            }
+    });
+}

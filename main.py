@@ -88,9 +88,13 @@ class LoginHandler(tornado.web.RequestHandler):
             print('match　/login/second')
             pass
 
-class TestAdd(tornado.web.RequestHandler):
+class Test(tornado.web.RequestHandler):
 
     def get(self, *args, **kwargs):
+        pass
+    def post(self, *args, **kwargs):
+        # print('Test.class  post()  ',self.request.body)
+        self.write('hello world!!!')
         pass
 
 class Application(tornado.web.Application):
@@ -105,9 +109,9 @@ class Application(tornado.web.Application):
 
         handlers = [
             (r"/", MainHandler),
-            (r"/test", TestAdd),
-            (r"/set_encrypt_pwd", LoginHandler),
-            (r"/static/(.*)",tornado.web.StaticFileHandler,{'path':'html/static'}),
+            (r"/test", Test),
+            # (r"/set_encrypt_pwd", LoginHandler),
+            # (r"/static/(.*)",tornado.web.StaticFileHandler,{'path':'html/static'}),
             (r"/check", LoginHandler),
             (r"/getimage", LoginHandler),
             (r"/login/vcode", LoginHandler),

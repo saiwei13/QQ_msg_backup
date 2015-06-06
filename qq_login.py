@@ -3,6 +3,7 @@ import requests
 import random2
 import os
 from requests.utils import dict_from_cookiejar
+import time
 
 __author__ = 'chenwei'
 
@@ -54,10 +55,16 @@ class SmartQQ(BaseClient):
 
         self.js_ver = '10125'
 
+
+        self.ptwebqq=''
+        self.clientid = 53999199
+        self.status = 'online'
+
         self.index_url = 'http://w.qq.com/'
         self.check_url = 'https://ssl.ptlogin2.qq.com/check'
         self.captcha_url = 'https://ssl.captcha.qq.com/getimage'
         self.login_url = 'https://ssl.ptlogin2.qq.com/login'
+        self.login_2_url = 'http://d.web2.qq.com/channel/login2'
 
         self.config_section = 'qq'
         '''配置文件字段'''
@@ -116,20 +123,19 @@ class SmartQQ(BaseClient):
         if os.path.isfile(path):
             os.remove(path)
 
-    def del_cacel(self):
+    def del_cache(self):
         '''清除缓存'''
         self.vcode=''
         self.encrypt_pwd=''
+        self.ptwebqq=''
 
     def check_vc(self):
         '''check 返回的东西，要仔细看，都是坑'''
         print('check_vc()')
 
-        self.del_cacel();
+        self.del_cache();
 
         self.session.get(self.index_url)
-
-
 
         url = self.check_url+ \
                              '?pt_tea=1' \
@@ -198,9 +204,9 @@ class SmartQQ(BaseClient):
 
         # print(base_url)
 
-        print('__get_encrypt_pwd()  self.salt = ',self.salt);
-        print('__get_encrypt_pwd()  self.password = ',self.password)
-        print('__get_encrypt_pwd()  self.vcode = ',self.vcode)
+        # print('__get_encrypt_pwd()  self.salt = ',self.salt);
+        # print('__get_encrypt_pwd()  self.password = ',self.password)
+        # print('__get_encrypt_pwd()  self.vcode = ',self.vcode)
 
         # driver.find_element_by_id('salt').send_keys('\x00\x00\x00\x00\x7c\x0f\x3f\xf3')
         # driver.find_element_by_id('salt').send_keys(self.salt)
@@ -224,87 +230,162 @@ class SmartQQ(BaseClient):
         if not self.encrypt_pwd:
             self.get_encrypt_pwd()
         else:
+            self.sign_in_first()
 
-            print('encrypt_pwd.length=',len(self.encrypt_pwd))
 
-            # return;
-            print('u = '+self.username)
-            print('vcode = '+self.vcode)
-            print('encrypt_pwd = '+self.encrypt_pwd)
+    def sign_in_first(self):
+        '''第一次登录'''
+        print('encrypt_pwd.length=',len(self.encrypt_pwd))
+        print('u = '+self.username)
+        print('vcode = '+self.vcode)
+        # print('encrypt_pwd = '+self.encrypt_pwd)
 
+        cookies = dict_from_cookiejar(self.session.cookies)
+        self.pt_verifysession = cookies['ptvfsession']
+        # print('pt_verifysession='+self.pt_verifysession)
+
+        par = {
+            'u':self.username,
+            'p':self.encrypt_pwd,
+            'verifycode':self.vcode,
+            'webqq_type':10,
+            'remember_uin':1,
+            'login2qq':1,
+            'aid':501004106,
+            'u1':'http://w.qq.com/proxy.html?login2qq=1&webqq_type=10',
+            'h':1,
+            'ptredirect':0,
+            'ptlang':2052,
+            'daid':164,
+            'from_ui':1,
+            'pttype':1,
+            'dumy':'',
+            'fp': 'loginerroralert',
+            'action':'0-17-8156',     ##改变 ##写死
+            'mibao_css':'m_webqq',
+            't':1,
+            'g':1,
+            'js_type':0,
+            'js_ver':self.js_ver,
+            'login_sig':'',
+            'pt_randsalt':0,
+            'pt_vcode_v1':0,
+            'pt_verifysession_v1':self.pt_verifysession, ##改变
+        }
+
+        from urllib.parse import urlencode
+
+        url = self.login_url+'?%s' %   urlencode(par)
+
+        # print('login_url = '+url)
+
+        self.session.headers.update({
+            'Accept': '*/*',
+            'Referer': 'https://ui.ptlogin2.qq.com/cgi-bin/login?daid=164&target=self&style=16&mibao_css=m_webqq&appid=501004106&enable_qlogin=0&no_verifyimg=1&s_url=http//w.qq.com/proxy.html&f_url=loginerroralert&strong_login=1&login_state=10&t=20131024001',
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/41.0.2272.76 Chrome/41.0.2272.76 Safari/537.36',
+            'Accept-Encoding':'gzip, deflate, sdch',
+            'Accept-Language':'en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2',
+            'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        })
+
+        rsp = self.session.get(url)
+        # print(rsp.content.decode(encoding='UTF-8'))
+
+        print(rsp.content)
+
+        ''':type : requests.Response'''
+        if rsp.status_code == 200 :
             cookies = dict_from_cookiejar(self.session.cookies)
-            self.pt_verifysession = cookies['ptvfsession']
-            print('pt_verifysession='+self.pt_verifysession)
-
-            # self.vcode = '!TUG'
-            # self.encrypt_pwd='HRs11rVeFoIPrGxPIuiKrDslTpdssXG*mVgNDfngG-g9JtVUyNkifrJLJOorVvyKISjNGnz26AlepMUKcImSY4FL4mA3lbhn3d-rPmakcwyEVXxk1TpOcV2jBPpnATC-NjHGInZCopqaq7RE*NBYxXPg*8u*3VlAFYyfbmbLgDsZzmPKjXK*VjylO*TWhTlqlvDQKmpt4duD*X1JDRRuWw__'
-
-            # print('cookies = ',str(cookies))
-            # print(cookies['ptvfsession'])
-
-            pt_verifysession_v1 = ''
-
-            # if not self.pt_verifysession:
-            #     cookies = dict_from_cookiejar(self.session.cookies)
-            #     self.pt_verifysession = cookies['verifysession']
+            try:
+                if cookies['ptwebqq']:
+                    self.ptwebqq = cookies['ptwebqq']
+                    # self.sign_in_second();
+                    self.getvfwebqq()
+            except Exception as e:
+                print(e)
+            # print(cookies)
+            # print(rsp.headers)
+        else:
+            print(rsp.status_code)
 
 
+    def getvfwebqq(self):
+        ''''''
+        print('getvfwebqq()')
 
-            par = {
-                'u':self.username,
-                'p':self.encrypt_pwd,
-                'verifycode':self.vcode,
-                'webqq_type':10,
-                'remember_uin':1,
-                'login2qq':1,
-                'aid':501004106,
-                'u1':'http://w.qq.com/proxy.html?login2qq=1&webqq_type=10',
-                'h':1,
-                'ptredirect':0,
-                'ptlang':2052,
-                'daid':164,
-                'from_ui':1,
-                'pttype':1,
-                'dumy':'',
-                'fp': 'loginerroralert',
-                'action':'0-17-8156',     ##改变 ##写死
-                'mibao_css':'m_webqq',
-                't':1,
-                'g':1,
-                'js_type':0,
-                'js_ver':self.js_ver,
-                'login_sig':'',
-                'pt_randsalt':0,
-                'pt_vcode_v1':0,
-                'pt_verifysession_v1':self.pt_verifysession, ##改变
-            }
+        url = 'http://s.web2.qq.com/api/getvfwebqq?ptwebqq=%s&clientid=53999199&psessionid=&t=%s' % (self.ptwebqq,str(int(time.time())))
 
-            from urllib.parse import urlencode
+        self.session.headers.update({
+            'Accept': '*/*',
+            'Referer':'http://s.web2.qq.com/proxy.html?v=20130916001&callback=1&id=1',
+            'Content-Type': 'utf-8',
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/41.0.2272.76 Chrome/41.0.2272.76 Safari/537.36',
+            'Accept-Encoding':'gzip, deflate, sdch',
+            'Accept-Language':'en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2',
+            'Accept':'*/*',
+        })
 
-            url = self.login_url+'?%s' %   urlencode(par)
+        rsp = self.session.get(url)
+        ''':type : requests.Response'''
+        print(rsp.status_code)
+        print(rsp.url)
+        print(rsp.content)
 
-            print('login_url = '+url)
+        if rsp.status_code == 200 :
+            self.sign_in_second()
+        else:
+            print('else return')
 
-            self.session.headers.update({
-                'Accept': '*/*',
-                'Referer': 'https://ui.ptlogin2.qq.com/cgi-bin/login?daid=164&target=self&style=16&mibao_css=m_webqq&appid=501004106&enable_qlogin=0&no_verifyimg=1&s_url=http//w.qq.com/proxy.html&f_url=loginerroralert&strong_login=1&login_state=10&t=20131024001',
-                'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/41.0.2272.76 Chrome/41.0.2272.76 Safari/537.36',
-                'Accept-Encoding':'gzip, deflate, sdch',
-                'Accept-Language':'en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2',
-                'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            })
 
-            rsp = self.session.get(url)
-            ''':type : requests.Response'''
-            if rsp.status_code == 200 :
 
-                print(rsp.content.decode(encoding='UTF-8'))
+    def sign_in_second(self):
+        '''第二次post登录'''
+        print('sign_in_second()')
 
-                cookies = dict_from_cookiejar(self.session.cookies)
-                # print(cookies)
-                print(rsp.headers)
-            else:
-                print(rsp.status_code)
+        header = {
+            'Origin': 'http://d.web2.qq.com',
+            'User-Agent': "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/41.0.2272.76 Chrome/41.0.2272.76 Safari/537.36",
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': '*/*',
+            'Referer': "http://d.web2.qq.com/proxy.html?v=20130916001&callback=1&id=2",
+            'Accept-Encoding': 'gzip, deflate',
+            'Accept-Language': 'en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4'
+        }
+
+        # str_tmp = '{"ptwebqq"="%s","clientid"=%s,"psessionid"="","status"="%s"}' % (self.ptwebqq,self.clientid,self.status)
+
+        # data = 'r=%7B%22status%22%3A%22online%22%2C%22ptwebqq%22%3A%22' + self.ptwebqq + '%22%2C%22passwd_sig%22%3A%22%22%2C%22clientid%22%3A%22'+self.clientid+'%22%2C%22psessionid%22%3Anull%7D&clientid='+self.clientid+'&psessionid=null'
+
+        # data = 'r=%7B%22ptwebqq%22%3A%22'+self.ptwebqq+'%22%2C%22clientid%22%3A'+self.clientid+'%2C%22psessionid%22%3A%22%22%2C%22status%22%3A%22online%22%7D'
+        #
+        # post_data = {
+        #     'r':str_tmp
+        # }
+        #
+        # print('post_data = ',post_data)
+
+        # cookies = dict_from_cookiejar(self.session.cookies)
+        # print('cookies = ',cookies)
+        # return;
+
+        post_data = 'r=%7B%22ptwebqq%22%3A%22'+self.ptwebqq+'%22%2C%22clientid%22%3A'+str(self.clientid)+'%2C%22psessionid%22%3A%22%22%2C%22status%22%3A%22online%22%7D'
+
+        rsp = self.session.post(
+            url=self.login_2_url,
+            data=post_data,
+            headers=header,
+        )
+        ''':type : requests.Response'''
+
+        print(rsp.status_code)
+        # print(rsp.headers)
+        print(rsp.url)
+        print(rsp.content)
+
+        if rsp.status_code == 200 :
+            pass
+        else:
+            pass
 
     def test(self):
         s = "ptui_checkVC('0','!UFV','\x00\x00\x00\x00\x7c\x0f\x3f\xf3','e322f75cb753410b90762a1d05153515118fa46e6186800fba28ab7de4760b6a90e7ad3444b39b48d52eb6819efb231ab1d9379fefd72a14','0');"
@@ -321,6 +402,13 @@ class SmartQQ(BaseClient):
 
 if __name__ == '__main__':
 
+    # print('start')
+    # import time
+    # time.sleep(3)
+    # print('finish ')
+
+
+
     # tmp = 'ss'
     # tmp2 = tmp+'dd'
     # print(tmp2)
@@ -336,10 +424,61 @@ if __name__ == '__main__':
         password=cf.get('qq','password')
     );
 
-    qq.check_vc();
+    qq.ptwebqq = 'dea75142dc6e91fd609e47c9c7c3fcd63d5d48f1a5631d2e2480825cab90d6b4'
+    # # post_data=r'{"ptwebqq": "%s","clientid": "%s","psessionid": "","status":"%s"}' % (qq.ptwebqq,qq.ptwebqq,qq.status)
+    # post_data='r:{"ptwebqq"="%s","clientid"=%s,"psessionid"="","status"="%s"}' % (qq.ptwebqq,qq.clientid,qq.status)
+    # print(post_data)
+    #
+    #
+    # str_tmp = json.dumps(
+    #     {
+    #         "ptwebqq":qq.ptwebqq,
+    #         "clientid":qq.clientid,
+    #         "status":qq.status
+    #     })
+    #
+    # tmp  = 'r:'+str_tmp
+    #
+    # print(tmp)
 
-    if qq.cap_cd :
-        qq.get_captcha()
+    # str_tmp = json.dumps({"ptwebqq":qq.ptwebqq,"clientid":qq.clientid,"status":qq.status})
+
+    # print(type(str_tmp))
+    # print(str_tmp)
+
+    # post_data='r:{"ptwebqq"="%s","clientid"=%s,"psessionid"="","status"="%s"}' % (qq.ptwebqq,qq.clientid,qq.status)
+
+    # str_tmp = '{"ptwebqq"="%s","clientid"=%s,"psessionid"="","status"="%s"}' % (qq.ptwebqq,qq.clientid,qq.status)
+    #
+    # post_data = {
+    #     'r':str_tmp
+    # }
+
+    post_data = 'r=%7B%22ptwebqq%22%3A%22'+qq.ptwebqq+'%22%2C%22clientid%22%3A'+str(qq.clientid)+'%2C%22psessionid%22%3A%22%22%2C%22status%22%3A%22online%22%7D'
+
+    print(post_data)
+    #
+    header = {
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+    #
+    rsp = qq.session.post(
+        'http://127.0.0.1:8888/test',
+            data=post_data,
+            headers=header)
+
+    ''':type : requests.Response'''
+    print(rsp.status_code)
+    print(rsp.url)
+    print(rsp.content)
+
+
+
+    #
+    # qq.check_vc();
+    #
+    # if qq.cap_cd :
+    #     qq.get_captcha()
 
 
     # qq.test()

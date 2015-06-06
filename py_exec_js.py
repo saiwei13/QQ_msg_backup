@@ -119,9 +119,11 @@ if __name__ == '__main__':
     #
     # action = [0, 0];
 
+    import time
+    print(int(time.time()))
 
-    salt = '\x00\x00\x00\x00\x7c\x0f\x3f\xf3';
-    print(bytes(salt,encoding='utf8'))
+    # salt = '\x00\x00\x00\x00\x7c\x0f\x3f\xf3';
+    # print(bytes(salt,encoding='utf8'))
 
     # pass
     #
