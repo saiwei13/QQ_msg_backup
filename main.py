@@ -91,10 +91,15 @@ class LoginHandler(tornado.web.RequestHandler):
 class Test(tornado.web.RequestHandler):
 
     def get(self, *args, **kwargs):
+        print(self.request.body)
         pass
     def post(self, *args, **kwargs):
-        # print('Test.class  post()  ',self.request.body)
-        self.write('hello world!!!')
+        print('Test.class  post()  ',self.request.body)
+
+        s= '\x00\x00\x00\x00\x7c\x0f\x3f\xf3';
+
+        self.write(s)
+        # self.write('hello world!!!')
         pass
 
 class Application(tornado.web.Application):

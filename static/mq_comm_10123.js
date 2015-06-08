@@ -2881,6 +2881,21 @@ function test_ex(){
     console.log('result = '+result)
 }
 
+
+function get_salt(tmp){
+    //var arr = new Array(salt.length)
+    var s=''
+    for(var i=0;i<salt.length;i++){
+            //console.log(json.charAt(i))
+            //arr[i] = salt.charCodeAt(i)
+            //arr.join(salt.charCodeAt(i))
+        s+=String.fromCharCode(salt.charCodeAt(i))
+        //console.log(s)
+    }
+
+    return s;
+}
+
 /**
  * 给　PhantomJS　使用的
  */
@@ -2894,11 +2909,16 @@ function test_my_comm(){
 
     var python_salt = salt;
 
-    salt = '\x00\x00\x00\x00\x7c\x0f\x3f\xf3'
+    //console.log(salt)
+    //salt = '\x00\x00\x00\x00\x7c\x0f\x3f\xf3'
+    //console.log(salt)
     //pwd = '111111'// 'gguuss'
     //vcode = '!IUM';// "!FDE"
 
     //console.log('salt='+salt+" ,pwd="+pwd+" , vcode="+vcode)
+
+    console.log(typeof(salt))
+    salt = get_salt(salt)
 
     var result = $.Encryption.getEncryption(pwd,salt,vcode)
     //console.log('result='+result);

@@ -65,6 +65,7 @@ class SmartQQ(BaseClient):
         self.captcha_url = 'https://ssl.captcha.qq.com/getimage'
         self.login_url = 'https://ssl.ptlogin2.qq.com/login'
         self.login_2_url = 'http://d.web2.qq.com/channel/login2'
+        self.my_encrypt_url = "http://127.0.0.1:8888/encrypt"
 
         self.config_section = 'qq'
         '''配置文件字段'''
@@ -204,9 +205,8 @@ class SmartQQ(BaseClient):
 
         '''私有方法：　获取加密密码'''
         from selenium import webdriver
-        base_url = "http://127.0.0.1:8888/encrypt"
         driver = webdriver.PhantomJS()
-        driver.get(base_url)
+        driver.get(self.my_encrypt_url)
 
         # print(base_url)
 
@@ -215,8 +215,8 @@ class SmartQQ(BaseClient):
         # print('__get_encrypt_pwd()  self.vcode = ',self.vcode)
 
         # driver.find_element_by_id('salt').send_keys('\x00\x00\x00\x00\x7c\x0f\x3f\xf3')
-        # driver.find_element_by_id('salt').send_keys(self.salt)
-        driver.find_element_by_id('salt').send_keys(bytes(self.salt,encoding='utf8'))
+        driver.find_element_by_id('salt').send_keys(self.salt)
+        # driver.find_element_by_id('salt').send_keys(bytes(self.salt,encoding='utf8'))
         driver.find_element_by_id('pwd').send_keys(self.password)
         driver.find_element_by_id('vcode').send_keys(self.vcode)
         driver.find_element_by_id('bt_01').click()
@@ -312,7 +312,6 @@ class SmartQQ(BaseClient):
             if tmp_url:
                 self.session.get(tmp_url)
 
-
             cookies = dict_from_cookiejar(self.session.cookies)
             try:
                 if cookies['ptwebqq']:
@@ -321,8 +320,6 @@ class SmartQQ(BaseClient):
                     # self.getvfwebqq()
             except Exception as e:
                 print(e)
-            # print(cookies)
-            # print(rsp.headers)
         else:
             print(rsp.status_code)
 

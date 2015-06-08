@@ -24,7 +24,7 @@ $(document).ready(function(){
     });
 
     $('#bt_login').click(function(){
-        get_captcha()
+        login()
     });
 })
 
@@ -179,24 +179,47 @@ function login(){
 
 function test_post(){
 
+    salt = '\x00\x00\x00\x00\x7c\x0f\x3f\xf3'
+    var arr = new Array(salt.length)
+    var s=''
+    for(var i=0;i<salt.length;i++){
+            //console.log(json.charAt(i))
+            arr[i] = salt.charCodeAt(i)
+            //arr.join(salt.charCodeAt(i))
+        s+=String.fromCharCode(salt.charCodeAt(i))
+        console.log(s)
+    }
+
+    console.log('result='+s)
+
+    console.log(arr)
+    console.log('game over')
+    return;
+
+
     var success_callback = function(json){
         console.log(json)
 
-        if(json.resp_code == 0){
-            //alert('ok')
-        } else {
-            //alert('failer')
+        json = String(json)
+
+        //req_get('test',json,null)
+
+        console.log(json.length)
+        for(var i=0;i<json.length;i++){
+            //console.log(json.charAt(i))
+
+            console.log(json.charCodeAt(i))
         }
     }
 
+    var js_salt = '\x00\x00\x00\x00\x7c\x0f\x3f\xf3'
 
-    var data = 'r: {"ptwebqq":"dea75142dc6e91fd609e47c9c7c3fcd63d5d48f1a5631d2e2480825cab90d6b4","clientid":53999199,"psessionid":"","status":"online"}'
-    data = JSON.stringify({'vcode':12344,'ttt':'dddd'});
-    console.log('data='+data);
+    console.log(js_salt);
     $.ajax({
             url: 'test',
             type: 'post',
-            data:'r:{"ptwebqq"="1111","clientid"=53999199,"psessionid"="","status"="online"}',
+            data:js_salt,
+            //data:'r:{"ptwebqq"="1111","clientid"=53999199,"psessionid"="","status"="online"}',
             success: success_callback,
             complete: function( xhr, status ) {
                 console.log('complete');

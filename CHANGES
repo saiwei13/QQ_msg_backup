@@ -1,10 +1,16 @@
 version: 0.x   time: 2015-06-04
-- 解决salt值传递的问题，现在这个值被我写死在js里，需要动态传值　【ＴＯＤＯ】
 - 登录请求后，需要删除缓存信息
 - chrome fiddler plugin 已不能满足我的需求，　需要学习wireshark
   模拟截取　
 - 获取好友列表
 
+
+
+version: 0.8
+-解决salt值传递的问题
+原因：　salt从python 传到 javascript,由于语言不同，编码的问题，发生了一些变化，
+　　　　导致后面登录失败
+解决：　salt 到javascript 时，--->unicode---->string.
 
 version: 0.7
 -调整jquery code
