@@ -13,6 +13,21 @@ var DATATYPE_JSON='json'
 
 var ischeck = false;
 
+
+$(document).ready(function(){
+    $('#bt_check').click(function(){
+        check_vc();
+    });
+
+    $('#bt_smscode').click(function(){
+        get_captcha()
+    });
+
+    $('#bt_login').click(function(){
+        get_captcha()
+    });
+})
+
 /**
  * get 请求服务器
  * @param url
@@ -81,6 +96,7 @@ function get_vcode(){
     }
     return vcode;
 }
+
 
 /**
  * 账号检查 (与后台交互)
@@ -187,3 +203,4 @@ function test_post(){
             }
     });
 }
+

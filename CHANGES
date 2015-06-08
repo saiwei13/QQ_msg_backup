@@ -1,17 +1,13 @@
 version: 0.x   time: 2015-06-04
 - 解决salt值传递的问题，现在这个值被我写死在js里，需要动态传值　【ＴＯＤＯ】
 - 登录请求后，需要删除缓存信息
-- 500
-  http://d.web2.qq.com/channel/login2
-- 思路１　：　对比看看是否是cookies 少了什么
-- 思路２　：　用ｗｉｎｄｏｗｓ的fiddler ，看看login2 post, 返回的应答到底是什么？有什么关键的信息？
 - chrome fiddler plugin 已不能满足我的需求，　需要学习wireshark
-- check() 的时候，　已屏蔽请求主页，这个是否正常？
   模拟截取　
 - 获取好友列表
 
 
-
+version: 0.7
+-调整jquery code
 
 version: 0.6  time: 2015-06-06
 - 删除 请求　http://s.web2.qq.com/api/getvfwebqq
@@ -23,7 +19,6 @@ version: 0.5  time: 2015-06-06
 解决：　在第一次登录的时候，返回了结果中有个ｕｒｌ,需要访问该链接，
 　　　　获取到一个Cookie名为p_skey，用于第二次登录
 参考：　http://iofai.com/897.html
-
 
 version: 0.4  time: 2015-06-06
 - 第二次登录 post, 返回　status_code =  500

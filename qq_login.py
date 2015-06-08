@@ -162,13 +162,19 @@ class SmartQQ(BaseClient):
         # }
         print('check url = '+url)
         rsp = self.session.get(url)
+
+        # print('!!!!    rsp = ',rsp.content)
+
         ''':type : requests.Response'''
         if rsp.status_code == 200 :
             # s = "ptui_checkVC('0','!UFV','\x00\x00\x00\x00\x7c\x0f\x3f\xf3','e322f75cb753410b90762a1d05153515118fa46e6186800fba28ab7de4760b6a90e7ad3444b39b48d52eb6819efb231ab1d9379fefd72a14','0');"
             s = rsp.content.decode(encoding='UTF-8')  #bytes  --> str
+
             print('check rsp : ',s)
             s = s[13:-2]
+            # print(s)
             s = s.replace('\'','')
+            # print(s)
             s = s.split(',')
 
             if s[0] == '0':

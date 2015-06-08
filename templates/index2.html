@@ -25,18 +25,21 @@
     密 码： <input type="text"> <br/>
 </div>
 
-<button onclick="check_vc()">Check_VC</button> <br/>
+<button id="bt_check">Check_VC</button> <br/>
 <div id="tip_smscode"></div> <br/>
 
 <div class='valcode' style="display: none">  <!---->
     <input type="text" value="输入验证码" id="vcode"> <br />
     <img id="img_smscode"><br />
-    <button onclick="get_captcha()">更换验证码</button>　<br/>
+    <button id='bt_smscode'>更换验证码</button>　<br/>
 </div>
 
 <div id="mydiv"></div>
 
-<button id="bt_login" onclick="login()">登录</button>　<br/>
+<button id="bt_login">登录</button>　<br/>
+
+
+<div>--------------------------------------</div>
 
 <button onclick="test_post()">Test POST</button>　<br/>
 
