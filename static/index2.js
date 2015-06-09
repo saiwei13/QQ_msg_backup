@@ -97,6 +97,8 @@ function get_vcode(){
     return vcode;
 }
 
+var vcode ;
+var salt;
 
 /**
  * 账号检查 (与后台交互)
@@ -116,6 +118,9 @@ function check_vc(){
                     } else {
                         $('#tip_smscode').html("不需要验证码");
                         isNeedVerifyCode= false;
+
+                        vcode = json.vcode;
+                        salt = json.salt;
                     }
 
                     ischeck = true;
@@ -157,69 +162,61 @@ function get_captcha(){
  */
 function login(){
 
-
     if(!ischeck){
         alert('please first check !')
         return;
     }
 
+    console.log('salt='+salt)
+    //salt = get_salt(salt)
+    salt = get_salt_from_js(salt)
+    console.log('salt='+salt)
+
+    var result = $.Encryption.getEncryption('gguuss',salt,vcode)
+
     //转化为json形式
-    var data = JSON.stringify({'vcode':get_vcode(),'encrypt_pwd':''});
+    var data = JSON.stringify({'vcode':get_vcode(),'encrypt_pwd':result});
 
     var success_callback = function(json){
+
+        console.log('success_callback')
         console.log(json)
 
-        if(json.resp_code == 0){
-            alert('ok')
-        } else {
-            alert('failer')
-        }
+        alert(json)
+        //if(json.resp_code == 0){
+        //    alert('ok')
+        //} else {
+        //    alert('failer')
+        //}
     }
 
     req_post('login',data,success_callback)
 }
 
-
-function test_post(){
-
-    salt = '\x00\x00\x00\x00\x7c\x0f\x3f\xf3'
-    var arr = new Array(salt.length)
-    var s=''
-    for(var i=0;i<salt.length;i++){
-            //console.log(json.charAt(i))
-            arr[i] = salt.charCodeAt(i)
-            //arr.join(salt.charCodeAt(i))
-        s+=String.fromCharCode(salt.charCodeAt(i))
-        console.log(s)
-    }
-
-    console.log('result='+s)
-
-    console.log(arr)
-    console.log('game over')
-    return;
-
+function test_get(){
     var success_callback = function(json){
         console.log(json)
-
-        json = String(json)
-        //req_get('test',json,null)
-
-        console.log(json.length)
-        for(var i=0;i<json.length;i++){
-            //console.log(json.charAt(i))
-            console.log(json.charCodeAt(i))
-        }
+        alert(json)
     }
+    $.ajax({
+            url: 'test',
+            type: 'get',
+            success: success_callback,
+            complete: function( xhr, status ) {
+                console.log('complete');
+            }
+    });
+}
 
-    var js_salt = '\x00\x00\x00\x00\x7c\x0f\x3f\xf3'
 
-    console.log(js_salt);
+function test_post(){
+    var success_callback = function(json){
+        console.log(json)
+        alert(json)
+    }
     $.ajax({
             url: 'test',
             type: 'post',
-            data:js_salt,
-            //data:'r:{"ptwebqq"="1111","clientid"=53999199,"psessionid"="","status"="online"}',
             success: success_callback,
             complete: function( xhr, status ) {
                 console.log('complete');

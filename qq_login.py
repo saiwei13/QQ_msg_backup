@@ -189,7 +189,7 @@ class SmartQQ(BaseClient):
                 self.pt_verifysession = s[3]
                 print('salt='+self.salt)
                 self.del_captcha(pic_path)
-                tmp = json.dumps({'resp_code':0,'resp_msg':'不需要验证码','resp_data':False})
+                tmp = json.dumps({'resp_code':0,'resp_msg':'不需要验证码','resp_data':False,'vcode':self.vcode,'salt':self.salt})
             elif s[0] == '1':
                 print('需要验证码')
                 self.cap_cd = s[1];
@@ -251,6 +251,9 @@ class SmartQQ(BaseClient):
         else:
             self.encrypt_pwd = encrypt_pwd
             self.sign_in_first()
+
+
+            # return 'login success'
 
     def sign_in_first(self):
         '''第一次登录'''
@@ -425,7 +428,7 @@ class SmartQQ(BaseClient):
             tmp = json.dumps({'resp_code':rsp.json()['retcode'],'resp_msg':'login success'})
         else:
             tmp = json.dumps({'resp_code':rsp.status_code,'resp_msg':'login success'})
-            pass
+
 
     def test(self):
         s = "ptui_checkVC('0','!UFV','\x00\x00\x00\x00\x7c\x0f\x3f\xf3','e322f75cb753410b90762a1d05153515118fa46e6186800fba28ab7de4760b6a90e7ad3444b39b48d52eb6819efb231ab1d9379fefd72a14','0');"

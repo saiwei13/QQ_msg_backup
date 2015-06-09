@@ -5,8 +5,17 @@ version: 0.x   time: 2015-06-04
 - 获取好友列表
   js位置
   　　-pub.idqqimg.com/smartqq/js/mq.js
-
 - 轮询　http://d.web2.qq.com/channel/poll2
+
+
+
+version: 0.10
+- 获取好友列表[TODO]
+
+
+version: 0.10
+- 修改加密密码的ui交互, 由于前端用web来构建。
+　现取消原先PhantomJS的实现方式。
 
 version: 0.9
 -整合代码：调整登录接口，将将 "login/vcode" , "login/encrypt_pwd","login/first" ,"login/second"

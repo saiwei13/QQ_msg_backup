@@ -2809,22 +2809,22 @@ $.Encryption = $pt.Encryption = function () {
 
     function getEncryption(password, salt, vcode, isMd5) {
 
-        console.log('password='+password + " , salt ="+salt+ ', vcode='+vcode)
+        //console.log('password='+password + " , salt ="+salt+ ', vcode='+vcode)
 
         vcode = vcode || "";
         password = password || "";
         var md5Pwd = isMd5 ? password : md5(password), h1 = hexchar2bin(md5Pwd), s2 = md5(h1 + salt), rsaH1 = $pt.RSA.rsa_encrypt(h1), rsaH1Len = (rsaH1.length / 2).toString(16), hexVcode = TEA.strToBytes(vcode.toUpperCase(), true), vcodeLen = Number(hexVcode.length / 2).toString(16);
 
-        console.log("md5Pwd = "+md5Pwd)   //【正确】  //与验证码无关
-        console.log("h1 = "+h1)　    //[正确]　　　//与验证码无关
-        console.log("s2 = "+s2)     //[正确]　　//与验证码无关
-
-        //重点，这个值又变了
-        console.log("rsaH1 = "+rsaH1)   //已破解　这个值   根据当前时间在改变
-
-        console.log("rsaH1Len = "+rsaH1Len)  //[正确]　　//与验证码无关
-        console.log("hexVcode = "+hexVcode)  //[正确]
-        console.log("vcodeLen = "+vcodeLen)  //[正确]
+        //console.log("md5Pwd = "+md5Pwd)   //【正确】  //与验证码无关
+        //console.log("h1 = "+h1)　    //[正确]　　　//与验证码无关
+        //console.log("s2 = "+s2)     //[正确]　　//与验证码无关
+        //
+        ////重点，这个值又变了
+        //console.log("rsaH1 = "+rsaH1)   //已破解　这个值   根据当前时间在改变
+        //
+        //console.log("rsaH1Len = "+rsaH1Len)  //[正确]　　//与验证码无关
+        //console.log("hexVcode = "+hexVcode)  //[正确]
+        //console.log("vcodeLen = "+vcodeLen)  //[正确]
 
         tmp_md5Pwd = md5Pwd;
         tmp_h1 = h1;
@@ -2846,7 +2846,7 @@ $.Encryption = $pt.Encryption = function () {
         var saltPwd = TEA.enAsBase64(rsaH1Len + rsaH1 + TEA.strToBytes(salt) + vcodeLen + hexVcode);
 
         tmp_saltPwd = saltPwd;
-        console.log("saltPwd = "+saltPwd)
+        //console.log("saltPwd = "+saltPwd)
 
         TEA.initkey("");
         setTimeout(function () {
@@ -2878,6 +2878,17 @@ function test_ex(){
     console.log('result = '+result)
 }
 
+function get_salt_from_js(tmp){
+    //var b= '\\x00\\x00\\x00\\x00\\x7c\\x0f\\x3f\\xf3';
+    var a = tmp.split('\\x')
+    var s=''
+    for(var i=0;i<a.length;i++){
+        if(i==0) continue;
+        s+=String.fromCharCode(parseInt(a[i],16))
+    }
+    return s;
+}
+
 function get_salt(tmp){
     //var arr = new Array(salt.length)
     var s=''
@@ -2891,6 +2902,7 @@ function get_salt(tmp){
 
     return s;
 }
+
 
 /**
  * 给　PhantomJS　使用的
@@ -2938,3 +2950,5 @@ function test_my_comm(){
             }
     });
 }
+
+
