@@ -2,3 +2,52 @@
 
 http://d.web2.qq.com/channel/login2
 b'{"retcode":0,"result":{"uin":2081374195,"cip":3524121451,"index":1075,"port":57622,"status":"online","vfwebqq":"349ae871767482f38b5221886d4650c100ceb54718199d7e730894d06feacea90d57908bf64edd4a","psessionid":"8368046764001d636f6e6e7365727665725f77656271714031302e3133392e372e3136340000110100000d03036e0400f33f0f7c6d0000000a40596777524a454752416d00000028349ae871767482f38b5221886d4650c100ceb54718199d7e730894d06feacea90d57908bf64edd4a","user_state":0,"f":0}}\r\n'
+
+http://d.web2.qq.com/channel/login2
+b'{"retcode":0,"result":{"uin":2081374195,"cip":3524121451,"index":1075,"port":34976,"status":"online","vfwebqq":"ea9e044888245745ee31bf02b024c48fb4f284b65f3651e1ab96abab05c407bcce3dd95b78be5b98","psessionid":"8368046764001d636f6e6e7365727665725f77656271714031302e3133392e372e313634000013e300000daf036e0400f33f0f7c6d0000000a40746f70734b6f5942456d00000028ea9e044888245745ee31bf02b024c48fb4f284b65f3651e1ab96abab05c407bcce3dd95b78be5b98","user_state":0,"f":0}}\r\n'
+
+
+---2081374195-----29edb5b2f9e8c1a5f34c7c8f1554fad9848f78582d2d64038e560fd1814fe9a6
+---hash: 0D39574C55700DB8---
+
+        u = function (x, K) {
+                x += "";
+                for (var N = [], T = 0; T < K.length; T++)N[T % 4] ^= K.charCodeAt(T);
+                var U = ["EC", "OK"], V = [];
+                V[0] = x >> 24 & 255 ^ U[0].charCodeAt(0);
+                V[1] = x >> 16 & 255 ^ U[0].charCodeAt(1);
+                V[2] = x >> 8 & 255 ^ U[1].charCodeAt(0);
+                V[3] = x & 255 ^ U[1].charCodeAt(1);
+                U = [];
+                for (T = 0; T < 8; T++)U[T] = T % 2 == 0 ? N[T >> 1] : V[T >> 1];
+                N = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"];
+                V = "";
+                for (T = 0; T < U.length; T++) {
+                    V += N[U[T] >> 4 & 15];
+                    V += N[U[T] & 15]
+                }
+                return V
+            }
+
+
+
+this.getUserFriends = function () {
+            var x = {};
+            x.vfwebqq = mq.vfwebqq;
+            x.hash = u(C, mq.ptwebqq);
+            return function (K) {
+                mq.rpcService.require({
+                    url: o,
+                    method: "POST",
+                    withCredentials: true,
+                    param: x,
+                    onSuccess: function (N) {
+                        mq.report.speedReport("7832-22-1", 4, true, true);
+                        if (N.retcode == 0) {
+                            K();
+                            L.onGetFriendsListSuccess(N.result)
+                        }
+                    }
+                })
+            }
+        };

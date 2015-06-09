@@ -3,8 +3,14 @@ version: 0.x   time: 2015-06-04
 - chrome fiddler plugin 已不能满足我的需求，　需要学习wireshark
   模拟截取　
 - 获取好友列表
+  js位置
+  　　-pub.idqqimg.com/smartqq/js/mq.js
 
+- 轮询　http://d.web2.qq.com/channel/poll2
 
+version: 0.9
+-整合代码：调整登录接口，将将 "login/vcode" , "login/encrypt_pwd","login/first" ,"login/second"
+         统一成一个"login",具体细节根据传递的内容不同进行区分，细节放在逻辑中，使得外部接口干净，简洁
 
 version: 0.8
 -解决salt值传递的问题

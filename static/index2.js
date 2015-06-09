@@ -149,6 +149,10 @@ function get_captcha(){
 }
 
 /**
+ * TODO: 接口整合，　将 "login/vcode" , "login/encrypt_pwd","login/first" 统一成一个接口
+ * {
+ *      'vcode':'', 'encrypt_pwd':''
+ * }
  * 登录　(与后台交互)
  */
 function login(){
@@ -159,9 +163,8 @@ function login(){
         return;
     }
 
-    var vcode = get_vcode();
     //转化为json形式
-    vcode = JSON.stringify({'vcode':vcode});
+    var data = JSON.stringify({'vcode':get_vcode(),'encrypt_pwd':''});
 
     var success_callback = function(json){
         console.log(json)
@@ -173,7 +176,7 @@ function login(){
         }
     }
 
-    req_post('login/vcode',vcode,success_callback)
+    req_post('login',data,success_callback)
 }
 
 
@@ -196,18 +199,15 @@ function test_post(){
     console.log('game over')
     return;
 
-
     var success_callback = function(json){
         console.log(json)
 
         json = String(json)
-
         //req_get('test',json,null)
 
         console.log(json.length)
         for(var i=0;i<json.length;i++){
             //console.log(json.charAt(i))
-
             console.log(json.charCodeAt(i))
         }
     }

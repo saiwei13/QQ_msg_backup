@@ -72,6 +72,9 @@ class SmartQQ(BaseClient):
         self.config_cookies = 'cookies'
         '''配置文件字段'''
 
+        self.isLogin = False;
+        self.vfwebqq = ''
+
     def get_captcha(self):
 
         '''获取验证码'''
@@ -229,15 +232,25 @@ class SmartQQ(BaseClient):
         w = threading.Thread(name='worker', target=self.__get_encrypt_pwd)
         w.start()
 
-    def sign_in(self):
+    # def sign_in(self):
+    #
+    #     print('sign_in()')
+    #
+    #     if not self.encrypt_pwd:
+    #         self.get_encrypt_pwd()
+    #     else:
+    #         self.sign_in_first()
 
-        print('sign_in()')
+    def sign_in(self,vcode,encrypt_pwd):
 
-        if not self.encrypt_pwd:
+        if vcode:
+            self.vcode = vcode;
+
+        if not encrypt_pwd:
             self.get_encrypt_pwd()
         else:
+            self.encrypt_pwd = encrypt_pwd
             self.sign_in_first()
-
 
     def sign_in_first(self):
         '''第一次登录'''
@@ -367,12 +380,12 @@ class SmartQQ(BaseClient):
             'Accept-Language': 'en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4'
         }
 
-        # str_tmp = '{"ptwebqq"="%s","clientid"=%s,"psessionid"="","status"="%s"}' % (self.ptwebqq,self.clientid,self.status)
+        # str_tmp = '{"ptwebqq"="%s","clientid"=%s,"psessionid"="","status"="%s"}' % (self.ptwebqq,str(self.clientid),self.status)
 
         # data = 'r=%7B%22status%22%3A%22online%22%2C%22ptwebqq%22%3A%22' + self.ptwebqq + '%22%2C%22passwd_sig%22%3A%22%22%2C%22clientid%22%3A%22'+self.clientid+'%22%2C%22psessionid%22%3Anull%7D&clientid='+self.clientid+'&psessionid=null'
 
         # data = 'r=%7B%22ptwebqq%22%3A%22'+self.ptwebqq+'%22%2C%22clientid%22%3A'+self.clientid+'%2C%22psessionid%22%3A%22%22%2C%22status%22%3A%22online%22%7D'
-        #
+
         # post_data = {
         #     'r':str_tmp
         # }
@@ -384,7 +397,7 @@ class SmartQQ(BaseClient):
         # return;
 
         post_data = 'r=%7B%22ptwebqq%22%3A%22'+self.ptwebqq+'%22%2C%22clientid%22%3A'+str(self.clientid)+'%2C%22psessionid%22%3A%22%22%2C%22status%22%3A%22online%22%7D'
-
+        #
         rsp = self.session.post(
             url=self.login_2_url,
             data=post_data,
@@ -398,8 +411,20 @@ class SmartQQ(BaseClient):
         print(rsp.content)
 
         if rsp.status_code == 200 :
-            pass
+
+            if rsp.json()['retcode'] == 0:
+                print('login success')
+                self.isLogin = True
+
+                # print(rsp.json())
+                self.vfwebqq = rsp.json()['result']['vfwebqq']
+                # print('self.vfwebqq = ',self.vfwebqq)
+            else:
+                self.isLogin = False;
+
+            tmp = json.dumps({'resp_code':rsp.json()['retcode'],'resp_msg':'login success'})
         else:
+            tmp = json.dumps({'resp_code':rsp.status_code,'resp_msg':'login success'})
             pass
 
     def test(self):

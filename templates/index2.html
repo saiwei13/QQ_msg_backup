@@ -9,15 +9,18 @@
 <script src="/static/vendor/modernizr-2.8.3.min.js"></script>
 <script src="/static/vendor/jquery-1.11.3.min.js"></script>
 
+<script src="{{ static_url('my_mq.js') }}" type="text/javascript"></script>
 <script src="{{ static_url('index2.js') }}" type="text/javascript"></script>
 
-<!--<script>-->
+<script>
+    var hash = u('2081374195','29edb5b2f9e8c1a5f34c7c8f1554fad9848f78582d2d64038e560fd1814fe9a6')
+    console.log('hash='+hash)
 
-    <!--var action = [0,0]-->
-    <!--var g_begTime=new Date;-->
-    <!--console.log(g_begTime);-->
-    <!--console.log(action.join('-')+'-'+(new Date()-g_begTime))-->
-<!--</script>-->
+//    var action = [0,0]
+//    var g_begTime=new Date;
+//    console.log(g_begTime);
+//    console.log(action.join('-')+'-'+(new Date()-g_begTime))
+</script>
 
 <body>
 <div>
@@ -39,9 +42,8 @@
 <button id="bt_login">登录</button>　<br/>
 
 
-<div>--------------------------------------</div>
 
-<button onclick="test_post()">Test POST</button>　<br/>
+<!--<div>--------------------------------------</div><button onclick="test_post()">Test POST</button>　<br/>-->
 
 </body>
 </html>

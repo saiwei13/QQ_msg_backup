@@ -2826,8 +2826,6 @@ $.Encryption = $pt.Encryption = function () {
         console.log("hexVcode = "+hexVcode)  //[正确]
         console.log("vcodeLen = "+vcodeLen)  //[正确]
 
-
-
         tmp_md5Pwd = md5Pwd;
         tmp_h1 = h1;
         tmp_s2 = s2;
@@ -2865,7 +2863,6 @@ $.Encryption = $pt.Encryption = function () {
         var str3 = $.RSA.rsa_encrypt(str2);
         return str3
     }
-
     return {getEncryption: getEncryption, getRSAEncryption: getRSAEncryption, md5: md5}
 }();
 
@@ -2880,7 +2877,6 @@ function test_ex(){
     var result = $.Encryption.getEncryption(password,salt,vcode)
     console.log('result = '+result)
 }
-
 
 function get_salt(tmp){
     //var arr = new Array(salt.length)
@@ -2921,33 +2917,11 @@ function test_my_comm(){
     salt = get_salt(salt)
 
     var result = $.Encryption.getEncryption(pwd,salt,vcode)
-    //console.log('result='+result);
 
-    var encrypt_pwd = JSON.stringify({'encrypt_pwd':result}) //正式使用
-
-    //var encrypt_pwd = JSON.stringify(
-    //    {
-    //        'python_salt':python_salt,
-    //        'salt':salt
-    //    })
-
-    //var encrypt_pwd = JSON.stringify(
-    //    {   'input_salt':salt,
-    //        'input_pwd':pwd,
-    //        'input_vcode':vcode,
-    //        'd':tmp_d,
-    //        'saltPwd':tmp_saltPwd,
-    //        'md5Pwd':tmp_md5Pwd,
-    //        'h1':tmp_h1,
-    //        's2':tmp_s2,
-    //        'rsaH1':tmp_rsaH1,
-    //        'hexVcode':tmp_hexVcode,
-    //        'vcodeLen':tmp_vcodeLen,
-    //        'encrypt_pwd':result,
-    //    });
+    var encrypt_pwd = JSON.stringify({'vcode':'','encrypt_pwd':result}) //正式使用
 
     $.ajax({
-            url: 'login/first',
+            url: 'login',
             type: 'post',
             dataType : 'json',
             data:encrypt_pwd,

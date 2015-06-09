@@ -75,18 +75,10 @@ class LoginHandler(tornado.web.RequestHandler):
         msg = tornado.escape.json_decode(body)
         print(msg);
 
-        if(uri == "/login/vcode"):
+        if(uri == "/login"):
             vcode = msg['vcode']
-            self.qq.sign_in();
-        elif(uri == "/login/first"):
-            print('match　/login/first')
-
             encrypt_pwd = msg['encrypt_pwd']
-            self.qq.encrypt_pwd = encrypt_pwd;
-            self.qq.sign_in();
-        elif(uri == "/login/second"):
-            print('match　/login/second')
-            pass
+            self.qq.sign_in(vcode,encrypt_pwd)
 
 class Test(tornado.web.RequestHandler):
 
@@ -119,9 +111,7 @@ class Application(tornado.web.Application):
             # (r"/static/(.*)",tornado.web.StaticFileHandler,{'path':'html/static'}),
             (r"/check", LoginHandler),
             (r"/getimage", LoginHandler),
-            (r"/login/vcode", LoginHandler),
-            (r"/login/first", LoginHandler),
-            (r"/login/second", LoginHandler),
+            (r"/login", LoginHandler),
             (r"/encrypt", LoginHandler),
         ]
 
