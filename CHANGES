@@ -1,17 +1,16 @@
 version: 0.x   time: 2015-06-04
 - 登录请求后，需要删除缓存信息
-- chrome fiddler plugin 已不能满足我的需求，　需要学习wireshark
-  模拟截取　
-- 获取好友列表
   js位置
   　　-pub.idqqimg.com/smartqq/js/mq.js
 - 轮询　http://d.web2.qq.com/channel/poll2
 
 
 
-version: 0.10
-- 获取好友列表[TODO]
-
+version: 0.11
+- web 只是用于显示，请求逻辑统一放在python,javascript 只是用于前后端的中转
+- 获取好友列表错误
+  b'{"retcode":50}'
+  原因：　post data出错了，　　少了　%22
 
 version: 0.10
 - 修改加密密码的ui交互, 由于前端用web来构建。
@@ -48,7 +47,7 @@ version: 0.4  time: 2015-06-06
 
 version: 0.3   time: 2015-06-04
 - encrypt_pwd value is error by comparing webqq Official login process.
-  找到原因，the value .....[TODO]
+  找到原因，the value .....
 - first login by mothod GET is connected success.
 
 version: 0.2   time: 2015-06-03

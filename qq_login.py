@@ -4,6 +4,7 @@ import random2
 import os
 from requests.utils import dict_from_cookiejar
 import time
+from tornado import web
 
 __author__ = 'chenwei'
 
@@ -12,6 +13,8 @@ import json
 
 #验证码图片路径
 pic_path = "static/img/pic.jpg"
+
+TAG = 'qq_login.py'
 
 '''
 json 协议：
@@ -60,12 +63,16 @@ class SmartQQ(BaseClient):
         self.clientid = 53999199
         self.status = 'online'
 
+        ##
+        self.hash=''
+
         self.index_url = 'http://w.qq.com/'
         self.check_url = 'https://ssl.ptlogin2.qq.com/check'
         self.captcha_url = 'https://ssl.captcha.qq.com/getimage'
         self.login_url = 'https://ssl.ptlogin2.qq.com/login'
         self.login_2_url = 'http://d.web2.qq.com/channel/login2'
         self.my_encrypt_url = "http://127.0.0.1:8888/encrypt"
+        self.user_friends_url = "http://s.web2.qq.com/api/get_user_friends2"
 
         self.config_section = 'qq'
         '''配置文件字段'''
@@ -74,6 +81,7 @@ class SmartQQ(BaseClient):
 
         self.isLogin = False;
         self.vfwebqq = ''
+        self.psessionid=''
 
     def get_captcha(self):
 
@@ -157,7 +165,7 @@ class SmartQQ(BaseClient):
             'Accept-Encoding':'gzip, deflate, sdch',
             'Accept-Language':'en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2',
             'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            # 'Referer':'https://ui.ptlogin2.qq.com/cgi-bin/login?daid=164&target=self&style=16&mibao_css=m_webqq&appid=501004106&enable_qlogin=0&no_verifyimg=1&s_url=http%3A%2F%2Fw.qq.com%2Fproxy.html&f_url=loginerroralert&strong_login=1&login_state=10&t=20131024001'
+            'Referer':'https://ui.ptlogin2.qq.com/cgi-bin/login?daid=164&target=self&style=16&mibao_css=m_webqq&appid=501004106&enable_qlogin=0&no_verifyimg=1&s_url=http%3A%2F%2Fw.qq.com%2Fproxy.html&f_url=loginerroralert&strong_login=1&login_state=10&t=20131024001'
         })
 
         # proxies = {
@@ -232,31 +240,16 @@ class SmartQQ(BaseClient):
         w = threading.Thread(name='worker', target=self.__get_encrypt_pwd)
         w.start()
 
-    # def sign_in(self):
-    #
-    #     print('sign_in()')
-    #
-    #     if not self.encrypt_pwd:
-    #         self.get_encrypt_pwd()
-    #     else:
-    #         self.sign_in_first()
-
     def sign_in(self,vcode,encrypt_pwd):
 
         if vcode:
             self.vcode = vcode;
 
-        if not encrypt_pwd:
-            self.get_encrypt_pwd()
-        else:
-            self.encrypt_pwd = encrypt_pwd
-            self.sign_in_first()
-
-
-            # return 'login success'
+        self.encrypt_pwd = encrypt_pwd
+        return self.sign_in_first()
 
     def sign_in_first(self):
-        '''第一次登录'''
+        '''第一次登录  TODO : 请求错误的以后处理'''
         print('encrypt_pwd.length=',len(self.encrypt_pwd))
         print('u = '+self.username)
         print('vcode = '+self.vcode)
@@ -332,20 +325,46 @@ class SmartQQ(BaseClient):
             try:
                 if cookies['ptwebqq']:
                     self.ptwebqq = cookies['ptwebqq']
-                    self.sign_in_second();
+                    tmp = self.sign_in_second();
                     # self.getvfwebqq()
+                    # tmp = self.proxy();
+
             except Exception as e:
                 print(e)
         else:
             print(rsp.status_code)
 
+        return tmp;
 
+    def proxy(self):
+
+        print(TAG,'proxy()')
+
+        url = 'http://w.qq.com/proxy.html?login2qq=1&webqq_type=10'
+        self.session.headers.update({
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+            'Host':'w.qq.com',
+            'Referer': 'https://ui.ptlogin2.qq.com/cgi-bin/login?daid=164&target=self&style=16&mibao_css=m_webqq&appid=501004106&enable_qlogin=0&no_verifyimg=1&s_url=http//w.qq.com/proxy.html&f_url=loginerroralert&strong_login=1&login_state=10&t=20131024001',
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/41.0.2272.76 Chrome/41.0.2272.76 Safari/537.36',
+            'Accept-Encoding':'gzip, deflate, sdch',
+            'Accept-Language':'en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2',
+            'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        })
+
+        rsp = self.session.get(url)
+        ''':type : requests.Response'''
+        print(rsp.status_code)
+        if rsp.status_code == 200:
+            return self.getvfwebqq()
+            # return self.sign_in_second()
+
+    # @web.asynchronous
     def getvfwebqq(self):
         ''''''
         print('getvfwebqq()')
 
         url = 'http://s.web2.qq.com/api/getvfwebqq?ptwebqq=%s&clientid=53999199&psessionid=&t=%s' % (self.ptwebqq,str(int(time.time())))
-
+        print(url)
         self.session.headers.update({
             'Accept': '*/*',
             'Referer':'http://s.web2.qq.com/proxy.html?v=20130916001&callback=1&id=1',
@@ -363,7 +382,7 @@ class SmartQQ(BaseClient):
         print(rsp.content)
 
         if rsp.status_code == 200 :
-            self.sign_in_second()
+            return self.sign_in_second()
         else:
             print('else return')
 
@@ -383,33 +402,15 @@ class SmartQQ(BaseClient):
             'Accept-Language': 'en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4'
         }
 
-        # str_tmp = '{"ptwebqq"="%s","clientid"=%s,"psessionid"="","status"="%s"}' % (self.ptwebqq,str(self.clientid),self.status)
-
-        # data = 'r=%7B%22status%22%3A%22online%22%2C%22ptwebqq%22%3A%22' + self.ptwebqq + '%22%2C%22passwd_sig%22%3A%22%22%2C%22clientid%22%3A%22'+self.clientid+'%22%2C%22psessionid%22%3Anull%7D&clientid='+self.clientid+'&psessionid=null'
-
-        # data = 'r=%7B%22ptwebqq%22%3A%22'+self.ptwebqq+'%22%2C%22clientid%22%3A'+self.clientid+'%2C%22psessionid%22%3A%22%22%2C%22status%22%3A%22online%22%7D'
-
-        # post_data = {
-        #     'r':str_tmp
-        # }
-        #
-        # print('post_data = ',post_data)
-
-        # cookies = dict_from_cookiejar(self.session.cookies)
-        # print('cookies = ',cookies)
-        # return;
-
         post_data = 'r=%7B%22ptwebqq%22%3A%22'+self.ptwebqq+'%22%2C%22clientid%22%3A'+str(self.clientid)+'%2C%22psessionid%22%3A%22%22%2C%22status%22%3A%22online%22%7D'
-        #
+
         rsp = self.session.post(
             url=self.login_2_url,
             data=post_data,
             headers=header,
         )
         ''':type : requests.Response'''
-
         print(rsp.status_code)
-        # print(rsp.headers)
         print(rsp.url)
         print(rsp.content)
 
@@ -421,14 +422,45 @@ class SmartQQ(BaseClient):
 
                 # print(rsp.json())
                 self.vfwebqq = rsp.json()['result']['vfwebqq']
+                self.psessionid = rsp.json()['result']['psessionid']
                 # print('self.vfwebqq = ',self.vfwebqq)
             else:
                 self.isLogin = False;
 
-            tmp = json.dumps({'resp_code':rsp.json()['retcode'],'resp_msg':'login success'})
+            tmp = json.dumps({'resp_code':rsp.json()['retcode'],'resp_msg':'login success','ptwebqq':self.ptwebqq})
         else:
             tmp = json.dumps({'resp_code':rsp.status_code,'resp_msg':'login success'})
 
+        return tmp
+
+    # @web.asynchronous
+    def get_user_friends(self,hash_value):
+        '''获取用户好友列表'''
+
+        print(TAG,"get_user_friends() hash_value=",hash_value)
+        self.hash = hash_value
+
+        header = {
+            'Origin': 'http://s.web2.qq.com',
+            'User-Agent': "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/41.0.2272.76 Chrome/41.0.2272.76 Safari/537.36",
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': '*/*',
+            'Referer': "http://s.web2.qq.com/proxy.html?v=20130916001&callback=1&id=1",
+            'Accept-Encoding': 'gzip, deflate',
+            'Accept-Language': 'en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2'
+        }
+        post_data = 'r=%7B%22vfwebqq%22%3A%22'+self.vfwebqq+'%22%2C%22hash%22%3A%22'+self.hash+'%22%7D'
+        print(TAG,'post_data = '+post_data)
+
+        rsp = self.session.post(
+            url=self.user_friends_url,
+            data=post_data,
+            headers=header,
+        )
+        ''':type : requests.Response'''
+
+        print(rsp.status_code)
+        print(rsp.content)
 
     def test(self):
         s = "ptui_checkVC('0','!UFV','\x00\x00\x00\x00\x7c\x0f\x3f\xf3','e322f75cb753410b90762a1d05153515118fa46e6186800fba28ab7de4760b6a90e7ad3444b39b48d52eb6819efb231ab1d9379fefd72a14','0');"
@@ -440,8 +472,6 @@ class SmartQQ(BaseClient):
         print('--------------------------------')
         for i in range(0,len(s)):
             print(s[i])
-        # print(len(s[0]))
-        # print(len(s[1]))
 
 if __name__ == '__main__':
 
@@ -514,14 +544,3 @@ if __name__ == '__main__':
     print(rsp.status_code)
     print(rsp.url)
     print(rsp.content)
-
-
-
-    #
-    # qq.check_vc();
-    #
-    # if qq.cap_cd :
-    #     qq.get_captcha()
-
-
-    # qq.test()

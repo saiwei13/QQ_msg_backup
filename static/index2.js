@@ -12,6 +12,10 @@ var TYPE_POST='post'
 var DATATYPE_JSON='json'
 
 var ischeck = false;
+var isLogin = false;
+
+var ptwebqq ;
+var username='2081374195'
 
 
 $(document).ready(function(){
@@ -25,6 +29,14 @@ $(document).ready(function(){
 
     $('#bt_login').click(function(){
         login()
+    });
+
+    $('#bt_get_friends').click(function(){
+        get_friends()
+    });
+
+    $('#img_smscode').click(function(){
+        get_captcha()
     });
 })
 
@@ -154,7 +166,28 @@ function get_captcha(){
 }
 
 /**
- * TODO: 接口整合，　将 "login/vcode" , "login/encrypt_pwd","login/first" 统一成一个接口
+ * TODO : 用户名先写死
+ */
+function get_friends(){
+    if(!isLogin){
+        alert('please first login !')
+        return;
+    }
+
+    var success_callback = function(json){
+        console.log("get_friends()  success_callback")
+        console.log(json)
+
+        alert('ok')
+    }
+
+    var hash = u(username,ptwebqq)
+    var data = JSON.stringify({'hash':hash});
+
+    req_post('get_user_friends2',data,success_callback)
+}
+
+/**
  * {
  *      'vcode':'', 'encrypt_pwd':''
  * }
@@ -167,10 +200,7 @@ function login(){
         return;
     }
 
-    console.log('salt='+salt)
-    //salt = get_salt(salt)
     salt = get_salt_from_js(salt)
-    console.log('salt='+salt)
 
     var result = $.Encryption.getEncryption('gguuss',salt,vcode)
 
@@ -182,12 +212,15 @@ function login(){
         console.log('success_callback')
         console.log(json)
 
-        alert(json)
-        //if(json.resp_code == 0){
-        //    alert('ok')
-        //} else {
-        //    alert('failer')
-        //}
+        if(json.resp_code == 0){
+
+            //$("#bt_get_friends").css("display","block");
+            isLogin = true;
+            ptwebqq = json.ptwebqq
+            alert(json.resp_msg)
+        } else {
+            alert('failer')
+        }
     }
 
     req_post('login',data,success_callback)
@@ -196,11 +229,29 @@ function login(){
 function test_get(){
     var success_callback = function(json){
         console.log(json)
-        alert(json)
     }
+
     $.ajax({
             url: 'test',
             type: 'get',
+            data:'vvv=ddd',
+            success: success_callback,
+            complete: function( xhr, status ) {
+                console.log('complete');
+            }
+    });
+}
+
+
+function test_get_2(){
+    var success_callback = function(json){
+        console.log(json)
+    }
+
+    $.ajax({
+            url: 'test',
+            type: 'get',
+            data:'vvv=444',
             success: success_callback,
             complete: function( xhr, status ) {
                 console.log('complete');
@@ -212,11 +263,15 @@ function test_get(){
 function test_post(){
     var success_callback = function(json){
         console.log(json)
-        alert(json)
+        //alert(json)
     }
+
+    var data = JSON.stringify({'vcode':'v2ex'});
+
     $.ajax({
             url: 'test',
             type: 'post',
+            data:data,
             success: success_callback,
             complete: function( xhr, status ) {
                 console.log('complete');
