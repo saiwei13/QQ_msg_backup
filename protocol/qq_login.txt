@@ -1,0 +1,51 @@
+Request URL: https://ssl.ptlogin2.qq.com/login?u=2081374195&p=nHGHaJO1eoHZ8JrCp*gfuMpmnzzmh2W1FMh8EOLE07*BiQOLYr4E2dQIyFYSCGezcu9zYndeKjsnWsWFhyW5ONVeTKKG5lO*ZXilZ-e9j7*-MvejpLV8Y9xxH9QrYoiIpxQ7CRXJNz-cBYZeVPhTLIE0WysjGNLCmb1dsoo5tA7vnMXItw1mELoKUD9CL3tDKnJ8o4K4MI6Z3levpL6C8w__&verifycode=whdz&webqq_type=10&remember_uin=1&login2qq=1&aid=501004106&u1=http%3A%2F%2Fw.qq.com%2Fproxy.html%3Flogin2qq%3D1%26webqq_type%3D10&h=1&ptredirect=0&ptlang=2052&daid=164&from_ui=1&pttype=1&dumy=&fp=loginerroralert&action=0-33-557363&mibao_css=m_webqq&t=1&g=1&js_type=0&js_ver=10123&login_sig=&pt_randsalt=0&pt_vcode_v1=0&pt_verifysession_v1=h02LV6mitymQN5aVEc7j6DJ8EK46RXfqezMQfRUFUbwNHlFyZ1Qusbu3e_PdVfxiwKwy66UCrjRGqz6gz6U0w5avbHL3-fuUxcb
+Request Method: GET
+Status Code: 200
+
+Query Url
+u: 2081374195
+p: nHGHaJO1eoHZ8JrCp*gfuMpmnzzmh2W1FMh8EOLE07*BiQOLYr4E2dQIyFYSCGezcu9zYndeKjsnWsWFhyW5ONVeTKKG5lO*ZXilZ-e9j7*-MvejpLV8Y9xxH9QrYoiIpxQ7CRXJNz-cBYZeVPhTLIE0WysjGNLCmb1dsoo5tA7vnMXItw1mELoKUD9CL3tDKnJ8o4K4MI6Z3levpL6C8w__
+verifycode: whdz
+webqq_type: 10
+remember_uin: 1
+login2qq: 1
+aid: 501004106
+u1: http://w.qq.com/proxy.html?login2qq=1&webqq_type=10
+h: 1
+ptredirect: 0
+ptlang: 2052
+daid: 164
+from_ui: 1
+pttype: 1
+dumy:
+fp: loginerroralert
+action: 0-33-557363
+mibao_css: m_webqq
+t: 1
+g: 1
+js_type: 0
+js_ver: 10123
+login_sig:
+pt_randsalt: 0
+pt_vcode_v1: 0
+pt_verifysession_v1: h02LV6mitymQN5aVEc7j6DJ8EK46RXfqezMQfRUFUbwNHlFyZ1Qusbu3e_PdVfxiwKwy66UCrjRGqz6gz6U0w5avbHL3-fuUxcb  [直接从cookie中取]
+
+Cookie (11) 444byte
+Request Headers
+Accept: */*
+X-DevTools-Emulate-Network-Conditions-Client-Id: E880392C-EAAE-45B1-8008-DA09D09BC80F
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36
+Referer: https://ui.ptlogin2.qq.com/cgi-bin/login?daid=164&target=self&style=16&mibao_css=m_webqq&appid=501004106&enable_qlogin=0&no_verifyimg=1&s_url=http%3A%2F%2Fw.qq.com%2Fproxy.html&f_url=loginerroralert&strong_login=1&login_state=10&t=20131024001
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2
+Cookie: pgv_pvi=6811314176; ptisp=cnc; pgv_info=ssid=s9907661088; pgv_pvid=590610640; pt_login_sig=Ic0csWVjzmhKyv0EX3ZS16TwtrbkE1kaGb6RpLdEMp30qKC-6-QU8PEorCCZLwAt; pt_clientip=422d7f000001724a; pt_serverip=5f600a82584bed9d; qrsig=BU*HJCO1eQyAVqamJL8gKK-lezjkpk6Yw-mp3Q6flX1gvsptp3wU**WoxOVUOb9A; chkuin=2081374195; confirmuin=2081374195; verifysession=h02LV6mitymQN5aVEc7j6DJ8EK46RXfqezMQfRUFUbwNHlFyZ1Qusbu3e_PdVfxiwKwy66UCrjRGqz6gz6U0w5avbHL3-fuUxcb
+
+服务器返回：
+ptuiCB(
+	'0', 
+	'0', 
+	'http://ptlogin4.web2.qq.com/check_sig?pttype=1&uin=2081374195&service=login&nodirect=0&ptsigx=22784cf9c7683d7787736cf34a1e76384a0a6309228720c53a0f426a1b5d777dd0bcd73e598c56826e1afea24b5140b404e38e26f21add7d3a140b10ade109dd&s_url=http%3A%2F%2Fw.qq.com%2Fproxy.html%3Flogin2qq%3D1%26webqq_type%3D10&f_url=&ptlang=2052&ptredirect=100&aid=501004106&daid=164&j_later=0&low_login_hour=0&regmaster=0&pt_login_type=1&pt_aid=0&pt_aaid=0&pt_light=0',
+	'0',
+	'登录成功！',
+	'rtokie'
+);

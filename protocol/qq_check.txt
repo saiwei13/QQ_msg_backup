@@ -1,0 +1,46 @@
+﻿
+协议：
+Request URL: https://ssl.ptlogin2.qq.com/check?pt_tea=1&uin=2081374195&appid=501004106&js_ver=10123&js_type=0&login_sig=&u1=http%3A%2F%2Fw.qq.com%2Fproxy.html&r=0.9580582731869072
+Request Method: GET
+Status Code: 200
+
+Query Url
+pt_tea: 1
+uin: 2081374195
+appid: 501004106
+js_ver: 10123
+js_type: 0
+login_sig:
+u1: http://w.qq.com/proxy.html
+r: 0.9580582731869072
+Cookie
+pgv_pvi: 6811314176
+pgv_info: ssid
+pgv_pvid: 590610640
+pt_login_sig: Ps56bfG7mgrBx1w12puAo7tgImPs2pS-yzFM6CWUTukqS3s-vp1SHyq9VzMlvj4E
+pt_clientip: 9b347f0000012961
+pt_serverip: c0010a870893920a
+qrsig: lV30Fk75cZerl*xklvZU6prupNaE34QkSPk76yXj4OjJAkeM90uJCNMPJ8Mtihh1
+chkuin: 2081374195
+
+
+检查账号是否存在
+
+
+ptui_checkVC(
+	'1',    ------表示需要验证码
+	'JOTi2ysBnxScg-MKURV6sV1qbUV9vvNcUYTXkEDN4B0OpGevASTVrQ**',    ---- [用来获取验证码]
+	'\x00\x00\x00\x00\x7c\x0f\x3f\xf3',                           -----【用来加密 密码】
+	'', 
+	'0');
+
+	
+	
+ptui_checkVC(
+	'0',   ------表示不需要验证码
+	'!IJF',  -----做为默认的验证码上传
+	'\x00\x00\x00\x00\x7c\x0f\x3f\xa3', 
+	
+	----------赋值给pt_verifysession_v1
+	'60e80f1e901ecc68d1c63f0d81d508660b3ef9c52d822326b4cbe50a58c27e7eae365a56b673a8301920846e0408f78bd80ab1919750c2cc',
+	'0');

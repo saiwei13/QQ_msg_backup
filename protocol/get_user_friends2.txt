@@ -1,0 +1,25 @@
+Request URL: http://s.web2.qq.com/api/get_user_friends2
+Request Method: POST
+Status Code: 200
+
+Form Data
+r: {"vfwebqq":"9af4500e15f32faa111406931628b933557a60dd9ce3a5942d005ccc1d34dfac44a1832f8d65cd34","hash":"0A39014C5B7059B8"}
+
+Cookie (17) 459byte
+
+Request Headers
+Origin: http://s.web2.qq.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/41.0.2272.76 Chrome/41.0.2272.76 Safari/537.36
+Content-Type: application/x-www-form-urlencoded
+Accept: */*
+Referer: http://s.web2.qq.com/proxy.html?v=20130916001&callback=1&id=1
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2
+Cookie: RK=r8sv+NtIbV; ts_last=web2.qq.com/; ts_refer=www.baidu.com/link; ts_uid=9330858990; pgv_info=ssid=s429486848; pgv_pvid=8161970554; o_cookie=2081374195; pt_clientip=e1937f0000013ad3; pt_serverip=29910abf0660ce5a; ptisp=cm; pt2gguin=o2081374195; uin=o2081374195; skey=@6rs1HhvX4; p_uin=o2081374195; p_skey=7dQk7OzKTzI5SjSOsFBa9rCLUvqO4oYou73bfbfJgC0_; pt4_token=*LGbP*63t6pygyR7MtjIlw__; ptwebqq=a632b852294229a5db25a2bbbab96d1427b3619efabd8b07bd24d772f44bb83e
+
+Response Headers
+Server: nginx
+Date: Tue, 09 Jun 2015 17:41:50 GMT
+Content-Type: application/json;charset=utf-8
+Content-Length: 231
+Connection: keep-alive

@@ -1,0 +1,23 @@
+POST http://d.web2.qq.com/channel/login2 HTTP/1.1
+Host: d.web2.qq.com
+Connection: keep-alive
+Content-Length: 180
+Origin: http://d.web2.qq.com
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36
+Content-Type: application/x-www-form-urlencoded
+Accept: */*
+Referer: http://d.web2.qq.com/proxy.html?v=20130916001&callback=1&id=2
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2
+Cookie: ts_last=web2.qq.com/; ts_refer=www.baidu.com/link; ts_uid=9514246539; pgv_info=ssid=s5716345192; pgv_pvid=7210829545; pt_clientip=87177f0000016a36; pt_serverip=65b90aa693da6027; ptisp=cnc; RK=r8sv+NtIbV; pt2gguin=o2081374195; uin=o2081374195; skey=@KYtjGFJ2E; p_uin=o2081374195; p_skey=SZaG-7q9nP5e9raJRL9SD*1*Ou5mY8RtXq8e9wBwBkQ_; pt4_token=OE3LKE2aiJVnno15yC4tug__; ptwebqq=5c72c198c4d9b098ee234d0c0dcb9380e9a545a6464915b4ed9aa70b9befa2c6
+
+r=%7B%22ptwebqq%22%3A%225c72c198c4d9b098ee234d0c0dcb9380e9a545a6464915b4ed9aa70b9befa2c6
+
+
+
+=========================================================
+Content-Type: text/plain;charset=utf-8
+
+
+=========================================================
+r   {"ptwebqq":"5c72c198c4d9b098ee234d0c0dcb9380e9a545a6464915b4ed9aa70b9befa2c6","clientid":53999199,"psessionid":"","status":"online"}

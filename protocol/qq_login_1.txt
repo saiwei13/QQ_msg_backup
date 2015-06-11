@@ -1,0 +1,41 @@
+Request URL: https://ssl.ptlogin2.qq.com/login?u=2081374195&p=HRs11rVeFoIPrGxPIuiKrDslTpdssXG*mVgNDfngG-g9JtVUyNkifrJLJOorVvyKISjNGnz26AlepMUKcImSY4FL4mA3lbhn3d-rPmakcwyEVXxk1TpOcV2jBPpnATC-NjHGInZCopqaq7RE*NBYxXPg*8u*3VlAFYyfbmbLgDsZzmPKjXK*VjylO*TWhTlqlvDQKmpt4duD*X1JDRRuWw__&verifycode=!TUG&webqq_type=10&remember_uin=1&login2qq=1&aid=501004106&u1=http%3A%2F%2Fw.qq.com%2Fproxy.html%3Flogin2qq%3D1%26webqq_type%3D10&h=1&ptredirect=0&ptlang=2052&daid=164&from_ui=1&pttype=1&dumy=&fp=loginerroralert&action=0-8-8156&mibao_css=m_webqq&t=1&g=1&js_type=0&js_ver=10125&login_sig=&pt_randsalt=0&pt_vcode_v1=0&pt_verifysession_v1=b144880935288a7d8283eca7cac29b96d04211fb8c488b7262f6893bee2bf199107564a04edd31cc45338d0feb6f76fc425bb95d469eda6b
+Request Method: GET
+Status Code: 200
+
+Query Url
+u: 2081374195
+p: HRs11rVeFoIPrGxPIuiKrDslTpdssXG*mVgNDfngG-g9JtVUyNkifrJLJOorVvyKISjNGnz26AlepMUKcImSY4FL4mA3lbhn3d-rPmakcwyEVXxk1TpOcV2jBPpnATC-NjHGInZCopqaq7RE*NBYxXPg*8u*3VlAFYyfbmbLgDsZzmPKjXK*VjylO*TWhTlqlvDQKmpt4duD*X1JDRRuWw__
+verifycode: !TUG
+webqq_type: 10
+remember_uin: 1
+login2qq: 1
+aid: 501004106
+u1: http://w.qq.com/proxy.html?login2qq=1&webqq_type=10
+h: 1
+ptredirect: 0
+ptlang: 2052
+daid: 164
+from_ui: 1
+pttype: 1
+dumy:
+fp: loginerroralert
+action: 0-8-8156
+mibao_css: m_webqq
+t: 1
+g: 1
+js_type: 0
+js_ver: 10125
+login_sig:
+pt_randsalt: 0
+pt_vcode_v1: 0
+pt_verifysession_v1: b144880935288a7d8283eca7cac29b96d04211fb8c488b7262f6893bee2bf199107564a04edd31cc45338d0feb6f76fc425bb95d469eda6b
+
+Cookie (20) 720byte
+
+Request Headers
+Accept: */*
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36
+Referer: https://ui.ptlogin2.qq.com/cgi-bin/login?daid=164&target=self&style=16&mibao_css=m_webqq&appid=501004106&enable_qlogin=0&no_verifyimg=1&s_url=http%3A%2F%2Fw.qq.com%2Fproxy.html&f_url=loginerroralert&strong_login=1&login_state=10&t=20131024001
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2
+Cookie: uikey=2a6ee429639afcb68418b28e9fe5106be9deb819ea208f010c707b2b910f22dc; ETK=; superuin=o2081374195; superkey=1PC5zPDSVxTDDZqVyGJENLO9DjLM9Ha3sZbHC6zJ26g_; supertoken=2065601044; ptisp=cnc; RK=r8sv+NtIbV; ptnick_2081374195=72746f6b6965; pt2gguin=o2081374195; uin=o2081374195; pgv_info=ssid=s133334080; pgv_pvid=9634489328; o_cookie=2081374195; pt_login_sig=ft5dYyRgANDXYFx-mmkZiXSNw*YP4zbzeynDL0OVoKqZ9M49dUf30f40vEa4Pfly; pt_clientip=8ee77f00000155f9; pt_serverip=32220a85030c7c68; qrsig=XYKGaMLJp55zjV*2So1KHE-1Xzqw1uzlACAF3lUiFmQk5to-WhQw7JqEtv3SBykQ; chkuin=2081374195; confirmuin=2081374195; ptvfsession=b144880935288a7d8283eca7cac29b96d04211fb8c488b7262f6893bee2bf199107564a04edd31cc45338d0feb6f76fc425bb95d469eda6b

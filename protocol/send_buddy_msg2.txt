@@ -1,0 +1,20 @@
+POST http://d.web2.qq.com/channel/send_buddy_msg2 HTTP/1.1
+Host: d.web2.qq.com
+Connection: keep-alive
+Content-Length: 584
+Origin: http://d.web2.qq.com
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.124 Safari/537.36
+Content-Type: application/x-www-form-urlencoded
+Accept: */*
+Referer: http://d.web2.qq.com/proxy.html?v=20130916001&callback=1&id=2
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2
+Cookie: RK=r8sv+NtIbV; pt_clientip=52397f0000017a7c; pt_serverip=6b4b0a85030c1d8c; ptisp=cnc; pt2gguin=o2081374195; uin=o2081374195; skey=@sVS3siQ6C; p_uin=o2081374195; p_skey=BMRb-TLnxPc5px892Gq5b5CZJAKKWnTIPGDeHbEyH2I_; pt4_token=Smttpy7aQzDoqwAtSqtgGA__; ts_last=web2.qq.com/; ts_refer=www.baidu.com/link; ts_uid=3395733381; pgv_info=ssid=s5570441795; pgv_pvid=1170520340; o_cookie=2081374195; ptwebqq=35f7a74ce1fcf8f1adb9a15fb04c8ffafc0af155602f68f9a1586ba8709fd544
+
+注：发送消息ddd
+r=%7B%22to%22%3A3715671693%2C%22content%22%3A%22%5B%5C%22ddd%5C%22%2C%5B%5C%22font%5C%22%2C%7B%5C%22name%5C%22%3A%5C%22%E5%AE%8B%E4%BD%93%5C%22%2C%5C%22size%5C%22%3A10%2C%5C%22style%5C%22%3A%5B0%2C0%2C0%5D%2C%5C%22color%5C%22%3A%5C%22000000%5C%22%7D%5D%5D%22%2C%22face%22%3A0%2C%22clientid%22%3A53999199%2C%22msg_id%22%3A32560001%2C%22psessionid%22%3A%228368046764001d636f6e6e7365727665725f77656271714031302e3133392e372e31363400004f6b00000e27036e0400f33f0f7c6d0000000a407356533373695136436d00000028551c5f8613818eb91a5c915f2f07b91896c1bc7b142240c4a5eaf415a4f331951b1d2dbd75e71c87%22%7D
+
+
+-------------------------------------------------
+{"retcode":0,"result":"ok"}
+

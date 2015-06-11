@@ -1,0 +1,30 @@
+Request URL: http://s.web2.qq.com/api/getvfwebqq?ptwebqq=&clientid=53999199&psessionid=&t=1433485658050
+Request Method: GET
+Status Code: 200
+
+Query Url
+ptwebqq:
+clientid: 53999199
+psessionid:
+t: 1433485658050
+Cookie (11) 290byte
+
+Request Headers
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36
+Content-Type: utf-8
+Accept: */*
+Referer: http://s.web2.qq.com/proxy.html?v=20130916001&callback=1&id=1
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2
+Cookie: pgv_info=ssid=s5708122824; pgv_pvid=100229020; o_cookie=2081374195; pt_clientip=e9f67f0000018038; pt_serverip=3ac30a87088f642f; pt2gguin=o2081374195; uin=o2081374195; skey=@KYtjGFJ2E; p_uin=o2081374195; p_skey=dy-pMIqOVlszmm2ttIxXwl6N9EmeqpPCsnxPzYWHflM_; pt4_token=0HxlRnIsy9YlwGiFtpZ9yw__
+
+Response Headers
+Server: nginx
+Date: Fri, 05 Jun 2015 06:27:36 GMT
+Content-Type: application/json;charset=utf-8
+Content-Length: 117
+Connection: keep-alive
+
+
+---------------------------------------------------------
+{"retcode":0,"result":{"vfwebqq":"e7b45e1464cda5780270f1bccf0b4efcda502b09275d80880cb2a68c6d4408fb190486a4c3af7bb4"}}

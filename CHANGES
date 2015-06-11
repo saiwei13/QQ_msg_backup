@@ -3,8 +3,20 @@ version: 0.x   time: 2015-06-04
   js位置
   　　-pub.idqqimg.com/smartqq/js/mq.js
 - 轮询　http://d.web2.qq.com/channel/poll2
+- 获取消息
+- 发送消息
+- tornado 异步
 
+version: 0.x [TODO]
+- get_group_name_list_mask2
+- get_discus_list
+- get_self_info2
+- 'Content-Type': 'application/x-www-form-urlencoded'
+  修改数据传送的代码，现在代码太死了，不够动态，消息一多就看不懂了
+  参考：http://blog.csdn.net/qq506657335/article/details/20802417　这个写法
 
+version: 0.12
+- 创建protocol文件夹，用于存放ｑｑ协议
 
 version: 0.11
 - web 只是用于显示，请求逻辑统一放在python,javascript 只是用于前后端的中转

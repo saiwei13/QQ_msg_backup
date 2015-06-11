@@ -1,0 +1,34 @@
+Request URL: https://ssl.captcha.qq.com/getimage?aid=501004106&r=0.5428479921538383&uin=2081374195&cap_cd=3IlW4cTkJeDtoD1VJseJk5vCgljlYkGSSW5B3zjOVqCrfT8_fL_8LQ**
+Request Method: GET
+Status Code: 200
+
+Query Url
+aid: 501004106
+r: 0.5428479921538383
+uin: 2081374195
+cap_cd: 3IlW4cTkJeDtoD1VJseJk5vCgljlYkGSSW5B3zjOVqCrfT8_fL_8LQ**    [从check中取得的]
+
+Cookie
+pgv_pvi: 6811314176
+ptisp: cnc
+verifysession: h02FTrUdd9HdQeJ6pGw4R_343rZrxMvxMoeD5tkCxdiFA50B2FNR_Hn8UFGxQmk43xhVLm_4DI4lfSmUDn4DhFj-KQn9EIIYRaR
+pgv_info: ssid
+pgv_pvid: 590610640
+pt_clientip: 422d7f000001724a
+pt_serverip: 5f600a82584bed9d
+
+
+更换验证码
+-----------------------------------
+Request URL: https://ssl.captcha.qq.com/getimage?&uin=2081374195&aid=501004106&0.7960092902649194&cap_cd=3IlW4cTkJeDtoD1VJseJk5vCgljlYkGSSW5B3zjOVqCrfT8_fL_8LQ**
+Request Method: GET
+Status Code: 200
+
+Query Url
+uin: 2081374195
+aid: 501004106
+cap_cd: 3IlW4cTkJeDtoD1VJseJk5vCgljlYkGSSW5B3zjOVqCrfT8_fL_8LQ**
+
+
+
+返回验证码图片

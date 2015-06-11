@@ -1,0 +1,13 @@
+GET http://s.web2.qq.com/api/get_discus_list?clientid=53999199&psessionid=8368046764001d636f6e6e7365727665725f77656271714031302e3133392e372e31363400004f3500000e26036e0400f33f0f7c6d0000000a407356533373695136436d000000289203668727bad83222367860e708413d720e5659d7ad9ef26333d011cf3742c6a8eb80444f984d47&vfwebqq=648c53f9beab5794fb632d7b2b4b1655806fcab1c0a86a70a1842ab2330e53ebf0bc1310ee88950f&t=1433951421668 HTTP/1.1
+Host: s.web2.qq.com
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.124 Safari/537.36
+Content-Type: utf-8
+Accept: */*
+Referer: http://s.web2.qq.com/proxy.html?v=20130916001&callback=1&id=1
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2
+Cookie: RK=r8sv+NtIbV; pgv_info=ssid=s5570441795; pgv_pvid=1170520340; o_cookie=2081374195; pt_clientip=52397f0000017a7c; pt_serverip=6b4b0a85030c1d8c; ptisp=cnc; pt2gguin=o2081374195; uin=o2081374195; skey=@sVS3siQ6C; p_uin=o2081374195; p_skey=BMRb-TLnxPc5px892Gq5b5CZJAKKWnTIPGDeHbEyH2I_; pt4_token=Smttpy7aQzDoqwAtSqtgGA__; ptwebqq=35f7a74ce1fcf8f1adb9a15fb04c8ffafc0af155602f68f9a1586ba8709fd544
+
+---------------------------------------------------
+{"retcode":0,"result":{"dnamelist":[]}}
