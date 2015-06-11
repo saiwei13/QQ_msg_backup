@@ -32,11 +32,18 @@ check:
 
 ##定义静态变量　　[TODO 先防这]
 HEADER_ACCEPT_LANGUAGE = 'en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2'
-HEADER_ACCEPT_ENCODING_GZIP = 'gzip, deflate'
+HEADER_ACCEPT_ENCODING_GZIP = 'gzip, deflate, sdch'
 HEADER_ACCEPT = '*/*'
 HEADER_CONTENT_TYPE_URLENCODED='application/x-www-form-urlencoded'
 HEADER_USER_AGENT='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/41.0.2272.76 Chrome/41.0.2272.76 Safari/537.36'
 
+HEADER_ORIGIN_LOGIN2='http://d.web2.qq.com'
+HEADER_ORIGIN_GET_USER_FRIENDS='http://s.web2.qq.com'
+
+HEADER_REFERER_LOGIN2 ='http://d.web2.qq.com/proxy.html?v=20130916001&callback=1&id=2'
+HEADER_REFERER_LOGIN = 'https://ui.ptlogin2.qq.com/cgi-bin/login?daid=164&target=self&style=16&mibao_css=m_webqq&appid=501004106&enable_qlogin=0&no_verifyimg=1&s_url=http//w.qq.com/proxy.html&f_url=loginerroralert&strong_login=1&login_state=10&t=20131024001'
+HEADER_REFERER_CHECK = 'https://ui.ptlogin2.qq.com/cgi-bin/login?daid=164&target=self&style=16&mibao_css=m_webqq&appid=501004106&enable_qlogin=0&no_verifyimg=1&s_url=http%3A%2F%2Fw.qq.com%2Fproxy.html&f_url=loginerroralert&strong_login=1&login_state=10&t=20131024001'
+HEADER_REFERER_GET_USER_FRIENDS = "http://s.web2.qq.com/proxy.html?v=20130916001&callback=1&id=1"
 
 class SmartQQ(BaseClient):
     ''''''
@@ -109,12 +116,11 @@ class SmartQQ(BaseClient):
                               % (str(random2.random()),self.username,self.cap_cd)
 
         self.session.headers.update({
-            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/41.0.2272.76 Chrome/41.0.2272.76 Safari/537.36',
-            'Accept-Encoding':'gzip, deflate, sdch',
-            'Accept-Language':'en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2',
-            'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            # 'Referer':'https://ui.ptlogin2.qq.com/cgi-bin/login?daid=164&target=self&style=16&mibao_css=m_webqq&appid=501004106&enable_qlogin=0&no_verifyimg=1&s_url=http%3A%2F%2Fw.qq.com%2Fproxy.html&f_url=loginerroralert&strong_login=1&login_state=10&t=20131024001'
-        })
+            'User-Agent': HEADER_USER_AGENT,
+            'Accept-Encoding':HEADER_ACCEPT_ENCODING_GZIP,##'gzip, deflate, sdch',
+            'Accept-Language':HEADER_ACCEPT_LANGUAGE,
+            'Accept':HEADER_ACCEPT
+            })
 
         rsp = self.session.get(url)
         ''':type : requests.Response'''
@@ -169,21 +175,15 @@ class SmartQQ(BaseClient):
         print(url)
 
         self.session.headers.update({
-            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/41.0.2272.76 Chrome/41.0.2272.76 Safari/537.36',
-            'Accept-Encoding':'gzip, deflate, sdch',
-            'Accept-Language':'en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2',
-            'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            'Referer':'https://ui.ptlogin2.qq.com/cgi-bin/login?daid=164&target=self&style=16&mibao_css=m_webqq&appid=501004106&enable_qlogin=0&no_verifyimg=1&s_url=http%3A%2F%2Fw.qq.com%2Fproxy.html&f_url=loginerroralert&strong_login=1&login_state=10&t=20131024001'
+            'User-Agent': HEADER_USER_AGENT,
+            'Accept-Encoding':HEADER_ACCEPT_ENCODING_GZIP ,
+            'Accept-Language':HEADER_ACCEPT_LANGUAGE,
+            'Accept':HEADER_ACCEPT,
+            'Referer':HEADER_REFERER_CHECK
         })
 
-        # proxies = {
-        #     "http": "http://127.0.0.1:8118",
-        #     "https": "http://127.0.0.1:8118",
-        # }
         print('check url = '+url)
         rsp = self.session.get(url)
-
-        # print('!!!!    rsp = ',rsp.content)
 
         ''':type : requests.Response'''
         if rsp.status_code == 200 :
@@ -301,12 +301,11 @@ class SmartQQ(BaseClient):
         # print('login_url = '+url)
 
         self.session.headers.update({
-            'Accept': '*/*',
-            'Referer': 'https://ui.ptlogin2.qq.com/cgi-bin/login?daid=164&target=self&style=16&mibao_css=m_webqq&appid=501004106&enable_qlogin=0&no_verifyimg=1&s_url=http//w.qq.com/proxy.html&f_url=loginerroralert&strong_login=1&login_state=10&t=20131024001',
-            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/41.0.2272.76 Chrome/41.0.2272.76 Safari/537.36',
-            'Accept-Encoding':'gzip, deflate, sdch',
-            'Accept-Language':'en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2',
-            'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+            'Accept': HEADER_ACCEPT,
+            'Referer': HEADER_REFERER_LOGIN,
+            'User-Agent': HEADER_USER_AGENT,
+            'Accept-Encoding': HEADER_ACCEPT_ENCODING_GZIP ,
+            'Accept-Language':HEADER_ACCEPT_LANGUAGE,
         })
 
         rsp = self.session.get(url)
@@ -332,77 +331,24 @@ class SmartQQ(BaseClient):
                 if cookies['ptwebqq']:
                     self.ptwebqq = cookies['ptwebqq']
                     tmp = self.sign_in_second();
-                    # self.getvfwebqq()
-                    # tmp = self.proxy();
 
             except Exception as e:
                 print(e)
         else:
             print(rsp.status_code)
-
         return tmp;
-
-    def proxy(self):
-
-        print(TAG,'proxy()')
-
-        url = 'http://w.qq.com/proxy.html?login2qq=1&webqq_type=10'
-        self.session.headers.update({
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            'Host':'w.qq.com',
-            'Referer': 'https://ui.ptlogin2.qq.com/cgi-bin/login?daid=164&target=self&style=16&mibao_css=m_webqq&appid=501004106&enable_qlogin=0&no_verifyimg=1&s_url=http//w.qq.com/proxy.html&f_url=loginerroralert&strong_login=1&login_state=10&t=20131024001',
-            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/41.0.2272.76 Chrome/41.0.2272.76 Safari/537.36',
-            'Accept-Encoding':'gzip, deflate, sdch',
-            'Accept-Language':'en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2',
-            'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-        })
-
-        rsp = self.session.get(url)
-        ''':type : requests.Response'''
-        print(rsp.status_code)
-        if rsp.status_code == 200:
-            return self.getvfwebqq()
-            # return self.sign_in_second()
-
-    # @web.asynchronous
-    def getvfwebqq(self):
-        ''''''
-        print('getvfwebqq()')
-
-        url = 'http://s.web2.qq.com/api/getvfwebqq?ptwebqq=%s&clientid=53999199&psessionid=&t=%s' % (self.ptwebqq,str(int(time.time())))
-        print(url)
-        self.session.headers.update({
-            'Accept': '*/*',
-            'Referer':'http://s.web2.qq.com/proxy.html?v=20130916001&callback=1&id=1',
-            'Content-Type': 'utf-8',
-            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/41.0.2272.76 Chrome/41.0.2272.76 Safari/537.36',
-            'Accept-Encoding':'gzip, deflate, sdch',
-            'Accept-Language':'en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2',
-            'Accept':'*/*',
-        })
-
-        rsp = self.session.get(url)
-        ''':type : requests.Response'''
-        print(rsp.status_code)
-        print(rsp.url)
-        print(rsp.content)
-
-        if rsp.status_code == 200 :
-            return self.sign_in_second()
-        else:
-            print('else return')
 
     def sign_in_second(self):
         '''第二次post登录'''
         print('sign_in_second()')
         header = {
-            'Origin': 'http://d.web2.qq.com',
-            'User-Agent': "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/41.0.2272.76 Chrome/41.0.2272.76 Safari/537.36",
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': '*/*',
-            'Referer': "http://d.web2.qq.com/proxy.html?v=20130916001&callback=1&id=2",
-            'Accept-Encoding': 'gzip, deflate',
-            'Accept-Language': 'en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4'
+            'Origin': HEADER_ORIGIN_LOGIN2,
+            'User-Agent':HEADER_USER_AGENT,
+            'Content-Type': HEADER_CONTENT_TYPE_URLENCODED,
+            'Accept': HEADER_ACCEPT,
+            'Referer': HEADER_REFERER_LOGIN2,
+            'Accept-Encoding': HEADER_ACCEPT_ENCODING_GZIP,
+            'Accept-Language': HEADER_ACCEPT_LANGUAGE
         }
 
         str_tmp="""{"ptwebqq":"%s","clientid":%s,"psessionid":"%s","status":"%s"}""" % (self.ptwebqq,str(self.clientid),self.psessionid,self.status)
@@ -446,13 +392,13 @@ class SmartQQ(BaseClient):
         self.hash = hash_value
 
         header = {
-            'Origin': 'http://s.web2.qq.com',
-            'User-Agent': "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/41.0.2272.76 Chrome/41.0.2272.76 Safari/537.36",
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': '*/*',
-            'Referer': "http://s.web2.qq.com/proxy.html?v=20130916001&callback=1&id=1",
-            'Accept-Encoding': 'gzip, deflate',
-            'Accept-Language': 'en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2'
+            'Origin': HEADER_ORIGIN_GET_USER_FRIENDS,
+            'User-Agent': HEADER_USER_AGENT,
+            'Content-Type': HEADER_CONTENT_TYPE_URLENCODED,
+            'Accept': HEADER_ACCEPT,
+            'Referer': HEADER_REFERER_GET_USER_FRIENDS,
+            'Accept-Encoding': HEADER_ACCEPT_ENCODING_GZIP,
+            'Accept-Language': HEADER_ACCEPT_LANGUAGE
         }
 
         str_tmp="""{"vfwebqq":"%s","hash":"%s"}""" % (self.vfwebqq,self.hash)
@@ -488,8 +434,6 @@ if __name__ == '__main__':
     # time.sleep(3)
     # print('finish ')
 
-
-
     # tmp = 'ss'
     # tmp2 = tmp+'dd'
     # print(tmp2)
@@ -506,34 +450,6 @@ if __name__ == '__main__':
     );
 
     qq.ptwebqq = 'dea75142dc6e91fd609e47c9c7c3fcd63d5d48f1a5631d2e2480825cab90d6b4'
-    # # post_data=r'{"ptwebqq": "%s","clientid": "%s","psessionid": "","status":"%s"}' % (qq.ptwebqq,qq.ptwebqq,qq.status)
-    # post_data='r:{"ptwebqq"="%s","clientid"=%s,"psessionid"="","status"="%s"}' % (qq.ptwebqq,qq.clientid,qq.status)
-    # print(post_data)
-    #
-    #
-    # str_tmp = json.dumps(
-    #     {
-    #         "ptwebqq":qq.ptwebqq,
-    #         "clientid":qq.clientid,
-    #         "status":qq.status
-    #     })
-    #
-    # tmp  = 'r:'+str_tmp
-    #
-    # print(tmp)
-
-    # str_tmp = json.dumps({"ptwebqq":qq.ptwebqq,"clientid":qq.clientid,"status":qq.status})
-
-    # print(type(str_tmp))
-    # print(str_tmp)
-
-    # post_data='r:{"ptwebqq"="%s","clientid"=%s,"psessionid"="","status"="%s"}' % (qq.ptwebqq,qq.clientid,qq.status)
-
-    # str_tmp = '{"ptwebqq"="%s","clientid"=%s,"psessionid"="","status"="%s"}' % (qq.ptwebqq,qq.clientid,qq.status)
-    #
-    # post_data = {
-    #     'r':str_tmp
-    # }
 
     post_data = 'r=%7B%22ptwebqq%22%3A%22'+qq.ptwebqq+'%22%2C%22clientid%22%3A'+str(qq.clientid)+'%2C%22psessionid%22%3A%22%22%2C%22status%22%3A%22online%22%7D'
     post_data = {
@@ -542,27 +458,6 @@ if __name__ == '__main__':
             +'","clientid":'+str(qq.clientid)
             +',"psessionid":"' + qq.psessionid
             +'","status":"' +qq.status+'"}'};
-
-
-    # str_tmp = json.dumps({"ptwebqq":qq.ptwebqq,"clientid":qq.clientid,"psessionid":qq.psessionid,"status":qq.status})
-
-
-    # str_tmp='{"ptwebqq:"'+qq.ptwebqq+'","clientid":'+str(qq.clientid)+'}'
-
-    str_tmp={
-        'ptwebqq':qq.ptwebqq,
-        'clientid':str(qq.clientid)
-    }
-
-
-
-    # str_tmp = urlencode(str_tmp)
-    # # print(str_tmp)
-    # # print(type(str_tmp))
-    # post_data = {
-    #     'r':str_tmp
-    # }
-
 
     str_tmp="""{"ptwebqq":"%s","clientid":%s,"psessionid":"%s","status":"%s"}""" % (qq.ptwebqq,str(qq.clientid),qq.psessionid,qq.status)
     post_data=[('r',str_tmp)]

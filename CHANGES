@@ -12,6 +12,12 @@ version: 0.x [TODO]
 - get_discus_list
 - get_self_info2
 
+
+version: 0.14
+- 删除无用的接口 proxy,getvfwebqq
+- 将header里的值，用变量来替代
+
+
 version: 0.13
 - 'Content-Type': 'application/x-www-form-urlencoded'
   修改数据传送的代码，现在代码可读性太差，不够动态，消息一多就看不懂了
