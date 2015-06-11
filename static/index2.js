@@ -38,6 +38,10 @@ $(document).ready(function(){
     $('#img_smscode').click(function(){
         get_captcha()
     });
+
+    $('#bt_poll2').click(function(){
+        poll2()
+    });
 })
 
 /**
@@ -165,27 +169,6 @@ function get_captcha(){
     req_get('getimage','',success_callback);
 }
 
-/**
- * TODO : 用户名先写死
- */
-function get_friends(){
-    if(!isLogin){
-        alert('please first login !')
-        return;
-    }
-
-    var success_callback = function(json){
-        console.log("get_friends()  success_callback")
-        console.log(json)
-
-        alert('ok')
-    }
-
-    var hash = u(username,ptwebqq)
-    var data = JSON.stringify({'hash':hash});
-
-    req_post('get_user_friends2',data,success_callback)
-}
 
 /**
  * {
@@ -222,8 +205,47 @@ function login(){
             alert('failer')
         }
     }
-
     req_post('login',data,success_callback)
+}
+
+/**
+ * TODO : 用户名先写死
+ */
+function get_friends(){
+    if(!isLogin){
+        alert('please first login !')
+        return;
+    }
+
+    var success_callback = function(json){
+        console.log("get_friends()  success_callback")
+        console.log(json)
+
+        alert('ok')
+    }
+
+    var hash = u(username,ptwebqq)
+    var data = JSON.stringify({'hash':hash});
+
+    req_post('get_user_friends2',data,success_callback)
+}
+
+
+/**
+ * 轮询获取消息
+ */
+function poll2(){
+
+    if(!isLogin){
+        alert('please first login !')
+        return;
+    }
+
+    var success_callback = function(json){
+        console.log(json)
+    }
+    var data = JSON.stringify({'req':''});
+    req_post('poll2',data,success_callback)
 }
 
 function test_get(){

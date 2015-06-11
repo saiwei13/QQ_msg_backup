@@ -77,6 +77,7 @@ class LoginHandler(tornado.web.RequestHandler):
 
         body = self.request.body;
         print(body)
+
         msg = tornado.escape.json_decode(body)
         # print(msg);
 
@@ -88,6 +89,8 @@ class LoginHandler(tornado.web.RequestHandler):
             self.write(msg)
         elif(uri == '/get_user_friends2'):
             self.qq.get_user_friends(msg['hash'])
+        elif(uri == '/poll2'):
+            self.qq.poll2()
             pass
 
 class Test(tornado.web.RequestHandler):
@@ -135,6 +138,7 @@ class Application(tornado.web.Application):
             (r"/getimage", LoginHandler),
             (r"/login", LoginHandler),
             (r"/get_user_friends2",LoginHandler),
+            (r"/poll2",LoginHandler),
             # (r"/encrypt", LoginHandler),
         ]
 

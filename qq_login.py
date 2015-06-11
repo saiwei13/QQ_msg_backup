@@ -37,10 +37,10 @@ HEADER_ACCEPT = '*/*'
 HEADER_CONTENT_TYPE_URLENCODED='application/x-www-form-urlencoded'
 HEADER_USER_AGENT='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/41.0.2272.76 Chrome/41.0.2272.76 Safari/537.36'
 
-HEADER_ORIGIN_LOGIN2='http://d.web2.qq.com'
+HEADER_ORIGIN_LOGIN2 = HEADER_ORIGIN_POLL2 = 'http://d.web2.qq.com'
 HEADER_ORIGIN_GET_USER_FRIENDS='http://s.web2.qq.com'
 
-HEADER_REFERER_LOGIN2 ='http://d.web2.qq.com/proxy.html?v=20130916001&callback=1&id=2'
+HEADER_REFERER_LOGIN2 = HEADER_REFERER_POLL2 ='http://d.web2.qq.com/proxy.html?v=20130916001&callback=1&id=2'
 HEADER_REFERER_LOGIN = 'https://ui.ptlogin2.qq.com/cgi-bin/login?daid=164&target=self&style=16&mibao_css=m_webqq&appid=501004106&enable_qlogin=0&no_verifyimg=1&s_url=http//w.qq.com/proxy.html&f_url=loginerroralert&strong_login=1&login_state=10&t=20131024001'
 HEADER_REFERER_CHECK = 'https://ui.ptlogin2.qq.com/cgi-bin/login?daid=164&target=self&style=16&mibao_css=m_webqq&appid=501004106&enable_qlogin=0&no_verifyimg=1&s_url=http%3A%2F%2Fw.qq.com%2Fproxy.html&f_url=loginerroralert&strong_login=1&login_state=10&t=20131024001'
 HEADER_REFERER_GET_USER_FRIENDS = "http://s.web2.qq.com/proxy.html?v=20130916001&callback=1&id=1"
@@ -90,6 +90,7 @@ class SmartQQ(BaseClient):
         self.login_2_url = 'http://d.web2.qq.com/channel/login2'
         self.my_encrypt_url = "http://127.0.0.1:8888/encrypt"
         self.user_friends_url = "http://s.web2.qq.com/api/get_user_friends2"
+        self.poll2_url = 'http://d.web2.qq.com/channel/poll2'
 
         self.config_section = 'qq'
         '''配置文件字段'''
@@ -384,7 +385,6 @@ class SmartQQ(BaseClient):
 
         return tmp
 
-    # @web.asynchronous
     def get_user_friends(self,hash_value):
         '''获取用户好友列表'''
 
@@ -415,6 +415,45 @@ class SmartQQ(BaseClient):
         ''':type : requests.Response'''
         print(rsp.status_code)
         print(rsp.content)
+
+    def __poll2(self):
+        header = {
+            'Origin': HEADER_ORIGIN_POLL2,
+            'User-Agent': HEADER_USER_AGENT,
+            'Content-Type': HEADER_CONTENT_TYPE_URLENCODED,
+            'Accept': HEADER_ACCEPT,
+            'Referer': HEADER_REFERER_POLL2,
+            'Accept-Encoding': HEADER_ACCEPT_ENCODING_GZIP,
+            'Accept-Language': HEADER_ACCEPT_LANGUAGE
+        }
+
+        str_tmp="""{"ptwebqq":"%s","clientid":%s,"psessionid":"%s","key":"%s"}""" % (self.ptwebqq,str(self.clientid),self.psessionid,'')
+        print(str_tmp)
+        post_data=[('r',str_tmp)]
+        post_data = urlencode(post_data)
+
+        rsp = self.session.post(
+            url=self.poll2_url,
+            data=post_data,
+            headers=header,
+        )
+        ''':type : requests.Response'''
+        print(rsp.status_code)
+        print(rsp.content)
+
+    def poll2(self):
+        '''获取消息'''
+        print(TAG,"poll2() start")
+
+        w = threading.Thread(name='worker', target=self.__poll2)
+        w.start()
+
+        print(TAG,"poll2() end")
+
+    def sendMessage(self):
+        '''发送消息'''
+        pass
+
 
     def test(self):
         s = "ptui_checkVC('0','!UFV','\x00\x00\x00\x00\x7c\x0f\x3f\xf3','e322f75cb753410b90762a1d05153515118fa46e6186800fba28ab7de4760b6a90e7ad3444b39b48d52eb6819efb231ab1d9379fefd72a14','0');"

@@ -14,6 +14,13 @@ Cookie: RK=r8sv+NtIbV; pgv_info=ssid=s5570441795; pgv_pvid=1170520340; o_cookie=
 r=%7B%22ptwebqq%22%3A%2235f7a74ce1fcf8f1adb9a15fb04c8ffafc0af155602f68f9a1586ba8709fd544%22%2C%22clientid%22%3A53999199%2C%22psessionid%22%3A%228368046764001d636f6e6e7365727665725f77656271714031302e3133392e372e31363400004f3500000e26036e0400f33f0f7c6d0000000a407356533373695136436d00000028a65a7c2637e71cbd3885b995a75a433a86fc819b6b6d969d24adfb66a0551c1bfd933ce82baefe9b%22%2C%22key%22%3A%22%22%7D
 
 应答： 
+-------------------------------------------------------------
+第一次：　b'{"retcode":0,"result":[{"poll_type":"buddies_status_change","value":{"uin":2479463038,"status":"online","client_type":1}}]}\r\n'
+
+b'{"retcode":0,"result":[{"poll_type":"message","value":{"msg_id":57606,"from_uin":2479463038,"to_uin":2081374195,"msg_id2":547957,"msg_type":9,"reply_ip":176498261,"time":1434006397,"content":[["font",{"size":10,"color":"000000","style":[0,0,0],"name":"\\u5B8B\\u4F53"}],"SPSS "]}}]}\r\n'
+b'{"retcode":0,"result":[{"poll_type":"message","value":{"msg_id":57617,"from_uin":2479463038,"to_uin":2081374195,"msg_id2":696616,"msg_type":9,"reply_ip":176498261,"time":1434006557,"content":[["font",{"size":10,"color":"000000","style":[0,0,0],"name":"\\u5B8B\\u4F53"}],"google "]}}]}\r\n'
+
+
 
 {"retcode":102,"errmsg":""}
 {"retcode":0,"result":[{"poll_type":"message","value":{"msg_id":64323,"from_uin":3715671693,"to_uin":2081374195,"msg_id2":233278,"msg_type":9,"reply_ip":176498281,"time":1433951655,"content":[["font",{"size":10,"color":"000000","style":[0,0,0],"name":"\u5B8B\u4F53"}],"i am chenwei "]}}]}
