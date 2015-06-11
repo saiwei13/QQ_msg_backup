@@ -439,16 +439,20 @@ class SmartQQ(BaseClient):
         )
         ''':type : requests.Response'''
         print(rsp.status_code)
-        # print(rsp.content)
+        print(rsp.content)
 
         if rsp.status_code == 200:
             if rsp.json()['retcode'] == 0:
                 result = rsp.json()['result']
-                poll_type = result[0]['poll_type']
-                if poll_type == 'message':
-                    content = result[0]['value']['content'][1]
-                    print('content = ',content)
-                pass
+                ## bug: 查看version: 0.17
+                if type(result) == list:
+                    poll_type = result[0]['poll_type']
+                    if poll_type == 'message':
+                        content = result[0]['value']['content'][1]
+                        print('content = ',content)
+
+                elif type(result) == str:
+                    pass
             elif rsp.json()['retcode'] == 102:
                 ##没有消息
                 pass
@@ -500,6 +504,16 @@ def hello():
 if __name__ == '__main__':
 
     pass
+
+    s = 'abcd'
+
+    s = ['a','b',0,1,3]
+
+    print(type(s))
+    if type(s) == list:
+        print('list')
+    elif type(s) == str:
+        print('string')
 
 
 

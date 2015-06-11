@@ -12,8 +12,15 @@ version: 0.x   time: 2015-06-04
 - get_discus_list
 - get_self_info2
 
-
-
+version: 0.17
+- 先在该程序上登录ｑｑ，然后再登录ｐｃ端ＱＱ，poll2解析出错
+　error log:
+　poll_type = result[0]['poll_type']
+　TypeError: string indices must be integers
+  原因：当在ｐｃ端登录成功后，这边poll2时，会收到
+  　　　b'{"retcode":0,"result":"ok"}\r\n'
+       导致解析失败
+  解决：　type(result)  将list和str区分开，做不同处理
 
 version: 0.16　
 - 调用poll2 ,返回错误

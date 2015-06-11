@@ -45,8 +45,16 @@ b'{"retcode":0,"result":
     ]}\r\n'
 b'{"retcode":0,"result":[{"poll_type":"message","value":{"msg_id":57617,"from_uin":2479463038,"to_uin":2081374195,"msg_id2":696616,"msg_type":9,"reply_ip":176498261,"time":1434006557,"content":[["font",{"size":10,"color":"000000","style":[0,0,0],"name":"\\u5B8B\\u4F53"}],"google "]}}]}\r\n'
 
+##输入状态
+b'{"retcode":0,"result":[{"poll_type":"input_notify","value":{"msg_id":36920,"from_uin":3035936695,"to_uin":2081374195,"msg_id2":0,"msg_type":121,"reply_ip":4294967295}}]}\r\n'
 
-
+##　无消息
 {"retcode":102,"errmsg":""}
+
 {"retcode":0,"result":[{"poll_type":"message","value":{"msg_id":64323,"from_uin":3715671693,"to_uin":2081374195,"msg_id2":233278,"msg_type":9,"reply_ip":176498281,"time":1433951655,"content":[["font",{"size":10,"color":"000000","style":[0,0,0],"name":"\u5B8B\u4F53"}],"i am chenwei "]}}]}
 
+
+
+
+b'{"retcode":0,"result":[{"poll_type":"kick_message","value":{"msg_id":35899,"from_uin":10000,"to_uin":2081374195,"msg_id2":35900,"msg_type":48,"reply_ip":0,"show_reason":1,"reason":"\\u60A8\\u7684\\u5E10\\u53F7\\u5728\\u53E6\\u4E00\\u5730\\u70B9\\u767B\\u5F55\\uFF0C\\u60A8\\u5DF2\\u88AB\\u8FEB\\u4E0B\\u7EBF\\u3002\\u5982\\u6709\\u7591\\u95EE\\uFF0C\\u8BF7\\u767B\\u5F55 safe.qq.com \\u4E86\\u89E3\\u66F4\\u591A\\u3002"}}]}\r\n'
+b'{"retcode":0,"result":"ok"}\r\n'
