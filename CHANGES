@@ -12,6 +12,8 @@ version: 0.x [TODO]
 - get_discus_list
 - get_self_info2
 
+version: 0.15 [TODO]
+-
 
 version: 0.14
 - 删除无用的接口 proxy,getvfwebqq
