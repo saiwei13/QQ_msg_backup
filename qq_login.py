@@ -428,7 +428,7 @@ class SmartQQ(BaseClient):
         }
 
         str_tmp="""{"ptwebqq":"%s","clientid":%s,"psessionid":"%s","key":"%s"}""" % (self.ptwebqq,str(self.clientid),self.psessionid,'')
-        print(str_tmp)
+        # print(str_tmp)
         post_data=[('r',str_tmp)]
         post_data = urlencode(post_data)
 
@@ -439,15 +439,41 @@ class SmartQQ(BaseClient):
         )
         ''':type : requests.Response'''
         print(rsp.status_code)
-        print(rsp.content)
+        # print(rsp.content)
+
+        if rsp.status_code == 200:
+            if rsp.json()['retcode'] == 0:
+                result = rsp.json()['result']
+                poll_type = result[0]['poll_type']
+                if poll_type == 'message':
+                    content = result[0]['value']['content'][1]
+                    print('content = ',content)
+                pass
+            elif rsp.json()['retcode'] == 102:
+                ##没有消息
+                pass
+            elif rsp.json()['retcode'] == 121:
+                self.isLogin = False;
+                print('poll2()  retcode: 121 , 掉线')
+            else:
+                print(rsp.content)
+        else:
+            print(rsp.content)
+
+        ##定时轮询去服务器取消息
+        # t = threading.Timer(5, self.__poll2)
+        # t.start()
+
+    def getMessage(self):
+        while True and self.isLogin:
+            self.__poll2();
 
     def poll2(self):
         '''获取消息'''
         print(TAG,"poll2() start")
-
-        w = threading.Thread(name='worker', target=self.__poll2)
+        w = threading.Thread(name='worker', target=self.getMessage)
         w.start()
-
+        # self.__poll2()
         print(TAG,"poll2() end")
 
     def sendMessage(self):
@@ -466,54 +492,58 @@ class SmartQQ(BaseClient):
         for i in range(0,len(s)):
             print(s[i])
 
+def hello():
+    t = threading.Timer(3, hello)
+    t.start()
+    print('hello world, i am %s, Current time: %s' % ('chenwei', time.time()))
+
 if __name__ == '__main__':
 
-    # print('start')
-    # import time
-    # time.sleep(3)
-    # print('finish ')
+    pass
 
-    # tmp = 'ss'
-    # tmp2 = tmp+'dd'
-    # print(tmp2)
 
-    from utils import config_file
 
-    import configparser
-    cf = configparser.ConfigParser()
-    cf.read(config_file)
-
-    qq = SmartQQ(
-        username=cf.get('qq','username'),
-        password=cf.get('qq','password')
-    );
-
-    qq.ptwebqq = 'dea75142dc6e91fd609e47c9c7c3fcd63d5d48f1a5631d2e2480825cab90d6b4'
-
-    post_data = 'r=%7B%22ptwebqq%22%3A%22'+qq.ptwebqq+'%22%2C%22clientid%22%3A'+str(qq.clientid)+'%2C%22psessionid%22%3A%22%22%2C%22status%22%3A%22online%22%7D'
-    post_data = {
-        "r":
-            '{"ptwebqq":"'+qq.ptwebqq
-            +'","clientid":'+str(qq.clientid)
-            +',"psessionid":"' + qq.psessionid
-            +'","status":"' +qq.status+'"}'};
-
-    str_tmp="""{"ptwebqq":"%s","clientid":%s,"psessionid":"%s","status":"%s"}""" % (qq.ptwebqq,str(qq.clientid),qq.psessionid,qq.status)
-    post_data=[('r',str_tmp)]
-    post_data = urlencode(post_data)
-
-    print(post_data)
+    # hello()
     #
-    header = {
-        'Content-Type': 'application/x-www-form-urlencoded'
-    }
+    # print('finish')
 
-    rsp = qq.session.post(
-        'http://127.0.0.1:8888/test',
-            data=post_data,
-            headers=header)
-
-    ''':type : requests.Response'''
-    print(rsp.status_code)
-    print(rsp.url)
-    print(rsp.content)
+    # from utils import config_file
+    #
+    # import configparser
+    # cf = configparser.ConfigParser()
+    # cf.read(config_file)
+    #
+    # qq = SmartQQ(
+    #     username=cf.get('qq','username'),
+    #     password=cf.get('qq','password')
+    # );
+    #
+    # qq.ptwebqq = 'dea75142dc6e91fd609e47c9c7c3fcd63d5d48f1a5631d2e2480825cab90d6b4'
+    #
+    # post_data = 'r=%7B%22ptwebqq%22%3A%22'+qq.ptwebqq+'%22%2C%22clientid%22%3A'+str(qq.clientid)+'%2C%22psessionid%22%3A%22%22%2C%22status%22%3A%22online%22%7D'
+    # post_data = {
+    #     "r":
+    #         '{"ptwebqq":"'+qq.ptwebqq
+    #         +'","clientid":'+str(qq.clientid)
+    #         +',"psessionid":"' + qq.psessionid
+    #         +'","status":"' +qq.status+'"}'};
+    #
+    # str_tmp="""{"ptwebqq":"%s","clientid":%s,"psessionid":"%s","status":"%s"}""" % (qq.ptwebqq,str(qq.clientid),qq.psessionid,qq.status)
+    # post_data=[('r',str_tmp)]
+    # post_data = urlencode(post_data)
+    #
+    # print(post_data)
+    # #
+    # header = {
+    #     'Content-Type': 'application/x-www-form-urlencoded'
+    # }
+    #
+    # rsp = qq.session.post(
+    #     'http://127.0.0.1:8888/test',
+    #         data=post_data,
+    #         headers=header)
+    #
+    # ''':type : requests.Response'''
+    # print(rsp.status_code)
+    # print(rsp.url)
+    # print(rsp.content)

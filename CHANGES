@@ -2,16 +2,24 @@ version: 0.x   time: 2015-06-04
 - 登录请求后，需要删除缓存信息
   js位置
   　　-pub.idqqimg.com/smartqq/js/mq.js
-- 轮询　http://d.web2.qq.com/channel/poll2
-- 获取消息
 - 发送消息
 - tornado 异步
-
-version: 0.x [TODO]
+- 尝试同时登两个（或两个以上ＱＱ）
+- 发送／收到　消息　，需要抽象出来，与ｌｏｇｉｎ代码放在一起，太大了
+- 建立数据库
+- python 是否有单件模式
 - get_group_name_list_mask2
 - get_discus_list
 - get_self_info2
--{"retcode":121,"t":"0"}\r\n'
+
+
+
+
+version: 0.16　
+- 调用poll2 ,返回错误
+　{"retcode":121,"t":"0"}\r\n'
+  原因：　掉线
+  解决：　需要用心跳包，保持长连接
 
 version: 0.15
 - poll2 接口调通
