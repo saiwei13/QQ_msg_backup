@@ -23,3 +23,8 @@ Date: Tue, 09 Jun 2015 17:41:50 GMT
 Content-Type: application/json;charset=utf-8
 Content-Length: 231
 Connection: keep-alive
+
+
+----------------------------------------------------------------------
+b'{"retcode":0,"result":{"friends":[{"flag":0,"uin":3924885525,"categories":0}],"marknames":[],"categories":[],"vipinfo":[{"vip_level":0,"u":3924885525,"is_vip":0}],"info":[{"face":177,"flag":524802,"nick":"xiii","uin":3924885525}]}}'
+

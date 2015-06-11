@@ -12,12 +12,11 @@ Accept-Language: en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2
 Cookie: ts_last=web2.qq.com/; ts_refer=www.baidu.com/link; ts_uid=9514246539; pgv_info=ssid=s5716345192; pgv_pvid=7210829545; pt_clientip=87177f0000016a36; pt_serverip=65b90aa693da6027; ptisp=cnc; RK=r8sv+NtIbV; pt2gguin=o2081374195; uin=o2081374195; skey=@KYtjGFJ2E; p_uin=o2081374195; p_skey=SZaG-7q9nP5e9raJRL9SD*1*Ou5mY8RtXq8e9wBwBkQ_; pt4_token=OE3LKE2aiJVnno15yC4tug__; ptwebqq=5c72c198c4d9b098ee234d0c0dcb9380e9a545a6464915b4ed9aa70b9befa2c6
 
 r=%7B%22ptwebqq%22%3A%225c72c198c4d9b098ee234d0c0dcb9380e9a545a6464915b4ed9aa70b9befa2c6
-
-
-
-=========================================================
-Content-Type: text/plain;charset=utf-8
-
-
-=========================================================
 r   {"ptwebqq":"5c72c198c4d9b098ee234d0c0dcb9380e9a545a6464915b4ed9aa70b9befa2c6","clientid":53999199,"psessionid":"","status":"online"}
+
+
+
+
+
+=========================================================
+b'{"retcode":0,"result":{"uin":2081374195,"cip":3524121451,"index":1075,"port":46817,"status":"online","vfwebqq":"7bdd917f3ea0a14955e30b7495076b0cc6f386bf0a66faa4e78aaa587bd28030872df0b20a591431","psessionid":"8368046764001d636f6e6e7365727665725f77656271714031302e3133392e372e313634000007fd00000e41036e0400f33f0f7c6d0000000a40356569494e586a33596d000000287bdd917f3ea0a14955e30b7495076b0cc6f386bf0a66faa4e78aaa587bd28030872df0b20a591431","user_state":0,"f":0}}\r\n'

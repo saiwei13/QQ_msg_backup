@@ -24,6 +24,13 @@ qrsig: lV30Fk75cZerl*xklvZU6prupNaE34QkSPk76yXj4OjJAkeM90uJCNMPJ8Mtihh1
 chkuin: 2081374195
 
 
+
+============================================================================
+ptui_checkVC('0','!EQR','\x00\x00\x00\x00\x7c\x0f\x3f\xf3','eb3338482536195072e47722eb87ea5eabb78fde41972002d44707fede643f8571db616eab70eb348dacb55ab230e9f11cd1338d13444779','0');
+
+
+
+
 检查账号是否存在
 
 

@@ -39,3 +39,8 @@ Referer: https://ui.ptlogin2.qq.com/cgi-bin/login?daid=164&target=self&style=16&
 Accept-Encoding: gzip, deflate, sdch
 Accept-Language: en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2
 Cookie: uikey=2a6ee429639afcb68418b28e9fe5106be9deb819ea208f010c707b2b910f22dc; ETK=; superuin=o2081374195; superkey=1PC5zPDSVxTDDZqVyGJENLO9DjLM9Ha3sZbHC6zJ26g_; supertoken=2065601044; ptisp=cnc; RK=r8sv+NtIbV; ptnick_2081374195=72746f6b6965; pt2gguin=o2081374195; uin=o2081374195; pgv_info=ssid=s133334080; pgv_pvid=9634489328; o_cookie=2081374195; pt_login_sig=ft5dYyRgANDXYFx-mmkZiXSNw*YP4zbzeynDL0OVoKqZ9M49dUf30f40vEa4Pfly; pt_clientip=8ee77f00000155f9; pt_serverip=32220a85030c7c68; qrsig=XYKGaMLJp55zjV*2So1KHE-1Xzqw1uzlACAF3lUiFmQk5to-WhQw7JqEtv3SBykQ; chkuin=2081374195; confirmuin=2081374195; ptvfsession=b144880935288a7d8283eca7cac29b96d04211fb8c488b7262f6893bee2bf199107564a04edd31cc45338d0feb6f76fc425bb95d469eda6b
+
+
+=============================================================================
+b"ptuiCB('0','0','http://ptlogin4.web2.qq.com/check_sig?pttype=1&uin=2081374195&service=login&nodirect=0&ptsigx=292debf99955d6eea855d0f734a72664f68ee186ccaf70cb705293c27e93493f16152b810575dd0a8622189d2e3bfb27dd19a533ce8ccbe79fb8e0095b9d50c0&s_url=http%3A%2F%2Fw.qq.com%2Fproxy.html%3Flogin2qq%3D1%26webqq_type%3D10&f_url=&ptlang=2052&ptredirect=100&aid=501004106&daid=164&j_later=0&low_login_hour=0&regmaster=0&pt_login_type=1&pt_aid=0&pt_aaid=0&pt_light=0&pt_3rd_aid=0','0','\xe7\x99\xbb\xe5\xbd\x95\xe6\x88\x90\xe5\x8a\x9f\xef\xbc\x81', 'rtokie');\r\n"
+

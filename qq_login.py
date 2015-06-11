@@ -4,6 +4,8 @@ import random2
 import os
 from requests.utils import dict_from_cookiejar
 import time
+from urllib.parse import urlencode
+
 from tornado import web
 
 __author__ = 'chenwei'
@@ -26,6 +28,15 @@ check:
             {resp_code:1001,resp_msg:'请求失败',resp_data:false}
 
 '''
+
+
+##定义静态变量　　[TODO 先防这]
+HEADER_ACCEPT_LANGUAGE = 'en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2'
+HEADER_ACCEPT_ENCODING_GZIP = 'gzip, deflate'
+HEADER_ACCEPT = '*/*'
+HEADER_CONTENT_TYPE_URLENCODED='application/x-www-form-urlencoded'
+HEADER_USER_AGENT='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/41.0.2272.76 Chrome/41.0.2272.76 Safari/537.36'
+
 
 class SmartQQ(BaseClient):
     ''''''
@@ -57,7 +68,6 @@ class SmartQQ(BaseClient):
         self.pt_verifysession=''
 
         self.js_ver = '10125'
-
 
         self.ptwebqq=''
         self.clientid = 53999199
@@ -125,8 +135,6 @@ class SmartQQ(BaseClient):
             msg = json.dumps({'resp_code':0,'resp_msg':'success'})
         else:
             msg = json.dumps({'resp_code':rsp.status_code,'resp_msg':rsp.content})
-            pass
-
         return msg;
 
         print('--------finish-------ddd---')
@@ -288,8 +296,6 @@ class SmartQQ(BaseClient):
             'pt_verifysession_v1':self.pt_verifysession, ##改变
         }
 
-        from urllib.parse import urlencode
-
         url = self.login_url+'?%s' %   urlencode(par)
 
         # print('login_url = '+url)
@@ -386,12 +392,9 @@ class SmartQQ(BaseClient):
         else:
             print('else return')
 
-
-
     def sign_in_second(self):
         '''第二次post登录'''
         print('sign_in_second()')
-
         header = {
             'Origin': 'http://d.web2.qq.com',
             'User-Agent': "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/41.0.2272.76 Chrome/41.0.2272.76 Safari/537.36",
@@ -402,7 +405,9 @@ class SmartQQ(BaseClient):
             'Accept-Language': 'en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4'
         }
 
-        post_data = 'r=%7B%22ptwebqq%22%3A%22'+self.ptwebqq+'%22%2C%22clientid%22%3A'+str(self.clientid)+'%2C%22psessionid%22%3A%22%22%2C%22status%22%3A%22online%22%7D'
+        str_tmp="""{"ptwebqq":"%s","clientid":%s,"psessionid":"%s","status":"%s"}""" % (self.ptwebqq,str(self.clientid),self.psessionid,self.status)
+        post_data=[('r',str_tmp)]
+        post_data = urlencode(post_data)
 
         rsp = self.session.post(
             url=self.login_2_url,
@@ -449,7 +454,11 @@ class SmartQQ(BaseClient):
             'Accept-Encoding': 'gzip, deflate',
             'Accept-Language': 'en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2'
         }
-        post_data = 'r=%7B%22vfwebqq%22%3A%22'+self.vfwebqq+'%22%2C%22hash%22%3A%22'+self.hash+'%22%7D'
+
+        str_tmp="""{"vfwebqq":"%s","hash":"%s"}""" % (self.vfwebqq,self.hash)
+        post_data=[('r',str_tmp)]
+        post_data = urlencode(post_data)
+
         print(TAG,'post_data = '+post_data)
 
         rsp = self.session.post(
@@ -458,7 +467,6 @@ class SmartQQ(BaseClient):
             headers=header,
         )
         ''':type : requests.Response'''
-
         print(rsp.status_code)
         print(rsp.content)
 
@@ -528,13 +536,44 @@ if __name__ == '__main__':
     # }
 
     post_data = 'r=%7B%22ptwebqq%22%3A%22'+qq.ptwebqq+'%22%2C%22clientid%22%3A'+str(qq.clientid)+'%2C%22psessionid%22%3A%22%22%2C%22status%22%3A%22online%22%7D'
+    post_data = {
+        "r":
+            '{"ptwebqq":"'+qq.ptwebqq
+            +'","clientid":'+str(qq.clientid)
+            +',"psessionid":"' + qq.psessionid
+            +'","status":"' +qq.status+'"}'};
+
+
+    # str_tmp = json.dumps({"ptwebqq":qq.ptwebqq,"clientid":qq.clientid,"psessionid":qq.psessionid,"status":qq.status})
+
+
+    # str_tmp='{"ptwebqq:"'+qq.ptwebqq+'","clientid":'+str(qq.clientid)+'}'
+
+    str_tmp={
+        'ptwebqq':qq.ptwebqq,
+        'clientid':str(qq.clientid)
+    }
+
+
+
+    # str_tmp = urlencode(str_tmp)
+    # # print(str_tmp)
+    # # print(type(str_tmp))
+    # post_data = {
+    #     'r':str_tmp
+    # }
+
+
+    str_tmp="""{"ptwebqq":"%s","clientid":%s,"psessionid":"%s","status":"%s"}""" % (qq.ptwebqq,str(qq.clientid),qq.psessionid,qq.status)
+    post_data=[('r',str_tmp)]
+    post_data = urlencode(post_data)
 
     print(post_data)
     #
     header = {
         'Content-Type': 'application/x-www-form-urlencoded'
     }
-    #
+
     rsp = qq.session.post(
         'http://127.0.0.1:8888/test',
             data=post_data,
