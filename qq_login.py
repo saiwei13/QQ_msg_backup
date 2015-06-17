@@ -439,7 +439,7 @@ class SmartQQ(BaseClient):
         )
         ''':type : requests.Response'''
         print(rsp.status_code)
-        print(rsp.content)
+        # print(rsp.content)
 
         if rsp.status_code == 200:
             if rsp.json()['retcode'] == 0:
@@ -455,6 +455,7 @@ class SmartQQ(BaseClient):
                     pass
             elif rsp.json()['retcode'] == 102:
                 ##没有消息
+                print(rsp.content)
                 pass
             elif rsp.json()['retcode'] == 121:
                 self.isLogin = False;

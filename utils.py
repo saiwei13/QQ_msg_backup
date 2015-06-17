@@ -2,7 +2,10 @@ import time
 
 __author__ = 'chenwei'
 
-config_file = 'config.ini'
+# config_file = 'config.ini'
+
+config_file = '/home/chenwei/workspace/PycharmProjects/QQ_msg_backup/config.ini'
+
 '''配置文件'''
 
 

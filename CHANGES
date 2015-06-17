@@ -12,6 +12,23 @@ version: 0.x   time: 2015-06-04
 - get_discus_list
 - get_self_info2
 
+version: 0.xx [TODO]
+- a)该程序会与　webqq,pc端ｑｑ造成互踢的局面
+  b)该程序与　android 可以兼容，同时接收信息
+
+  c) webqq（smartqq） 与 pc qq , 只能登录一个
+  d) 在两台android 手机上，同时登录ｑｑ，会互踢，
+  　　只保证一个登录
+  e) android , ipad 能互踢？　[TODO]
+  f) android , mac ,iphone 互踢？ [TODO]
+  g) android , win phone 互踢？ [TODO]
+  h) android pad, webqq/smartqq,  win7 pc qq, pc TM2013 是一种登录类型
+  i) android phone (nexus5) 与 iphone 是一种登录类型
+  j) ipad 是一种登录类型
+
+version: 0.18
+- 将程序里的相对路径改成绝对路径（如：log文件路径，配置文件路径）
+
 version: 0.17
 - 先在该程序上登录ｑｑ，然后再登录ｐｃ端ＱＱ，poll2解析出错
 　error log:

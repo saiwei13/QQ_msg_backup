@@ -41,6 +41,12 @@ class LoginHandler(tornado.web.RequestHandler):
     '''
     cf = configparser.ConfigParser()
     cf.read(config_file)
+
+    # qq = SmartQQ(
+    #     username=cf.get('qq','username'),
+    #     password=cf.get('qq','password')
+    # );
+
     qq = SmartQQ(
         username=cf.get('qq','username'),
         password=cf.get('qq','password')
@@ -144,7 +150,8 @@ class Application(tornado.web.Application):
 
         tornado.web.Application.__init__(self,handlers,**settings)
 
-        LOGDIR = os.path.join(os.getcwd(),'log')
+        # LOGDIR = os.path.join(os.getcwd(),'log')
+        LOGDIR = os.path.join('/home/chenwei/workspace/PycharmProjects/QQ_msg_backup','log')
         LOGFILE = datetime.datetime.now().strftime('%Y-%m-%d')+'.log'
         logging.basicConfig(level=logging.DEBUG,
                             format='',
